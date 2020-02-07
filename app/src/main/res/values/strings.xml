@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">OnnwayLoader</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+
+    <!--Bottom navigation-->
+    <string name="find_truck">Find Truck</string>
+    <string name="waiting_truck">Waiting Tuck</string>
+    <string name="my_order">My Orders</string>
+    <string name="my_quotes">My Quotes</string>
+
+    <string-array name="truck_type">
+        <item>3.5 MT/14\'x6\'x6\'</item>
+        <item>4.5 MT/17\'x6\'x6\'</item>
+        <item>7.5 MT/19\'x6\'x6\'</item>
+        <item>9 MT/18\'x7\'x7\'</item>
+        <item>15 MT/22\'x7\'x7\'</item>
+        <item>20 MT/24\'x7\'x7\'</item>
+    </string-array>
+    <string-array name="trailer_type">
+        <item>20 MT/40\'x8\'x8\'</item>
+        <item>20 MT/40\'x8\'x7\'</item>
+        <item>25 MT/40\'x8\'x8\'</item>
+        <item>25 MT/40\'x8\'x7\'</item>
+        <item>32 MT/40\'x8\'x7\'</item>
+        <item>32 MT/40\'x8\'x8\'</item>
+    </string-array>
+    <string-array name="container_type">
+        <item>6.5 MT/20\'x8\'x8\'</item>
+        <item>8 MT/24\'x8\'x8\'</item>
+        <item>14 MT/32\'x8\'x10\'</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="shipment_details">Shipment Details</string>
+    <string name="shipment_address">Address</string>
+
+</resources>

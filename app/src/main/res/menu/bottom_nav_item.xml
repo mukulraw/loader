@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_nav_find_truck"
+        android:icon="@drawable/ic_find_truck"
+        android:title="@string/find_truck" />
+    <item
+        android:id="@+id/bottom_nav_waiting_truck"
+        android:icon="@drawable/ic_waiting_truck"
+        android:title="@string/waiting_truck" />
+    <item
+        android:id="@+id/bottom_nav_my_orders"
+        android:icon="@drawable/ic_my_order"
+        android:title="@string/my_order" />
+    <item
+        android:id="@+id/bottom_nav_my_quotes"
+        android:icon="@drawable/my_order_ic"
+        android:title="@string/my_quotes" />
+</menu>

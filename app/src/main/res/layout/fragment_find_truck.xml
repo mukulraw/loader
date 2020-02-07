@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FindTruckFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <fragment
+            android:id="@+id/g_map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bottomsheet_background"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/g_map"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/full_load_card"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="0.475"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="20dp"
+                    android:elevation="4dp"
+                    app:cardCornerRadius="9dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="#2E2E2E">
+                    <TextView
+                        android:id="@+id/full_load_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Full-Load"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:textColor="#E8E8E8"
+                        android:layout_gravity="center"/>
+
+                </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="0.05"
+                    android:layout_marginBottom="28dp">
+
+                </LinearLayout>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/part_load_card"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="0.475"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:elevation="4dp"
+                    app:cardCornerRadius="9dp"
+                    app:cardElevation="4dp">
+
+                    <TextView
+                        android:id="@+id/part_load_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Part-Load"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:textColor="#2E2E2E"
+                        android:layout_gravity="center"/>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="12dp"
+                android:elevation="4dp"
+                app:cardCornerRadius="11dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/start_address_pointer"
+                        android:layout_weight="0.1"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/enter_source_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.9"
+                        android:hint="Enter source"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textSize="12sp"
+                        android:gravity="center_vertical"
+                        android:textColorHint="#707070"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="28dp"
+                android:elevation="4dp"
+                app:cardCornerRadius="11dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/end_address_pointer"
+                        android:layout_weight="0.1"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/enter_destination_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.9"
+                        android:hint="Enter destination"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:textSize="12sp"
+                        android:gravity="center_vertical"
+                        android:textColorHint="#707070"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_height="80dp"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:src="@drawable/ic_truck_image"
+                        android:id="@+id/open_truck_btn"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/circular_button" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="24dp"
+                        android:text="Open Truck"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="8sp"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/montserrat_semibold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_height="80dp"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:src="@drawable/ic_truck_image"
+                        android:id="@+id/container_btn"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/circular_button" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="24dp"
+                        android:text="Container"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="8dp"
+                        android:gravity="center"
+                        android:fontFamily="@font/montserrat_semibold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_height="80dp"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:src="@drawable/ic_truck_image"
+                        android:id="@+id/trailer_btn"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/circular_button" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="24dp"
+                        android:text="Trailer"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="8sp"
+                        android:gravity="center"
+                        android:fontFamily="@font/montserrat_semibold"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="72dp"
+                android:elevation="4dp"
+                app:cardCornerRadius="11dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_calendar"
+                        android:layout_weight="0.2"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/schedule_pick_up_date_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:hint="Schedule Pick-up"
+                        android:textSize="12sp"
+                        android:gravity="center_vertical"
+                        android:textColorHint="#707070"
+                        android:fontFamily="@font/montserrat_medium"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/next_card"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="11dp"
+                        android:layout_weight="0.2"
+                        app:cardBackgroundColor="#2E2E2E">
+                        <ImageView
+                            android:id="@+id/next_image"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_next"
+                            android:layout_gravity="center"/>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

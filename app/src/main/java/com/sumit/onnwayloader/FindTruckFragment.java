@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,7 +82,7 @@ public class FindTruckFragment extends Fragment
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
-        OpenTruckType.DialogListener{
+        OpenTruckType.DialogListener {
 
     /*
      * This fragment is used to load the findtruckfragment
@@ -91,17 +93,20 @@ public class FindTruckFragment extends Fragment
     //variables for the button, textview and card
 
     //CardView
-    private CardView partLoad, fullLoad, nextCard;
+    private ImageButton nextCard;
 
+    Button partLoad, fullLoad;
+
+
+    LinearLayout bottom;
     //ImageView
-    private ImageView nextImage;
+
 
     //TextView
     private TextView sourceAddress, destinationAddress, schedulePickupDate;
-    private TextView fullLoadTv, partLoadTv;
 
     //Buttons
-    private ImageButton openTruckBtn, containerBtn, trailerBtn;
+    private ImageView openTruckBtn, containerBtn, trailerBtn;
 
 
     //find current location
@@ -121,6 +126,7 @@ public class FindTruckFragment extends Fragment
     private int addressTyp = 0;
 
     private GetPrice getPrice;
+
     public FindTruckFragment() {
         // Required empty public constructor
     }
@@ -146,14 +152,14 @@ public class FindTruckFragment extends Fragment
         nextCard = view.findViewById(R.id.next_card);
 
         //imageview
-        nextImage = view.findViewById(R.id.next_image);
+
 
         //textView
         sourceAddress = view.findViewById(R.id.enter_source_tv);
+        bottom = view.findViewById(R.id.bottom);
         destinationAddress = view.findViewById(R.id.enter_destination_tv);
         schedulePickupDate = view.findViewById(R.id.schedule_pick_up_date_tv);
-        fullLoadTv = view.findViewById(R.id.full_load_tv);
-        partLoadTv = view.findViewById(R.id.part_load_tv);
+
 
         //Button
         openTruckBtn = view.findViewById(R.id.open_truck_btn);
@@ -177,25 +183,25 @@ public class FindTruckFragment extends Fragment
             }
         });
 
-        fullLoad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadType = "1";
-                partLoadTv.setTextColor(Color.parseColor("#2E2E2E"));
-                partLoad.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-                fullLoadTv.setTextColor(Color.parseColor("#E8E8E8"));
-                fullLoad.setCardBackgroundColor(Color.parseColor("#2E2E2E"));
-            }
-        });
-
         partLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadType = "2";
-                fullLoadTv.setTextColor(Color.parseColor("#2E2E2E"));
-                fullLoad.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-                partLoadTv.setTextColor(Color.parseColor("#E8E8E8"));
-                partLoad.setCardBackgroundColor(Color.parseColor("#2E2E2E"));
+                partLoad.setTextColor(Color.parseColor("#ffffff"));
+                partLoad.setBackgroundResource(R.drawable.black_back_round);
+                fullLoad.setTextColor(Color.parseColor("#000000"));
+                fullLoad.setBackgroundResource(R.drawable.white_back_round);
+            }
+        });
+
+        fullLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadType = "1";
+                fullLoad.setTextColor(Color.parseColor("#ffffff"));
+                fullLoad.setBackgroundResource(R.drawable.black_back_round);
+                partLoad.setTextColor(Color.parseColor("#000000"));
+                partLoad.setBackgroundResource(R.drawable.white_back_round);
             }
         });
 
@@ -249,28 +255,12 @@ public class FindTruckFragment extends Fragment
                         }, year, month, day);
                 picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 //Toast.makeText(getContext(), ""+System.currentTimeMillis(), Toast.LENGTH_SHORT).show();
-                picker.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000+(1000*60*60*24*4));
+                picker.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000 + (1000 * 60 * 60 * 24 * 4));
                 picker.show();
             }
         });
 
         nextCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getPrice = new GetPrice();
-                getPrice.currentMobile = EnterNumberActivity.mCurrentMobileNumber;
-                getPrice.sourceAddress = sourceAddress.getText().toString();
-                getPrice.destinationAddress = destinationAddress.getText().toString();
-                getPrice.truckType = truckType;
-//                new Post().getPrice(getActivity(), getPrice);
-                getMaterialType();
-                Toast.makeText(getContext(), Post.price, Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(getContext(), ShipmentActivity.class);
-//                startActivity(intent);
-            }
-        });
-
-        nextImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getPrice = new GetPrice();
@@ -285,6 +275,8 @@ public class FindTruckFragment extends Fragment
 //                startActivity(intent);
             }
         });
+
+
 
         return view;
     }
@@ -314,6 +306,22 @@ public class FindTruckFragment extends Fragment
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
+        final int[] h = {0};
+        final int[] w = { 0 };
+
+        bottom.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bottom.invalidate();
+
+                h[0] = bottom.getHeight();
+                w[0] = bottom.getWidth();
+
+                System.out.println("Height yourView: " + bottom.getHeight());
+                System.out.println("Width yourView: " + bottom.getWidth());
+            }
+        }, 1);
+
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getContext(),
@@ -322,15 +330,31 @@ public class FindTruckFragment extends Fragment
                 buildGoogleApiClient();
                 mGoogleMap.setMyLocationEnabled(true);
                 mGoogleMap.setMinZoomPreference(15);
+
+
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mGoogleMap.setPadding(0 , 0 , 0 , h[0] + 22);
+                    }
+                });
+
+
             }
         } else {
             buildGoogleApiClient();
             mGoogleMap.setMyLocationEnabled(true);
             mGoogleMap.setMinZoomPreference(15);
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mGoogleMap.setPadding(0 , 0 , 0 , h[0] + 22);
+                }
+            });
         }
     }
 
-    protected synchronized void buildGoogleApiClient() {
+    private synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -365,8 +389,8 @@ public class FindTruckFragment extends Fragment
 
     @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(getContext(), "Location Changed " + location.getLatitude()
-                + " " + location.getLongitude(), Toast.LENGTH_SHORT).show();
+        /*Toast.makeText(getContext(), "Location Changed " + location.getLatitude()
+                + " " + location.getLongitude(), Toast.LENGTH_SHORT).show();*/
 
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
@@ -376,7 +400,7 @@ public class FindTruckFragment extends Fragment
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
 
         //move map camera
@@ -474,10 +498,10 @@ public class FindTruckFragment extends Fragment
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
-                if(addressTyp == 1) {
+                if (addressTyp == 1) {
                     srcAddress = place.getName();
                     sourceAddress.setText(place.getName());
-                } else if(addressTyp == 2) {
+                } else if (addressTyp == 2) {
                     destAddress = place.getName();
                     destinationAddress.setText(place.getName());
                 }
@@ -548,6 +572,9 @@ public class FindTruckFragment extends Fragment
 //        materialType.show(ft, "dialog");
         Intent intent = new Intent(getContext(), MaterialActivity.class);
         startActivity(intent);
+
+        Toast.makeText(getContext(), "Move to step 2...", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -565,7 +592,7 @@ public class FindTruckFragment extends Fragment
     private String setDateFormat(int day, int month, int year) {
         String finalDate = "";
 
-        if(month == 1){
+        if (month == 1) {
             finalDate = day + " January " + year;
         } else if (month == 2) {
             finalDate = day + " February " + year;
@@ -583,7 +610,7 @@ public class FindTruckFragment extends Fragment
             finalDate = day + " August " + year;
         } else if (month == 9) {
             finalDate = day + " September" + year;
-        } else if(month == 10) {
+        } else if (month == 10) {
             finalDate = day + " October " + year;
         } else if (month == 11) {
             finalDate = day + " November " + year;

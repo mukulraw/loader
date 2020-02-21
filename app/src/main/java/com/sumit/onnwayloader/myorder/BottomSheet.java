@@ -9,11 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.sumit.onnwayloader.R;
 
-import afu.org.checkerframework.checker.nullness.qual.NonNull;
-import afu.org.checkerframework.checker.nullness.qual.Nullable;
 
 public class BottomSheet extends BottomSheetDialogFragment {
     public static TextView total_amount_tv, order_status_tv, truck_number_tv, delivery_address_tv, amt;

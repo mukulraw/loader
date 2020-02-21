@@ -145,7 +145,7 @@ public class OpenTruckType extends DialogFragment {
     }
 
     @Override
-    public void onCreate(@afu.org.checkerframework.checker.nullness.qual.Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Log.d("API123", "onCreate");

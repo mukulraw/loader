@@ -21,11 +21,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
@@ -37,7 +37,7 @@ dependencies {
     implementation 'com.github.florent37:materialtextfield:1.0.7'
 
     //dependency for volley
-    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.android.volley:volley:1.1.1'
 
     //dependency for reading otp received as message
     implementation 'swarajsaaj:otpreader:1.1'
@@ -46,16 +46,10 @@ dependencies {
     implementation 'com.github.mukeshsolanki:Google-Places-AutoComplete-EditText:0.0.6'
 
     //google maps dependency
-    implementation 'com.google.android.libraries.places:places:1.0.0'
-    implementation 'com.google.android.gms:play-services-location:16.0.0'
-    implementation 'com.google.android.gms:play-services-maps:16.0.0'
-    implementation 'com.google.maps:google-maps-services:0.2.5'
+    implementation 'com.google.android.libraries.places:places:2.2.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.maps:google-maps-services:0.2.9'
 
-    implementation "com.android.support:support-compat:28.0.0"
 
-    //cardview dependency
-    implementation 'com.android.support:cardview-v7:28.0.0'
-
-    //material design
-    implementation 'com.android.support:design:28.0.0-alpha1'
 }

@@ -18,6 +18,9 @@ import com.sumit.onnwayloader.getpricenetworking.GetPrice;
 import com.sumit.onnwayloader.networking.Post;
 import com.sumit.onnwayloader.otp.EnterNumberActivity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MaterialActivity extends AppCompatActivity {
 
     private SeekBar seekBar;
@@ -53,6 +56,9 @@ public class MaterialActivity extends AppCompatActivity {
         seekBar = findViewById(R.id.seekBar);
         backBtn = findViewById(R.id.back_btn);
         findFareBtn = findViewById(R.id.find_fare);
+
+
+
 
         materailType1 = findViewById(R.id.material_type_1);
         materailType2 = findViewById(R.id.material_type_2);
@@ -724,6 +730,9 @@ public class MaterialActivity extends AppCompatActivity {
         findFareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Toast.makeText(MaterialActivity.this, "Some error occurred", Toast.LENGTH_SHORT).show();
+                
                 getPrice = new GetPrice();
                 getPrice.currentMobile = EnterNumberActivity.mCurrentMobileNumber;
                 getPrice.sourceAddress = FindTruckFragment.srcAddress;

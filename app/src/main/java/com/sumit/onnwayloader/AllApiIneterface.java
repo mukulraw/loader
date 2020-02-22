@@ -1,5 +1,6 @@
 package com.sumit.onnwayloader;
 
+import com.sumit.onnwayloader.farePOJO.fareBean;
 import com.sumit.onnwayloader.truckTypePOJO.truckTypeBean;
 
 import java.util.List;
@@ -23,5 +24,15 @@ public interface AllApiIneterface {
 
     @GET("android/getMaterial.php")
     Call<List<truckTypeBean>> getMaterial();
+
+    @Multipart
+    @POST("android/getFare.php")
+    Call<fareBean> getFare(
+            @Part("source") String source,
+            @Part("destination") String destination,
+            @Part("truck_id") String truck_id,
+            @Part("mid") String mid,
+            @Part("weight") String weight
+    );
 
 }

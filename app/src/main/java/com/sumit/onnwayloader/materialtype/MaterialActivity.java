@@ -1,6 +1,7 @@
 package com.sumit.onnwayloader.materialtype;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbSeekbar;
 import com.sumit.onnwayloader.AllApiIneterface;
 import com.sumit.onnwayloader.R;
+import com.sumit.onnwayloader.Shipment;
 import com.sumit.onnwayloader.networking.AppController;
 import com.sumit.onnwayloader.truckTypePOJO.truckTypeBean;
 
@@ -44,11 +47,18 @@ public class MaterialActivity extends AppCompatActivity {
     String mid = "";
     ProgressBar progress;
 
+    String src , des , tid , dat;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material);
+
+        src = getIntent().getStringExtra("source");
+        des = getIntent().getStringExtra("destination");
+        tid = getIntent().getStringExtra("tid");
+        dat = getIntent().getStringExtra("date");
 
         //adding toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
@@ -134,6 +144,23 @@ public class MaterialActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
+                if (mid.length() > 0)
+                {
+
+                    Intent intent = new Intent(MaterialActivity.this, Shipment.class);
+                    intent.putExtra("src" , src);
+                    intent.putExtra("des" , des);
+                    intent.putExtra("tid" , tid);
+                    intent.putExtra("dat" , dat);
+                    intent.putExtra("wei" , weight.getText().toString());
+                    intent.putExtra("mid" , mid);
+                    startActivity(intent);
+
+                }
+                else
+                {
+                    Toast.makeText(MaterialActivity.this, "Please select a material type", Toast.LENGTH_SHORT).show();
+                }
 
                 /*
                 getPrice.currentMobile = EnterNumberActivity.mCurrentMobileNumber;

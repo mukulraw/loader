@@ -72,11 +72,11 @@ public class ShippingAddress extends AppCompatActivity {
                 } else if (MainActivity.ifRegistered == 1) {
                     Toast.makeText(ShippingAddress.this, "Hello3", Toast.LENGTH_LONG).show();
                     shipmentDetails.mobileNumber = EnterNumberActivity.mCurrentMobileNumber;
-                    shipmentDetails.loadType = FindTruckFragment.loadType;
+                    /*shipmentDetails.loadType = FindTruckFragment.loadType;
                     shipmentDetails.sourceAddress = FindTruckFragment.srcAddress;
                     shipmentDetails.destinationAddress = FindTruckFragment.destAddress;
                     shipmentDetails.truckType = FindTruckFragment.truckType;
-                    shipmentDetails.scheduleDate = FindTruckFragment.pickUpDate;
+                    shipmentDetails.scheduleDate = FindTruckFragment.pickUpDate;*/
                     shipmentDetails.loadingWeight = "300";
                     shipmentDetails.materialType = "10";
                     shipmentDetails.pickupStreet = "F 12 Old Minal, Bhopal";

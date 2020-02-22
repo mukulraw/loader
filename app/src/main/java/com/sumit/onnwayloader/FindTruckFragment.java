@@ -3,10 +3,13 @@ package com.sumit.onnwayloader;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -18,17 +21,22 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,17 +66,27 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.sumit.onnwayloader.getpricenetworking.GetPrice;
 import com.sumit.onnwayloader.materialtype.MaterialActivity;
 import com.sumit.onnwayloader.materialtype.MaterialType;
+import com.sumit.onnwayloader.networking.AppController;
 import com.sumit.onnwayloader.networking.Post;
 import com.sumit.onnwayloader.otp.EnterNumberActivity;
 import com.sumit.onnwayloader.shipmentdetails.ShipmentActivity;
+import com.sumit.onnwayloader.truckTypePOJO.truckTypeBean;
 import com.sumit.onnwayloader.trucklist.GetMoreTruckDetails;
 import com.sumit.onnwayloader.vehicletype.ContainerType;
 import com.sumit.onnwayloader.vehicletype.OpenTruckType;
 import com.sumit.onnwayloader.vehicletype.TrailerType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -106,7 +124,7 @@ public class FindTruckFragment extends Fragment
     private TextView sourceAddress, destinationAddress, schedulePickupDate;
 
     //Buttons
-    private ImageView openTruckBtn, containerBtn, trailerBtn;
+    private LinearLayout openTruckBtn, containerBtn, trailerBtn;
 
 
     //find current location
@@ -121,7 +139,9 @@ public class FindTruckFragment extends Fragment
 
 
     //taking details
-    public static String loadType = "1", srcAddress, destAddress, truckType, pickUpDate;
+    public static String truckType;
+
+    private String loadType = "1", srcAddress = "", destAddress = "",pickUpDate = "";
 
     private int addressTyp = 0;
 
@@ -130,6 +150,8 @@ public class FindTruckFragment extends Fragment
     public FindTruckFragment() {
         // Required empty public constructor
     }
+
+    String tid = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -263,7 +285,47 @@ public class FindTruckFragment extends Fragment
         nextCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getPrice = new GetPrice();
+
+                if (srcAddress.length() > 0)
+                {
+                    if (destAddress.length() > 0)
+                    {
+                        if (tid.length() > 0)
+                        {
+                            if (pickUpDate.length() > 0)
+                            {
+
+
+                                Intent intent = new Intent(getContext(), MaterialActivity.class);
+                                intent.putExtra("source" , srcAddress);
+                                intent.putExtra("destination" , destAddress);
+                                intent.putExtra("tid" , tid);
+                                intent.putExtra("date" , pickUpDate);
+                                startActivity(intent);
+
+
+                            }
+                            else
+                            {
+                                Toast.makeText(getActivity(), "Please select a pickup date", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity(), "Please select truck type", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "Please enter destination", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Please enter source", Toast.LENGTH_SHORT).show();
+                }
+
+                /*getPrice = new GetPrice();
                 getPrice.currentMobile = EnterNumberActivity.mCurrentMobileNumber;
                 getPrice.sourceAddress = srcAddress;
                 getPrice.destinationAddress = destAddress;
@@ -272,7 +334,7 @@ public class FindTruckFragment extends Fragment
                 getMaterialType();
                 Toast.makeText(getContext(), Post.price, Toast.LENGTH_LONG).show();
 //                Intent intent = new Intent(getContext(), ShipmentActivity.class);
-//                startActivity(intent);
+//                startActivity(intent);*/
             }
         });
 
@@ -515,8 +577,55 @@ public class FindTruckFragment extends Fragment
         }
     }
 
-    public void getOpenTruckType() {
-        OpenTruckType openTruckType = new OpenTruckType();
+    private void getOpenTruckType() {
+
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.truck_type_dialog);
+        dialog.show();
+
+        TextView title = dialog.findViewById(R.id.textView10);
+        final RecyclerView grid = dialog.findViewById(R.id.recyclerView);
+        final ProgressBar progress = dialog.findViewById(R.id.progressBar2);
+
+        title.setText("Open Truck Size");
+
+
+        progress.setVisibility(View.VISIBLE);
+
+        AppController b = (AppController) getContext().getApplicationContext();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+        Call<List<truckTypeBean>> call = cr.getTrucks("open truck");
+
+        call.enqueue(new Callback<List<truckTypeBean>>() {
+            @Override
+            public void onResponse(Call<List<truckTypeBean>> call, Response<List<truckTypeBean>> response) {
+
+                TruckAdapter adapter = new TruckAdapter(getContext() , response.body() , "open truck" , dialog);
+                GridLayoutManager manager = new GridLayoutManager(getContext() , 3);
+
+                grid.setAdapter(adapter);
+                grid.setLayoutManager(manager);
+
+                progress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<List<truckTypeBean>> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+            }
+        });
+
+        /*OpenTruckType openTruckType = new OpenTruckType();
         Bundle bundle = new Bundle();
         bundle.putBoolean("notAlertDialog", true);
         openTruckType.setArguments(bundle);
@@ -527,38 +636,106 @@ public class FindTruckFragment extends Fragment
         }
         ft.addToBackStack(null);
         openTruckType.show(ft, "dialog");
-        Toast.makeText(getActivity(), truckType, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), truckType, Toast.LENGTH_LONG).show();*/
     }
 
-    public void getContainerType() {
-        ContainerType containerType = new ContainerType();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("notAlertDialog", true);
-        containerType.setArguments(bundle);
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        containerType.show(ft, "dialog");
+    private void getContainerType() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.truck_type_dialog);
+        dialog.show();
+
+        TextView title = dialog.findViewById(R.id.textView10);
+        final RecyclerView grid = dialog.findViewById(R.id.recyclerView);
+        final ProgressBar progress = dialog.findViewById(R.id.progressBar2);
+
+        title.setText("Container Size");
+
+
+        progress.setVisibility(View.VISIBLE);
+
+        AppController b = (AppController) getContext().getApplicationContext();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+        Call<List<truckTypeBean>> call = cr.getTrucks("container");
+
+        call.enqueue(new Callback<List<truckTypeBean>>() {
+            @Override
+            public void onResponse(Call<List<truckTypeBean>> call, Response<List<truckTypeBean>> response) {
+
+                TruckAdapter adapter = new TruckAdapter(getContext() , response.body() , "container" , dialog);
+                GridLayoutManager manager = new GridLayoutManager(getContext() , 3);
+
+                grid.setAdapter(adapter);
+                grid.setLayoutManager(manager);
+
+                progress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<List<truckTypeBean>> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+            }
+        });
     }
 
-    public void getTrailerType() {
-        TrailerType trailerType = new TrailerType();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("notAlertDialog", true);
-        trailerType.setArguments(bundle);
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        trailerType.show(ft, "dialog");
+    private void getTrailerType() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.truck_type_dialog);
+        dialog.show();
+
+        TextView title = dialog.findViewById(R.id.textView10);
+        final RecyclerView grid = dialog.findViewById(R.id.recyclerView);
+        final ProgressBar progress = dialog.findViewById(R.id.progressBar2);
+
+        title.setText("Trailer Size");
+
+
+        progress.setVisibility(View.VISIBLE);
+
+        AppController b = (AppController) getContext().getApplicationContext();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+        Call<List<truckTypeBean>> call = cr.getTrucks("trailer");
+
+        call.enqueue(new Callback<List<truckTypeBean>>() {
+            @Override
+            public void onResponse(Call<List<truckTypeBean>> call, Response<List<truckTypeBean>> response) {
+
+                TruckAdapter adapter = new TruckAdapter(getContext() , response.body() , "trailer" , dialog);
+                GridLayoutManager manager = new GridLayoutManager(getContext() , 3);
+
+                grid.setAdapter(adapter);
+                grid.setLayoutManager(manager);
+
+                progress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<List<truckTypeBean>> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+            }
+        });
     }
 
-    public void getMaterialType() {
+    private void getMaterialType() {
 //        MaterialType materialType = new MaterialType();
 //        Bundle bundle = new Bundle();
 //        bundle.putBoolean("notAlertDialog", true);
@@ -619,4 +796,116 @@ public class FindTruckFragment extends Fragment
         }
         return finalDate;
     }
+
+    class TruckAdapter extends RecyclerView.Adapter<TruckAdapter.ViewHolder>
+    {
+        Context context;
+        List<truckTypeBean> list = new ArrayList<>();
+        String type;
+        Dialog dialog;
+
+        TruckAdapter(Context context, List<truckTypeBean> list, String type , Dialog dialog)
+        {
+            this.context = context;
+            this.list = list;
+            this.type = type;
+            this.dialog = dialog;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.truck_list_model , parent , false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+            final truckTypeBean item = list.get(position);
+
+            if (tid.equals(item.getId()))
+            {
+                holder.card.setCardBackgroundColor(Color.parseColor("#F5DEDE"));
+            }
+            else
+            {
+                holder.card.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+
+            if (type.equals("open truck"))
+            {
+                holder.image.setImageResource(R.drawable.ic_truck);
+            }
+            else if (type.equals("container"))
+            {
+                holder.image.setImageResource(R.drawable.ic_container);
+            }
+            else
+            {
+                holder.image.setImageResource(R.drawable.ic_trailer);
+            }
+
+            holder.text.setText(item.getTitle());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    checktruckType(item.getId() , item.getType());
+                    dialog.dismiss();
+
+                }
+            });
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder
+        {
+
+            ImageView image;
+            TextView text;
+            CardView card;
+
+            ViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                image = itemView.findViewById(R.id.image);
+                text = itemView.findViewById(R.id.text);
+                card = itemView.findViewById(R.id.card);
+
+            }
+        }
+    }
+
+    private void checktruckType(String id, String type)
+    {
+        this.tid = id;
+
+        if (type.equals("open truck"))
+        {
+            openTruckBtn.setBackgroundResource(R.drawable.red_back_round);
+            containerBtn.setBackgroundResource(R.drawable.white_back_round);
+            trailerBtn.setBackgroundResource(R.drawable.white_back_round);
+        }
+        else if (type.equals("container"))
+        {
+            openTruckBtn.setBackgroundResource(R.drawable.white_back_round);
+            containerBtn.setBackgroundResource(R.drawable.red_back_round);
+            trailerBtn.setBackgroundResource(R.drawable.white_back_round);
+        }
+        else
+        {
+            openTruckBtn.setBackgroundResource(R.drawable.white_back_round);
+            containerBtn.setBackgroundResource(R.drawable.white_back_round);
+            trailerBtn.setBackgroundResource(R.drawable.red_back_round);
+        }
+    }
+
 }

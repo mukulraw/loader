@@ -255,13 +255,13 @@ public class MaterialType extends DialogFragment {
         checkFare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getPrice = new GetPrice();
+                /*getPrice = new GetPrice();
                 getPrice.currentMobile = EnterNumberActivity.mCurrentMobileNumber;
                 getPrice.sourceAddress = FindTruckFragment.srcAddress;
                 getPrice.destinationAddress = FindTruckFragment.destAddress;
                 getPrice.truckType = FindTruckFragment.truckType;
                 new Post().getPrice(getActivity(), getPrice);
-                dismiss();
+                dismiss();*/
             }
         });
     }

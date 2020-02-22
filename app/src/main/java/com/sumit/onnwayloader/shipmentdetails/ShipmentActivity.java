@@ -60,9 +60,9 @@ public class ShipmentActivity extends AppCompatActivity {
         destinationAddress = findViewById(R.id.destination_address);
         shipmentDate = findViewById(R.id.shipment_date);
 
-        sourceAddress.setText(FindTruckFragment.srcAddress);
+        /*sourceAddress.setText(FindTruckFragment.srcAddress);
         destinationAddress.setText(FindTruckFragment.destAddress);
-        shipmentDate.setText(FindTruckFragment.pickUpDate);
+        shipmentDate.setText(FindTruckFragment.pickUpDate);*/
 
         friegthDetailsTv.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -138,12 +138,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginEnd="5dp"
+                    android:id="@+id/open_truck_btn"
                     android:background="@drawable/white_back_round"
                     android:gravity="center">
 
                     <ImageView
                         android:src="@drawable/ic_truck"
-                        android:id="@+id/open_truck_btn"
                         android:layout_width="46dp"
                         android:scaleType="fitXY"
                         android:adjustViewBounds="true"
@@ -165,13 +165,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
+                    android:id="@+id/container_btn"
                     android:background="@drawable/white_back_round"
                     android:orientation="vertical"
                     android:gravity="center">
 
                     <ImageView
                         android:src="@drawable/ic_container"
-                        android:id="@+id/container_btn"
                         android:layout_width="46dp"
                         android:scaleType="fitXY"
                         android:adjustViewBounds="true"
@@ -192,13 +192,13 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:id="@+id/trailer_btn"
                     android:background="@drawable/white_back_round"
                     android:orientation="vertical"
                     android:gravity="center">
 
                     <ImageView
                         android:src="@drawable/ic_trailer"
-                        android:id="@+id/trailer_btn"
                         android:layout_width="46dp"
                         android:scaleType="fitXY"
                         android:adjustViewBounds="true"

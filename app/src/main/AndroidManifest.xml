@@ -37,60 +37,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Shipment">
-
-
-
-        </activity>
+        <activity android:name=".Address1"></activity>
+        <activity android:name=".Shipment"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity
-            android:name=".userprofile.ProfileActivity"
-             />
-        <activity
-            android:name=".partload.PartLoadSpaceSelect"
-             />
-        <activity
-            android:name=".materialtype.MaterialActivity"
-             />
-        <activity
-            android:name=".userprofile.UserProfileActivity"
-             />
-        <activity
-            android:name=".shippingaddress.ShippingAddress"
-             />
-        <activity
-            android:name=".shipmentdetails.ShipmentActivity"
-             />
-        <activity
-            android:name=".GettingStarted"
-             />
+        <activity android:name=".userprofile.ProfileActivity" />
+        <activity android:name=".partload.PartLoadSpaceSelect" />
+        <activity android:name=".materialtype.MaterialActivity" />
+        <activity android:name=".userprofile.UserProfileActivity" />
+        <activity android:name=".shippingaddress.ShippingAddress" />
+        <activity android:name=".shipmentdetails.ShipmentActivity" />
+        <activity android:name=".GettingStarted" />
         <activity
             android:name=".otp.EnterNumberActivity"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".trucklist.GetMoreTruckDetails" />
         <activity android:name=".trucklist.AvailableTruckList" />
         <activity
             android:name=".addprofiledetails.FirstTimeProfileActivity"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".otp.OtpActivity"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".otp.NumberActivity"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".splash.SplashActivity"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
 
         <activity-alias
             android:name=".LauncherActivity"
@@ -105,13 +83,13 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDD5e-SJP_E8SDLOHYz79IR79pVy6YQOgg" />
+            android:value="AIzaSyDg928l41AL20avLOGqYVVHHYHyNTM3DMY" />
 
-        <activity
-            android:name=".MainActivity"
-             />
+        <activity android:name=".MainActivity" />
 
-        <receiver android:name="swarajsaaj.smscodereader.receivers.OtpReader">
+        <receiver
+            android:name="swarajsaaj.smscodereader.receivers.OtpReader"
+            android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>

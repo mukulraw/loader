@@ -2,8 +2,12 @@ package com.sumit.onnwayloader;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -15,6 +19,7 @@ import android.widget.Toolbar;
 import com.sumit.onnwayloader.farePOJO.Data;
 import com.sumit.onnwayloader.farePOJO.fareBean;
 import com.sumit.onnwayloader.networking.AppController;
+import com.sumit.onnwayloader.vehicletype.TrailerType;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,6 +69,8 @@ public class Shipment extends AppCompatActivity {
 
 
         orderid = findViewById(R.id.textView16);
+        confirm = findViewById(R.id.button);
+        request = findViewById(R.id.button4);
         orderdate = findViewById(R.id.textView17);
         truck = findViewById(R.id.textView19);
         source = findViewById(R.id.textView20);
@@ -123,7 +130,20 @@ public class Shipment extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(Shipment.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    Dialog dialog = new Dialog(Shipment.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setCancelable(true);
+                    dialog.setContentView(R.layout.no_fare_dialog);
+                    dialog.show();
+
+                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            finish();
+                        }
+                    });
+
                 }
 
                 progress.setVisibility(View.GONE);
@@ -144,6 +164,14 @@ public class Shipment extends AppCompatActivity {
                 ins = isChecked;
                 updateSummary();
 
+            }
+        });
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Shipment.this , Address1.class);
+                startActivity(intent);
             }
         });
 

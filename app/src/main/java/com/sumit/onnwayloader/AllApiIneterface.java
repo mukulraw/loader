@@ -1,5 +1,6 @@
 package com.sumit.onnwayloader;
 
+import com.sumit.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.sumit.onnwayloader.farePOJO.fareBean;
 import com.sumit.onnwayloader.truckTypePOJO.truckTypeBean;
 
@@ -33,6 +34,38 @@ public interface AllApiIneterface {
             @Part("truck_id") String truck_id,
             @Part("mid") String mid,
             @Part("weight") String weight
+    );
+
+    @Multipart
+    @POST("android/getFare.php")
+    Call<confirm_full_bean> confirm_full_load(
+            @Part("user_id") String user_id,
+            @Part("laod_type") String laod_type,
+            @Part("source") String source,
+            @Part("destination") String destination,
+            @Part("truck_type") String truck_type,
+            @Part("schedule") String schedule,
+            @Part("weight") String weight,
+            @Part("material") String material,
+            @Part("freight") String freight,
+            @Part("other_charges") String other_charges,
+            @Part("cgst") String cgst,
+            @Part("sgst") String sgst,
+            @Part("insurance") String insurance,
+            @Part("paid_percent") String paid_percent,
+            @Part("paid_amount") String paid_amount,
+            @Part("pickup_address") String pickup_address,
+            @Part("pickup_city") String pickup_city,
+            @Part("pickup_pincode") String pickup_pincode,
+            @Part("drop_address") String drop_address,
+            @Part("drop_city") String drop_city,
+            @Part("drop_pincode") String drop_pincode,
+            @Part("drop_phone") String drop_phone,
+            @Part("remarks") String remarks,
+            @Part("length") String length,
+            @Part("width") String width,
+            @Part("height") String height,
+            @Part("quantity") String quantity
     );
 
 }

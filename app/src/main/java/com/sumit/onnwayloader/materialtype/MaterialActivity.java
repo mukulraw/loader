@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,7 +124,7 @@ public class MaterialActivity extends AppCompatActivity {
             public void onResponse(Call<List<truckTypeBean>> call, Response<List<truckTypeBean>> response) {
 
                 TruckAdapter adapter = new TruckAdapter(MaterialActivity.this , response.body() , "container");
-                GridLayoutManager manager = new GridLayoutManager(MaterialActivity.this , 3);
+                GridLayoutManager manager = new GridLayoutManager(MaterialActivity.this , 1);
 
                 grid.setAdapter(adapter);
                 grid.setLayoutManager(manager);
@@ -223,6 +224,8 @@ public class MaterialActivity extends AppCompatActivity {
             }*/
 
             holder.text.setText(item.getTitle());
+
+            holder.text.setGravity(Gravity.CENTER_VERTICAL);
 
             holder.image.setVisibility(View.GONE);
 

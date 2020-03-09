@@ -13,13 +13,30 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="0dp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            app:logo="@mipmap/splash_logo"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/transparent"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/loggg"
+                android:padding="4dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/white_back_round"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 

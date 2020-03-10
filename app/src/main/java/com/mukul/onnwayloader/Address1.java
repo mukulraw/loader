@@ -96,7 +96,7 @@ public class Address1 extends AppCompatActivity {
                     {
                         if (ppin.length() > 0)
                         {
-                            if (pmob.length() > 0)
+                            if (pmob.length() == 10)
                             {
                                 if (dadd.length() > 0)
                                 {
@@ -104,7 +104,7 @@ public class Address1 extends AppCompatActivity {
                                     {
                                         if (dpin.length() > 0)
                                         {
-                                            if (dmob.length() > 0)
+                                            if (dmob.length() == 10)
                                             {
 
                                                 progress.setVisibility(View.VISIBLE);

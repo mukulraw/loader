@@ -30,50 +30,51 @@
         android:value="@integer/google_play_services_version" />
 
     <application
-        android:name="com.mukul.onnwayloader.networking.AppController"
+        android:name=".networking.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.mukul.onnwayloader.Address1"/>
-        <activity android:name="com.mukul.onnwayloader.Shipment"/>
+        <activity android:name=".Address2"></activity>
+        <activity android:name=".Address1" />
+        <activity android:name=".Shipment" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name="com.mukul.onnwayloader.userprofile.ProfileActivity" />
-        <activity android:name="com.mukul.onnwayloader.partload.PartLoadSpaceSelect" />
-        <activity android:name="com.mukul.onnwayloader.materialtype.MaterialActivity" />
-        <activity android:name="com.mukul.onnwayloader.userprofile.UserProfileActivity" />
-        <activity android:name="com.mukul.onnwayloader.shippingaddress.ShippingAddress" />
-        <activity android:name="com.mukul.onnwayloader.shipmentdetails.ShipmentActivity" />
-        <activity android:name="com.mukul.onnwayloader.GettingStarted" />
+        <activity android:name=".userprofile.ProfileActivity" />
+        <activity android:name=".partload.PartLoadSpaceSelect" />
+        <activity android:name=".materialtype.MaterialActivity" />
+        <activity android:name=".userprofile.UserProfileActivity" />
+        <activity android:name=".shippingaddress.ShippingAddress" />
+        <activity android:name=".shipmentdetails.ShipmentActivity" />
+        <activity android:name=".GettingStarted" />
         <activity
-            android:name="com.mukul.onnwayloader.otp.EnterNumberActivity"
+            android:name=".otp.EnterNumberActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.mukul.onnwayloader.trucklist.GetMoreTruckDetails" />
-        <activity android:name="com.mukul.onnwayloader.trucklist.AvailableTruckList" />
+        <activity android:name=".trucklist.GetMoreTruckDetails" />
+        <activity android:name=".trucklist.AvailableTruckList" />
         <activity
-            android:name="com.mukul.onnwayloader.addprofiledetails.FirstTimeProfileActivity"
+            android:name=".addprofiledetails.FirstTimeProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.mukul.onnwayloader.otp.OtpActivity"
+            android:name=".otp.OtpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.mukul.onnwayloader.otp.NumberActivity"
+            android:name=".otp.NumberActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.mukul.onnwayloader.splash.SplashActivity"
+            android:name=".splash.SplashActivity"
             android:screenOrientation="portrait" />
 
         <activity-alias
             android:name=".LauncherActivity"
             android:label="@string/app_name"
-            android:targetActivity="com.mukul.onnwayloader.splash.SplashActivity">
+            android:targetActivity=".splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -85,7 +86,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDg928l41AL20avLOGqYVVHHYHyNTM3DMY" />
 
-        <activity android:name="com.mukul.onnwayloader.MainActivity" />
+        <activity android:name=".MainActivity" />
 
         <receiver
             android:name="swarajsaaj.smscodereader.receivers.OtpReader"
@@ -116,7 +117,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
-
     </application>
 
 </manifest>

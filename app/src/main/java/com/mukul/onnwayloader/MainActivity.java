@@ -23,6 +23,7 @@ import com.mukul.onnwayloader.addprofiledetails.UserData;
 import com.mukul.onnwayloader.networking.Post;
 import com.mukul.onnwayloader.otp.CheckingPreRegistered;
 import com.mukul.onnwayloader.otp.EnterNumberActivity;
+import com.mukul.onnwayloader.splash.SplashActivity;
 import com.mukul.onnwayloader.sqlite.GetSetUserData;
 import com.mukul.onnwayloader.userprofile.ProfileActivity;
 
@@ -245,6 +246,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_logout) {
+
+            SharePreferenceUtils.getInstance().deletePref();
+            Intent intent = new Intent(MainActivity.this, SplashActivity.class);
+            startActivity(intent);
+            finishAffinity();
 
         }
 

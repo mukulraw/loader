@@ -43,7 +43,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("android/getFare.php")
+    @POST("android/confirm_full_load.php")
     Call<confirm_full_bean> confirm_full_load(
             @Part("user_id") String user_id,
             @Part("laod_type") String laod_type,
@@ -63,6 +63,7 @@ public interface AllApiIneterface {
             @Part("pickup_address") String pickup_address,
             @Part("pickup_city") String pickup_city,
             @Part("pickup_pincode") String pickup_pincode,
+            @Part("pickup_phone") String pickup_phone,
             @Part("drop_address") String drop_address,
             @Part("drop_city") String drop_city,
             @Part("drop_pincode") String drop_pincode,

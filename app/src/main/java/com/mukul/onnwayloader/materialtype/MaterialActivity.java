@@ -48,7 +48,7 @@ public class MaterialActivity extends AppCompatActivity {
     String mid = "";
     ProgressBar progress;
 
-    String src , des , tid , dat;
+    String src , des , tid , dat , loa;
 
 
     @Override
@@ -60,6 +60,7 @@ public class MaterialActivity extends AppCompatActivity {
         des = getIntent().getStringExtra("destination");
         tid = getIntent().getStringExtra("tid");
         dat = getIntent().getStringExtra("date");
+        loa = getIntent().getStringExtra("loadtype");
 
         //adding toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
@@ -155,6 +156,7 @@ public class MaterialActivity extends AppCompatActivity {
                     intent.putExtra("dat" , dat);
                     intent.putExtra("wei" , weight.getText().toString());
                     intent.putExtra("mid" , mid);
+                    intent.putExtra("loa" , loa);
                     startActivity(intent);
 
                 }

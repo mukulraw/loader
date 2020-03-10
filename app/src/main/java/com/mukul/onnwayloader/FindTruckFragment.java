@@ -286,6 +286,7 @@ public class FindTruckFragment extends Fragment
                                 intent.putExtra("source" , srcAddress);
                                 intent.putExtra("destination" , destAddress);
                                 intent.putExtra("tid" , tid);
+                                intent.putExtra("loadtype" , loadType);
                                 intent.putExtra("date" , pickUpDate);
                                 startActivity(intent);
 

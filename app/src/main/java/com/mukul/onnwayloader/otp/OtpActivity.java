@@ -81,11 +81,11 @@ public class OtpActivity extends AppCompatActivity implements OTPListener{
             Intent intent = new Intent(OtpActivity.this, MainActivity.class);
             startActivity(intent);
             finishAffinity();
-            Toast.makeText(OtpActivity.this, "Otp Received", Toast.LENGTH_LONG).show();
+            Toast.makeText(OtpActivity.this, "OTP Verified", Toast.LENGTH_LONG).show();
         }
         else
         {
-            Toast.makeText(OtpActivity.this, "Otp Received", Toast.LENGTH_LONG).show();
+            Toast.makeText(OtpActivity.this, "Invalid OTP", Toast.LENGTH_LONG).show();
         }
 
 

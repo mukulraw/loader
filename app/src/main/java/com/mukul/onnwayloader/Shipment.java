@@ -40,7 +40,7 @@ public class Shipment extends AppCompatActivity {
 
     boolean ins = false;
 
-    String src , des , tid , dat , wei , mid;
+    String src , des , tid , dat , wei , mid , loa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class Shipment extends AppCompatActivity {
         dat = getIntent().getStringExtra("dat");
         wei = getIntent().getStringExtra("wei");
         mid = getIntent().getStringExtra("mid");
+        loa = getIntent().getStringExtra("loa");
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
         mToolbar.setTitle("Shipment Details");
@@ -169,6 +170,18 @@ public class Shipment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Shipment.this , Address1.class);
+                intent.putExtra("src" , src);
+                intent.putExtra("des" , des);
+                intent.putExtra("tid" , tid);
+                intent.putExtra("dat" , dat);
+                intent.putExtra("wei" , wei);
+                intent.putExtra("mid" , mid);
+                intent.putExtra("loa" , loa);
+                intent.putExtra("freight" , String.valueOf(fr));
+                intent.putExtra("other_charges" , "" + ot);
+                intent.putExtra("cgst" , "" + cg);
+                intent.putExtra("sgst" , "" + sg);
+                intent.putExtra("insurance" , "" + in);
                 startActivity(intent);
             }
         });

@@ -143,6 +143,30 @@ public class Shipment extends AppCompatActivity {
                         }
                     });
 
+                    Button req = dialog.findViewById(R.id.button5);
+
+                    req.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Intent intent = new Intent(Shipment.this , Address2.class);
+                            intent.putExtra("src" , src);
+                            intent.putExtra("des" , des);
+                            intent.putExtra("tid" , tid);
+                            intent.putExtra("dat" , dat);
+                            intent.putExtra("wei" , wei);
+                            intent.putExtra("mid" , mid);
+                            intent.putExtra("loa" , loa);
+                            intent.putExtra("freight" , String.valueOf(fr));
+                            intent.putExtra("other_charges" , "" + ot);
+                            intent.putExtra("cgst" , "" + cg);
+                            intent.putExtra("sgst" , "" + sg);
+                            intent.putExtra("insurance" , "" + in);
+                            startActivity(intent);
+
+                        }
+                    });
+
                 }
 
                 progress.setVisibility(View.GONE);

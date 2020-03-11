@@ -102,7 +102,7 @@ public class FindTruckFragment extends Fragment
     Button partLoad, fullLoad;
 
 
-    LinearLayout bottom;
+    LinearLayout bottom , truck;
     //ImageView
 
 
@@ -158,6 +158,7 @@ public class FindTruckFragment extends Fragment
         partLoad = view.findViewById(R.id.part_load_card);
         fullLoad = view.findViewById(R.id.full_load_card);
         nextCard = view.findViewById(R.id.next_card);
+        truck = view.findViewById(R.id.truck);
 
         //imageview
 
@@ -199,6 +200,9 @@ public class FindTruckFragment extends Fragment
                 partLoad.setBackgroundResource(R.drawable.black_back_round);
                 fullLoad.setTextColor(Color.parseColor("#000000"));
                 fullLoad.setBackgroundResource(R.drawable.white_back_round);
+
+                truck.setVisibility(View.INVISIBLE);
+
             }
         });
 
@@ -210,6 +214,7 @@ public class FindTruckFragment extends Fragment
                 fullLoad.setBackgroundResource(R.drawable.black_back_round);
                 partLoad.setTextColor(Color.parseColor("#000000"));
                 partLoad.setBackgroundResource(R.drawable.white_back_round);
+                truck.setVisibility(View.VISIBLE);
             }
         });
 
@@ -276,16 +281,44 @@ public class FindTruckFragment extends Fragment
                 {
                     if (destAddress.length() > 0)
                     {
-                        if (tid.length() > 0)
+
+                        if (loadType.equals("1"))
+                        {
+                            if (tid.length() > 0)
+                            {
+                                if (pickUpDate.length() > 0)
+                                {
+
+
+                                    Intent intent = new Intent(getContext(), MaterialActivity.class);
+                                    intent.putExtra("source" , srcAddress);
+                                    intent.putExtra("destination" , destAddress);
+                                    intent.putExtra("tid" , tid);
+                                    intent.putExtra("loadtype" , loadType);
+                                    intent.putExtra("date" , pickUpDate);
+                                    startActivity(intent);
+
+
+                                }
+                                else
+                                {
+                                    Toast.makeText(getActivity(), "Please select a pickup date", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else
+                            {
+                                Toast.makeText(getActivity(), "Please select truck type", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else
                         {
                             if (pickUpDate.length() > 0)
                             {
 
 
-                                Intent intent = new Intent(getContext(), MaterialActivity.class);
+                                Intent intent = new Intent(getContext(), MaterialActivity2.class);
                                 intent.putExtra("source" , srcAddress);
                                 intent.putExtra("destination" , destAddress);
-                                intent.putExtra("tid" , tid);
                                 intent.putExtra("loadtype" , loadType);
                                 intent.putExtra("date" , pickUpDate);
                                 startActivity(intent);
@@ -297,10 +330,9 @@ public class FindTruckFragment extends Fragment
                                 Toast.makeText(getActivity(), "Please select a pickup date", Toast.LENGTH_SHORT).show();
                             }
                         }
-                        else
-                        {
-                            Toast.makeText(getActivity(), "Please select truck type", Toast.LENGTH_SHORT).show();
-                        }
+
+
+
                     }
                     else
                     {

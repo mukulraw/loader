@@ -19,6 +19,12 @@ public class loginBean {
     @SerializedName("otp")
     @Expose
     private String otp;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("email")
+    @Expose
+    private String email;
 
     public String getStatus() {
         return status;
@@ -58,5 +64,21 @@ public class loginBean {
 
     public void setOtp(String otp) {
         this.otp = otp;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

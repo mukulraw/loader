@@ -13,10 +13,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.mukul.onnwayloader.farePOJO.Data;
 import com.mukul.onnwayloader.farePOJO.fareBean;
+import com.mukul.onnwayloader.materialtype.MaterialActivity;
 import com.mukul.onnwayloader.networking.AppController;
 
 import retrofit2.Call;
@@ -149,20 +151,32 @@ public class Shipment extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
 
-                            Intent intent = new Intent(Shipment.this , Address2.class);
-                            intent.putExtra("src" , src);
-                            intent.putExtra("des" , des);
-                            intent.putExtra("tid" , tid);
-                            intent.putExtra("dat" , dat);
-                            intent.putExtra("wei" , wei);
-                            intent.putExtra("mid" , mid);
-                            intent.putExtra("loa" , loa);
-                            intent.putExtra("freight" , String.valueOf(fr));
-                            intent.putExtra("other_charges" , "" + ot);
-                            intent.putExtra("cgst" , "" + cg);
-                            intent.putExtra("sgst" , "" + sg);
-                            intent.putExtra("insurance" , "" + in);
-                            startActivity(intent);
+                            if (SharePreferenceUtils.getInstance().getString("name").length() > 0)
+                            {
+                                Intent intent = new Intent(Shipment.this , Address2.class);
+                                intent.putExtra("src" , src);
+                                intent.putExtra("des" , des);
+                                intent.putExtra("tid" , tid);
+                                intent.putExtra("dat" , dat);
+                                intent.putExtra("wei" , wei);
+                                intent.putExtra("mid" , mid);
+                                intent.putExtra("loa" , loa);
+                                intent.putExtra("freight" , String.valueOf(fr));
+                                intent.putExtra("other_charges" , "" + ot);
+                                intent.putExtra("cgst" , "" + cg);
+                                intent.putExtra("sgst" , "" + sg);
+                                intent.putExtra("insurance" , "" + in);
+                                startActivity(intent);
+                            }
+                            else
+                            {
+                                Toast.makeText(Shipment.this, "Please complete your profile to continue", Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(Shipment.this , Profile.class);
+                                startActivity(intent);
+                            }
+
+
 
                         }
                     });
@@ -193,40 +207,67 @@ public class Shipment extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Shipment.this , Address1.class);
-                intent.putExtra("src" , src);
-                intent.putExtra("des" , des);
-                intent.putExtra("tid" , tid);
-                intent.putExtra("dat" , dat);
-                intent.putExtra("wei" , wei);
-                intent.putExtra("mid" , mid);
-                intent.putExtra("loa" , loa);
-                intent.putExtra("freight" , String.valueOf(fr));
-                intent.putExtra("other_charges" , "" + ot);
-                intent.putExtra("cgst" , "" + cg);
-                intent.putExtra("sgst" , "" + sg);
-                intent.putExtra("insurance" , "" + in);
-                startActivity(intent);
+
+                if (SharePreferenceUtils.getInstance().getString("name").length() > 0)
+                {
+                    Intent intent = new Intent(Shipment.this , Address1.class);
+                    intent.putExtra("src" , src);
+                    intent.putExtra("des" , des);
+                    intent.putExtra("tid" , tid);
+                    intent.putExtra("dat" , dat);
+                    intent.putExtra("wei" , wei);
+                    intent.putExtra("mid" , mid);
+                    intent.putExtra("loa" , loa);
+                    intent.putExtra("freight" , String.valueOf(fr));
+                    intent.putExtra("other_charges" , "" + ot);
+                    intent.putExtra("cgst" , "" + cg);
+                    intent.putExtra("sgst" , "" + sg);
+                    intent.putExtra("insurance" , "" + in);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(Shipment.this, "Please complete your profile to continue", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(Shipment.this , Profile.class);
+                    startActivity(intent);
+                }
+
+
+
             }
         });
 
         request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Shipment.this , Address2.class);
-                intent.putExtra("src" , src);
-                intent.putExtra("des" , des);
-                intent.putExtra("tid" , tid);
-                intent.putExtra("dat" , dat);
-                intent.putExtra("wei" , wei);
-                intent.putExtra("mid" , mid);
-                intent.putExtra("loa" , loa);
-                intent.putExtra("freight" , String.valueOf(fr));
-                intent.putExtra("other_charges" , "" + ot);
-                intent.putExtra("cgst" , "" + cg);
-                intent.putExtra("sgst" , "" + sg);
-                intent.putExtra("insurance" , "" + in);
-                startActivity(intent);
+
+                if (SharePreferenceUtils.getInstance().getString("name").length() > 0)
+                {
+                    Intent intent = new Intent(Shipment.this , Address2.class);
+                    intent.putExtra("src" , src);
+                    intent.putExtra("des" , des);
+                    intent.putExtra("tid" , tid);
+                    intent.putExtra("dat" , dat);
+                    intent.putExtra("wei" , wei);
+                    intent.putExtra("mid" , mid);
+                    intent.putExtra("loa" , loa);
+                    intent.putExtra("freight" , String.valueOf(fr));
+                    intent.putExtra("other_charges" , "" + ot);
+                    intent.putExtra("cgst" , "" + cg);
+                    intent.putExtra("sgst" , "" + sg);
+                    intent.putExtra("insurance" , "" + in);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(Shipment.this, "Please complete your profile to continue", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(Shipment.this , Profile.class);
+                    startActivity(intent);
+                }
+
+
             }
         });
 

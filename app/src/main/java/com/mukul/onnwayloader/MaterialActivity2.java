@@ -339,18 +339,32 @@ public class MaterialActivity2 extends AppCompatActivity {
 
                 if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0)
                 {
-                    Intent intent = new Intent(MaterialActivity2.this , Address3.class);
-                    intent.putExtra("src" , src);
-                    intent.putExtra("des" , des);
-                    intent.putExtra("dat" , dat);
-                    intent.putExtra("wei" , wei);
-                    intent.putExtra("mid" , mid);
-                    intent.putExtra("loa" , loa);
-                    intent.putExtra("len" , length.getText().toString());
-                    intent.putExtra("wid" , width.getText().toString());
-                    intent.putExtra("hei" , height.getText().toString());
-                    intent.putExtra("qua" , quantity.getText().toString());
-                    startActivity(intent);
+
+                    if (SharePreferenceUtils.getInstance().getString("name").length() > 0)
+                    {
+                        Intent intent = new Intent(MaterialActivity2.this , Address3.class);
+                        intent.putExtra("src" , src);
+                        intent.putExtra("des" , des);
+                        intent.putExtra("dat" , dat);
+                        intent.putExtra("wei" , wei);
+                        intent.putExtra("mid" , mid);
+                        intent.putExtra("loa" , loa);
+                        intent.putExtra("len" , length.getText().toString());
+                        intent.putExtra("wid" , width.getText().toString());
+                        intent.putExtra("hei" , height.getText().toString());
+                        intent.putExtra("qua" , quantity.getText().toString());
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        Toast.makeText(MaterialActivity2.this, "Please complete your profile to continue", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(MaterialActivity2.this , Profile.class);
+                        startActivity(intent);
+                    }
+
+
+
                 }
                 else
                 {

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.mukul.onnwayloader.MainActivity;
 import com.mukul.onnwayloader.R;
+import com.mukul.onnwayloader.SharePreferenceUtils;
 
 import swarajsaaj.smscodereader.interfaces.OTPListener;
 import swarajsaaj.smscodereader.receivers.OtpReader;
@@ -30,7 +31,7 @@ public class OtpActivity extends AppCompatActivity implements OTPListener{
     private EditText otp1, otp2, otp3, otp4;
     private TextView mobileTv;
 
-    String phone , otp;
+    String phone , otp , id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class OtpActivity extends AppCompatActivity implements OTPListener{
 
         phone = getIntent().getStringExtra("phone");
         otp = getIntent().getStringExtra("otp");
+        id = getIntent().getStringExtra("id");
 
         //setting the color of STATUS BAR of activity to #696969
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -78,6 +80,9 @@ public class OtpActivity extends AppCompatActivity implements OTPListener{
 
         if (substr.equals(otp))
         {
+
+            SharePreferenceUtils.getInstance().saveString("userId" , id);
+
             Intent intent = new Intent(OtpActivity.this, MainActivity.class);
             startActivity(intent);
             finishAffinity();

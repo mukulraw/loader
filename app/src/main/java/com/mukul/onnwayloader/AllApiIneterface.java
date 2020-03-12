@@ -3,6 +3,7 @@ package com.mukul.onnwayloader;
 import com.mukul.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.mukul.onnwayloader.farePOJO.fareBean;
 import com.mukul.onnwayloader.truckTypePOJO.truckTypeBean;
+import com.mukul.onnwayloader.updateProfilePOJO.updateProfileBean;
 
 import java.util.List;
 
@@ -106,6 +107,17 @@ public interface AllApiIneterface {
             @Part("width") String width,
             @Part("height") String height,
             @Part("quantity") String quantity
+    );
+
+    @Multipart
+    @POST("android/update_loader_profile.php")
+    Call<updateProfileBean> update_loader_profile(
+            @Part("user_id") String user_id,
+            @Part("name") String name,
+            @Part("email") String email,
+            @Part("city") String city,
+            @Part("type") String type,
+            @Part("company") String company
     );
 
 }

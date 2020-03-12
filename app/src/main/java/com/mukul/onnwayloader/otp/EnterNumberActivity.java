@@ -132,7 +132,7 @@ public class EnterNumberActivity extends AppCompatActivity {
 
                 if (response.body().getStatus().equals("1")) {
 
-                    SharePreferenceUtils.getInstance().saveString("userId" , response.body().getUserId());
+
                     SharePreferenceUtils.getInstance().saveString("phone" , response.body().getPhone());
                     SharePreferenceUtils.getInstance().saveString("name" , response.body().getName());
                     SharePreferenceUtils.getInstance().saveString("email" , response.body().getEmail());
@@ -140,6 +140,7 @@ public class EnterNumberActivity extends AppCompatActivity {
                     Intent intent = new Intent(EnterNumberActivity.this, OtpActivity.class);
                     intent.putExtra("phone", mCurrentMobileNumber);
                     intent.putExtra("otp", response.body().getOtp());
+                    intent.putExtra("id", response.body().getUserId());
                     startActivity(intent);
                     finish();
                 } else {

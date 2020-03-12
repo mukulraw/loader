@@ -179,8 +179,7 @@ public class MainActivity extends AppCompatActivity
         phone = view.findViewById(R.id.phone);
         name = view.findViewById(R.id.name);
 
-        phone.setText("Ph. - " + SharePreferenceUtils.getInstance().getString("phone"));
-        name.setText(SharePreferenceUtils.getInstance().getString("name"));
+
 
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,6 +219,15 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        phone.setText("Ph. - " + SharePreferenceUtils.getInstance().getString("phone"));
+        name.setText(SharePreferenceUtils.getInstance().getString("name"));
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

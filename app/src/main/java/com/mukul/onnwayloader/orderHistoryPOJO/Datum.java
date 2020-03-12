@@ -1,9 +1,9 @@
-package com.mukul.onnwayloader.confirm_full_POJO;
+package com.mukul.onnwayloader.orderHistoryPOJO;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data {
+public class Datum {
     @SerializedName("id")
     @Expose
     private String id;
@@ -21,7 +21,7 @@ public class Data {
     private String destination;
     @SerializedName("truck_type")
     @Expose
-    private String truckType;
+    private Object truckType;
     @SerializedName("schedule")
     @Expose
     private String schedule;
@@ -138,11 +138,11 @@ public class Data {
         this.destination = destination;
     }
 
-    public String getTruckType() {
+    public Object getTruckType() {
         return truckType;
     }
 
-    public void setTruckType(String truckType) {
+    public void setTruckType(Object truckType) {
         this.truckType = truckType;
     }
 

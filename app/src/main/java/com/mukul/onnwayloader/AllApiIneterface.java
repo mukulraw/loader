@@ -2,6 +2,7 @@ package com.mukul.onnwayloader;
 
 import com.mukul.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.mukul.onnwayloader.farePOJO.fareBean;
+import com.mukul.onnwayloader.orderHistoryPOJO.orderHistoryBean;
 import com.mukul.onnwayloader.truckTypePOJO.truckTypeBean;
 import com.mukul.onnwayloader.updateProfilePOJO.updateProfileBean;
 
@@ -118,6 +119,30 @@ public interface AllApiIneterface {
             @Part("city") String city,
             @Part("type") String type,
             @Part("company") String company
+    );
+
+    @Multipart
+    @POST("android/getOngoingOrders.php")
+    Call<orderHistoryBean> getOngoingOrders(
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("android/getWaitingTrucks.php")
+    Call<orderHistoryBean> getWaitingTrucks(
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("android/getPastOrders.php")
+    Call<orderHistoryBean> getPastOrders(
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("android/getOrderDetails.php")
+    Call<confirm_full_bean> getOrderDetails(
+            @Part("id") String id
     );
 
 }

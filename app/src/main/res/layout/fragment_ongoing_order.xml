@@ -1,27 +1,25 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#adeded"
+    android:background="#f5f5f5"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:shimmer="http://schemas.android.com/apk/res-auto"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_ongoing_order"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EDEDED"
-        android:orientation="vertical">
+        android:background="#ededed"
+        android:padding="2dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_ongoing_order"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="56dp"
-            android:background="#ededed"
-            android:padding="2dp">
+    </androidx.recyclerview.widget.RecyclerView>
 
-        </androidx.recyclerview.widget.RecyclerView>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/progress"
+        android:visibility="gone"
+        />
 
-    </LinearLayout>
-    <include layout="@layout/bottom_sheet"/>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

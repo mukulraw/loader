@@ -65,8 +65,8 @@ public class SplashActivity extends AppCompatActivity {
         //setting the color of STATUS BAR of activity to #696969
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.rgb(105, 105, 105));
+            //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            //window.setStatusBarColor(Color.rgb(105, 105, 105));
         }
 
         progressBar = findViewById(R.id.progressBar_cyclic);

@@ -142,7 +142,7 @@ public class EnterNumberActivity extends AppCompatActivity {
                     intent.putExtra("otp", response.body().getOtp());
                     intent.putExtra("id", response.body().getUserId());
                     startActivity(intent);
-                    finish();
+                    finishAffinity();
                 } else {
                     Toast.makeText(EnterNumberActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }

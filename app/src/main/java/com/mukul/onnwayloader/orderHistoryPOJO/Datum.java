@@ -21,7 +21,7 @@ public class Datum {
     private String destination;
     @SerializedName("truck_type")
     @Expose
-    private Object truckType;
+    private String truckType;
     @SerializedName("schedule")
     @Expose
     private String schedule;
@@ -138,11 +138,11 @@ public class Datum {
         this.destination = destination;
     }
 
-    public Object getTruckType() {
+    public String getTruckType() {
         return truckType;
     }
 
-    public void setTruckType(Object truckType) {
+    public void setTruckType(String truckType) {
         this.truckType = truckType;
     }
 

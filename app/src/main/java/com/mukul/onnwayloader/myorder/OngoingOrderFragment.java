@@ -145,7 +145,7 @@ public class OngoingOrderFragment extends Fragment {
             holder.destination.setText(item.getDestination());
             holder.material.setText(item.getMaterial());
             holder.weight.setText(item.getWeight());
-
+            holder.truck.setText(item.getTruckType());
             try {
                 float fr = Float.parseFloat(item.getFreight());
                 float ot = Float.parseFloat(item.getOtherCharges());
@@ -182,7 +182,7 @@ public class OngoingOrderFragment extends Fragment {
         static class ViewHolder extends RecyclerView.ViewHolder
         {
 
-            TextView type , orderid , date , source , destination , material , weight , freight;
+            TextView type , orderid , date , source , destination , material , weight , freight , truck;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -195,6 +195,7 @@ public class OngoingOrderFragment extends Fragment {
                 material = itemView.findViewById(R.id.textView72);
                 weight = itemView.findViewById(R.id.textView74);
                 freight = itemView.findViewById(R.id.textView76);
+                truck = itemView.findViewById(R.id.textView64);
 
             }
         }

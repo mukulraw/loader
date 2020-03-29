@@ -128,6 +128,19 @@ public interface AllApiIneterface {
     );
 
     @Multipart
+    @POST("android/update_order.php")
+    Call<updateProfileBean> update_order(
+            @Part("id") String id,
+            @Part("status") String status
+    );
+
+    @Multipart
+    @POST("android/getQuotes.php")
+    Call<orderHistoryBean> getQuotes(
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
     @POST("android/getWaitingTrucks.php")
     Call<orderHistoryBean> getWaitingTrucks(
             @Part("user_id") String user_id

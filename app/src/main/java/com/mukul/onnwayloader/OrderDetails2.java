@@ -23,7 +23,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class OrderDetails2 extends AppCompatActivity {
 
-    TextView orderid , orderdate , truck , source , destination , material , weight , date , status;
+    TextView orderid , orderdate , truck , source , destination , material , weight , date , status , loadtype;
     TextView freight , other , cgst , sgst , grand;
     CheckBox insurance;
     Button confirm , request;
@@ -66,6 +66,7 @@ public class OrderDetails2 extends AppCompatActivity {
         weight = findViewById(R.id.textView25);
         date = findViewById(R.id.textView81);
         status = findViewById(R.id.textView83);
+        loadtype = findViewById(R.id.textView85);
 
         freight = findViewById(R.id.textView29);
         other = findViewById(R.id.textView35);
@@ -103,6 +104,7 @@ public class OrderDetails2 extends AppCompatActivity {
                 weight.setText(item.getWeight());
                 date.setText(item.getSchedule());
                 status.setText(item.getStatus());
+                loadtype.setText(item.getLaodType());
 
                 freight.setText("\u20B9" + item.getFreight());
                 other.setText("\u20B9" + item.getOtherCharges());

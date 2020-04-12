@@ -47,7 +47,7 @@
 
     <string name="shipment_details">Shipment Details</string>
     <string name="shipment_address">Address</string>
-        <string name="alarm_notification">alarm_notification</string>
+    <string name="alarm_notification">alarm_notification</string>
     <string name="default_notification_channel_id">123</string>
 
 </resources>

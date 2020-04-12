@@ -142,6 +142,8 @@ public class WaitingTruckFragment extends Fragment {
             holder.material.setText(item.getMaterial());
             holder.weight.setText(item.getWeight());
             holder.truck.setText(item.getTruckType());
+            holder.status.setText(item.getStatus());
+
 
             String dateString = item.getCreated();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -225,7 +227,7 @@ public class WaitingTruckFragment extends Fragment {
         static class ViewHolder extends RecyclerView.ViewHolder
         {
 
-            TextView type , orderid , date , source , destination , material , weight , freight , truck;
+            TextView type , orderid , date , source , destination , material , weight , freight , truck , status;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -239,6 +241,7 @@ public class WaitingTruckFragment extends Fragment {
                 weight = itemView.findViewById(R.id.textView74);
                 freight = itemView.findViewById(R.id.textView76);
                 truck = itemView.findViewById(R.id.textView64);
+                status = itemView.findViewById(R.id.textView79);
 
             }
         }

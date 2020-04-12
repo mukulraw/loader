@@ -2,6 +2,7 @@ package com.mukul.onnwayloader.myorder;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mukul.onnwayloader.AllApiIneterface;
+import com.mukul.onnwayloader.OrderDetails;
+import com.mukul.onnwayloader.OrderDetails2;
 import com.mukul.onnwayloader.R;
 import com.mukul.onnwayloader.SharePreferenceUtils;
 import com.mukul.onnwayloader.myorder.pastorder.PastOrderList;
@@ -135,7 +138,7 @@ public class PastOrderFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            Datum item = list.get(position);
+            final Datum item = list.get(position);
 
             holder.type.setText(item.getLaodType());
             holder.orderid.setText("Order #" + item.getId());
@@ -145,6 +148,8 @@ public class PastOrderFragment extends Fragment {
             holder.material.setText(item.getMaterial());
             holder.weight.setText(item.getWeight());
             holder.truck.setText(item.getTruckType());
+            holder.status.setText(item.getStatus());
+
             try {
                 float fr = Float.parseFloat(item.getFreight());
                 float ot = Float.parseFloat(item.getOtherCharges());
@@ -161,7 +166,14 @@ public class PastOrderFragment extends Fragment {
             }
 
 
-
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context , OrderDetails2.class);
+                    intent.putExtra("id" , item.getId());
+                    context.startActivity(intent);
+                }
+            });
 
 
         }
@@ -174,7 +186,7 @@ public class PastOrderFragment extends Fragment {
         static class ViewHolder extends RecyclerView.ViewHolder
         {
 
-            TextView type , orderid , date , source , destination , material , weight , freight , truck;
+            TextView type , orderid , date , source , destination , material , weight , freight , truck , status;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -188,6 +200,7 @@ public class PastOrderFragment extends Fragment {
                 weight = itemView.findViewById(R.id.textView74);
                 freight = itemView.findViewById(R.id.textView76);
                 truck = itemView.findViewById(R.id.textView64);
+                status = itemView.findViewById(R.id.textView79);
 
             }
         }

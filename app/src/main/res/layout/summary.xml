@@ -14,9 +14,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="ID : 24654"
+        android:textColor="#000000"
         android:textSize="16sp"
         android:visibility="gone"
-        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,9 +25,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:visibility="gone"
         android:layout_marginEnd="16dp"
         android:text="23 Feb 2020"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,7 +61,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18"
-        app:srcCompat="@drawable/ic_container" />
+        app:srcCompat="@drawable/ic_truck" />
 
     <TextView
         android:id="@+id/textView20"
@@ -81,9 +81,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        android:drawablePadding="10dp"
         android:drawableStart="@drawable/end_address_pointer"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="@+id/textView20"
         app:layout_constraintStart_toStartOf="@+id/textView20"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
@@ -117,7 +117,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView22"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView22"
+        app:layout_constraintStart_toEndOf="@+id/textView80"
         app:layout_constraintTop_toTopOf="@+id/textView22" />
 
     <TextView
@@ -125,13 +125,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
         android:text="Weight"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView22"
-        app:layout_constraintTop_toBottomOf="@+id/textView22"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <TextView
         android:id="@+id/textView25"
@@ -161,4 +158,48 @@
         app:layout_constraintEnd_toEndOf="@+id/textView21"
         app:layout_constraintStart_toStartOf="@+id/textView21"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <TextView
+        android:id="@+id/textView80"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Schedule Date"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/textView24"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+    <TextView
+        android:id="@+id/textView81"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView25"
+        app:layout_constraintStart_toStartOf="@+id/textView25"
+        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+    <TextView
+        android:id="@+id/textView82"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Status"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView80"
+        app:layout_constraintTop_toBottomOf="@+id/textView80"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView83"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="#42A5F5"
+        android:textAllCaps="true"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView81"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView81"
+        app:layout_constraintTop_toBottomOf="@+id/textView81" />
 </androidx.constraintlayout.widget.ConstraintLayout>

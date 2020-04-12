@@ -2,18 +2,12 @@ package com.mukul.onnwayloader;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.mukul.onnwayloader.confirm_full_POJO.Data;
@@ -27,7 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class OrderDetails extends AppCompatActivity {
+public class OrderDetails2 extends AppCompatActivity {
 
     TextView orderid , orderdate , truck , source , destination , material , weight , date , status;
     TextView freight , other , cgst , sgst , grand;
@@ -45,7 +39,7 @@ public class OrderDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_details);
+        setContentView(R.layout.activity_order_details2);
 
         id = getIntent().getStringExtra("id");
 
@@ -101,20 +95,22 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
 
-                    Data item = response.body().getData();
-                    truck.setText(item.getTruckType());
-                    source.setText(item.getSource());
-                    destination.setText(item.getDestination());
-                    material.setText(item.getMaterial());
-                    weight.setText(item.getWeight());
-                    date.setText(item.getSchedule());
-                    status.setText(item.getStatus());
+                Data item = response.body().getData();
+                truck.setText(item.getTruckType());
+                source.setText(item.getSource());
+                destination.setText(item.getDestination());
+                material.setText(item.getMaterial());
+                weight.setText(item.getWeight());
+                date.setText(item.getSchedule());
+                status.setText(item.getStatus());
 
-                    freight.setText("\u20B9" + item.getFreight());
-                    other.setText("\u20B9" + item.getOtherCharges());
-                    cgst.setText("\u20B9" + item.getCgst());
-                    sgst.setText("\u20B9" + item.getSgst());
-                    insurance.setText("\u20B9" + item.getInsurance());
+                freight.setText("\u20B9" + item.getFreight());
+                other.setText("\u20B9" + item.getOtherCharges());
+                cgst.setText("\u20B9" + item.getCgst());
+                sgst.setText("\u20B9" + item.getSgst());
+                insurance.setText("\u20B9" + item.getInsurance());
+
+                try {
 
                     fr = Float.parseFloat(item.getFreight());
                     ot = Float.parseFloat(item.getOtherCharges());
@@ -122,17 +118,23 @@ public class OrderDetails extends AppCompatActivity {
                     sg = Float.parseFloat(item.getSgst());
                     in = Float.parseFloat(item.getInsurance());
 
-                    if (in > 0)
-                    {
-                        insurance.setChecked(true);
-                    }
-                    else
-                    {
-                        insurance.setChecked(false);
-                    }
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
 
 
-                    updateSummary();
+                if (in > 0)
+                {
+                    insurance.setChecked(true);
+                }
+                else
+                {
+                    insurance.setChecked(false);
+                }
+
+
+                updateSummary();
 
 
 
@@ -148,25 +150,13 @@ public class OrderDetails extends AppCompatActivity {
         });
 
 
-        /*insurance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                ins = isChecked;
-                updateSummary();
-
-            }
-        });*/
-
-
-
     }
 
     void updateSummary()
     {
 
-            gr = fr + ot + cg + sg + in;
-            grand.setText("\u20B9" + gr);
+        gr = fr + ot + cg + sg + in;
+        grand.setText("\u20B9" + gr);
 
 
     }

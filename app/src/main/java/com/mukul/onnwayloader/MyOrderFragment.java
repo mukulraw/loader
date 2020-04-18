@@ -66,16 +66,5 @@ public class MyOrderFragment extends Fragment {
         return view;
     }
 
-    //hide and show the ActionBar
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-    }
 
 }

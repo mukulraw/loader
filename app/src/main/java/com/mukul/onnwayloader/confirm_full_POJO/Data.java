@@ -3,6 +3,8 @@ package com.mukul.onnwayloader.confirm_full_POJO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Data {
     @SerializedName("id")
     @Expose
@@ -97,6 +99,24 @@ public class Data {
     @SerializedName("created")
     @Expose
     private String created;
+    @SerializedName("vehicle_number")
+    @Expose
+    private String vehicleNumber;
+    @SerializedName("driver_number")
+    @Expose
+    private String driverNumber;
+    @SerializedName("pod")
+    @Expose
+    private List<Pod> pod = null;
+    @SerializedName("doc")
+    @Expose
+    private List<Doc> doc = null;
+    @SerializedName("lr")
+    @Expose
+    private List<Lr> lr = null;
+    @SerializedName("invoice")
+    @Expose
+    private List<Invoice> invoice = null;
 
     public String getId() {
         return id;
@@ -344,5 +364,53 @@ public class Data {
 
     public void setCreated(String created) {
         this.created = created;
+    }
+
+    public String getVehicleNumber() {
+        return vehicleNumber;
+    }
+
+    public void setVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
+    }
+
+    public String getDriverNumber() {
+        return driverNumber;
+    }
+
+    public void setDriverNumber(String driverNumber) {
+        this.driverNumber = driverNumber;
+    }
+
+    public List<Pod> getPod() {
+        return pod;
+    }
+
+    public void setPod(List<Pod> pod) {
+        this.pod = pod;
+    }
+
+    public List<Doc> getDoc() {
+        return doc;
+    }
+
+    public void setDoc(List<Doc> doc) {
+        this.doc = doc;
+    }
+
+    public List<Lr> getLr() {
+        return lr;
+    }
+
+    public void setLr(List<Lr> lr) {
+        this.lr = lr;
+    }
+
+    public List<Invoice> getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(List<Invoice> invoice) {
+        this.invoice = invoice;
     }
 }

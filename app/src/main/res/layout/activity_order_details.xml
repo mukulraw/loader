@@ -58,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="#fefefe"
                 app:cardUseCompatPadding="true">
 
                 <include layout="@layout/summary" />
@@ -68,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="#fefefe"
                 app:cardUseCompatPadding="true">
 
                 <include layout="@layout/bill" />
@@ -78,6 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="#fefefe"
                 app:cardUseCompatPadding="true">
 
                 <include layout="@layout/bill3" />

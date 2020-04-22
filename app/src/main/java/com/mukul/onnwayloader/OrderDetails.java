@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -65,7 +66,7 @@ public class OrderDetails extends AppCompatActivity {
     Button confirm , request;
     ProgressBar progress;
 
-    TextView vehiclenumber , drivernumber;
+    TextView vehiclenumber , drivernumber , pending;
 
     Button add , upload1 , upload2;
 
@@ -113,6 +114,7 @@ public class OrderDetails extends AppCompatActivity {
         date = findViewById(R.id.textView81);
         status = findViewById(R.id.textView83);
         loadtype = findViewById(R.id.textView85);
+        pending = findViewById(R.id.textView88);
 
         freight = findViewById(R.id.textView29);
         other = findViewById(R.id.textView35);
@@ -248,8 +250,18 @@ public class OrderDetails extends AppCompatActivity {
                 sgst.setText("\u20B9" + item.getSgst());
                 insurance.setText("\u20B9" + item.getInsurance());
 
-                vehiclenumber.setText(item.getVehicleNumber());
-                drivernumber.setText(item.getDriverNumber());
+                if (item.getVehicleNumber() != null)
+                {
+                    vehiclenumber.setText(item.getVehicleNumber());
+                    drivernumber.setText(item.getDriverNumber());
+                }
+                else
+                {
+                    vehiclenumber.setText("Not Available");
+                    drivernumber.setText("Not Available");
+                }
+
+
 
                 fr = Float.parseFloat(item.getFreight());
                 ot = Float.parseFloat(item.getOtherCharges());
@@ -264,6 +276,15 @@ public class OrderDetails extends AppCompatActivity {
                 else
                 {
                     insurance.setChecked(false);
+                }
+
+                if (response.body().getData().getPod().size() > 0)
+                {
+                    pending.setVisibility(View.GONE);
+                }
+                else
+                {
+                    pending.setVisibility(View.VISIBLE);
                 }
 
                 PODAdapter adapter = new PODAdapter(OrderDetails.this , item.getPod());
@@ -315,11 +336,31 @@ public class OrderDetails extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-            Pod item = list.get(position);
+            final Pod item = list.get(position);
 
-            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).resetViewBeforeLoading(false).build();
-            ImageLoader loader = ImageLoader.getInstance();
+            final DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).resetViewBeforeLoading(false).build();
+            final ImageLoader loader = ImageLoader.getInstance();
             loader.displayImage(item.getName() , holder.image , options);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Dialog dialog = new Dialog(context);
+                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                            WindowManager.LayoutParams.MATCH_PARENT);
+                    dialog.setContentView(R.layout.zoom_dialog);
+                    dialog.setCancelable(true);
+                    dialog.show();
+
+                    ImageView img = dialog.findViewById(R.id.image);
+                    loader.displayImage(item.getName() , img , options);
+
+                }
+            });
+
+
+
 
         }
 

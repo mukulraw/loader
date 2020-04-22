@@ -153,7 +153,7 @@ public class Profile extends AppCompatActivity {
                         }
                         else
                         {
-                            Toast.makeText(Profile.this, "Invalid city", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Profile.this, "Invalid address", Toast.LENGTH_SHORT).show();
                         }
                     }
                     else

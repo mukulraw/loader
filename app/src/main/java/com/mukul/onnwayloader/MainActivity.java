@@ -27,6 +27,8 @@ import com.mukul.onnwayloader.otp.EnterNumberActivity;
 import com.mukul.onnwayloader.splash.SplashActivity;
 import com.mukul.onnwayloader.sqlite.GetSetUserData;
 import com.mukul.onnwayloader.userprofile.ProfileActivity;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -46,6 +48,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -56,20 +60,21 @@ public class MainActivity extends AppCompatActivity
     //Fragments
     private FindTruckFragment findTruckFragment;
     private WaitingTruckFragment waitingTruckFragment;
-    private  MyOrderFragment myOrderFragment;
+    private MyOrderFragment myOrderFragment;
     private MyQuoteFragment myQuoteFragment;
 
     public CheckingPreRegistered checkingPreRegistered = new CheckingPreRegistered();
 
     public static int ifRegistered = -1;
 
-    private ImageView profileImageView;
+    CircleImageView profileImageView;
 
     GetSetUserData getSetUserData;
 
     UserData userData;
 
-    TextView phone , name;
+    TextView phone, name;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         new Post().getIfUserRegistered(getApplication(), checkingPreRegistered);
         userData = new UserData();
 
-        getSetUserData= new GetSetUserData(MainActivity.this);
+        getSetUserData = new GetSetUserData(MainActivity.this);
 
         setTitle(null);
 
@@ -97,9 +102,8 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
         //drawerLayout
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -128,36 +132,36 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
 
-                    case R.id.bottom_nav_find_truck :
+                    case R.id.bottom_nav_find_truck:
                         //hideSoftKeyboard(MainActivity.this);
                         setFragment(findTruckFragment);
                         return true;
-                    case R.id.bottom_nav_waiting_truck :
+                    case R.id.bottom_nav_waiting_truck:
                         //hideSoftKeyboard(MainActivity.this);
                         setFragment(waitingTruckFragment);
                         return true;
-                    case R.id.bottom_nav_my_orders :
+                    case R.id.bottom_nav_my_orders:
                         //hideSoftKeyboard(MainActivity.this);
                         setFragment(myOrderFragment);
                         return true;
-                    case R.id.bottom_nav_my_quotes :
+                    case R.id.bottom_nav_my_quotes:
                         //hideSoftKeyboard(MainActivity.this);
                         setFragment(myQuoteFragment);
                         return true;
-                    default :
+                    default:
                         return false;
                 }
             }
         });
 
         Cursor cursor = getSetUserData.getAllData();
-        if(cursor.getCount() == 0) {
+        if (cursor.getCount() == 0) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (Post.cityName.equals("")){
+                    if (Post.cityName.equals("")) {
                         ifRegistered = 0;
                         userData.mobileNumber = EnterNumberActivity.mCurrentMobileNumber;
                         userData.userAddress = "Not Found";
@@ -166,10 +170,10 @@ public class MainActivity extends AppCompatActivity
                         userData.userType = "Not Found";
                         userData.userName = "Not Found";
                         new Post().registerUser(getApplication(), userData);
-                    } else if(Post.cityName.equals("Not Found")){
+                    } else if (Post.cityName.equals("Not Found")) {
                         addData();
                         ifRegistered = 2;
-                    } else{
+                    } else {
                         addData();
                         ifRegistered = 1;
                         Toast.makeText(MainActivity.this, "Found", Toast.LENGTH_LONG).show();
@@ -184,13 +188,8 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        profileImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
-//                startActivity(intent);
-            }
-        });
+
+
     }
 
     @Override
@@ -209,6 +208,7 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -231,6 +231,10 @@ public class MainActivity extends AppCompatActivity
         phone.setText("Ph. - " + SharePreferenceUtils.getInstance().getString("phone"));
         name.setText(SharePreferenceUtils.getInstance().getString("name"));
 
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).showImageForEmptyUri(R.drawable.ic_profile_image).build();
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(SharePreferenceUtils.getInstance().getString("image") , profileImageView , options);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -240,8 +244,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            Intent intent = new Intent(MainActivity.this, GetProfile.class);
             startActivity(intent);
+            drawer.closeDrawer(GravityCompat.START);
+
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_faq) {
@@ -278,7 +284,7 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
     //method to set the fragment layout for the selected icon
@@ -293,14 +299,14 @@ public class MainActivity extends AppCompatActivity
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(
                 Activity.INPUT_METHOD_SERVICE
         );
-        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),0);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
     public void addData() {
         //function to add data in the local DB, to find the SQLite helper class, go to com.sumit.onnwayloader.sqlite.GetSetUserData
         boolean isInserted;
-        if(ifRegistered == 0) {
-             isInserted = getSetUserData.insertData(Post.mobileNumber, "Not Found", "Not Found", "Not Found", "Not Found", "Not Found");
+        if (ifRegistered == 0) {
+            isInserted = getSetUserData.insertData(Post.mobileNumber, "Not Found", "Not Found", "Not Found", "Not Found", "Not Found");
         } else {
             isInserted = getSetUserData.insertData(Post.mobileNumber, Post.userType, Post.userName, Post.userAddress, Post.cityName, Post.userEmail);
         }

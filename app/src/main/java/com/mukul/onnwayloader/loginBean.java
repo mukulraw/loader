@@ -25,6 +25,12 @@ public class loginBean {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("gst")
+    @Expose
+    private String gst;
+    @SerializedName("image")
+    @Expose
+    private String image;
 
     public String getStatus() {
         return status;
@@ -80,5 +86,21 @@ public class loginBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getGst() {
+        return gst;
+    }
+
+    public void setGst(String gst) {
+        this.gst = gst;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

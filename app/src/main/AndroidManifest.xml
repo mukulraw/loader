@@ -34,11 +34,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OrderDetails2"></activity>
+        <activity android:name=".GetProfile"></activity>
+        <activity android:name=".OrderDetails2" />
         <activity android:name=".OrderDetails" />
         <activity android:name=".Profile" />
         <activity android:name=".Address3" />
@@ -120,7 +121,6 @@
  Set custom default icon. This is used when no icon is set for incoming notification messages.
      See README(https://goo.gl/l4GJaQ) for more.
         -->
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

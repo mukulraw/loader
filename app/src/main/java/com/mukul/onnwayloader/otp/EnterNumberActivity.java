@@ -136,6 +136,8 @@ public class EnterNumberActivity extends AppCompatActivity {
                     SharePreferenceUtils.getInstance().saveString("phone" , response.body().getPhone());
                     SharePreferenceUtils.getInstance().saveString("name" , response.body().getName());
                     SharePreferenceUtils.getInstance().saveString("email" , response.body().getEmail());
+                    SharePreferenceUtils.getInstance().saveString("gst" , response.body().getGst());
+                    SharePreferenceUtils.getInstance().saveString("image" , response.body().getImage());
 
                     Intent intent = new Intent(EnterNumberActivity.this, OtpActivity.class);
                     intent.putExtra("phone", mCurrentMobileNumber);

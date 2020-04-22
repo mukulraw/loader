@@ -3,6 +3,7 @@ package com.mukul.onnwayloader;
 import com.mukul.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.mukul.onnwayloader.farePOJO.fareBean;
 import com.mukul.onnwayloader.orderHistoryPOJO.orderHistoryBean;
+import com.mukul.onnwayloader.profilePOJO.profileBean;
 import com.mukul.onnwayloader.truckTypePOJO.truckTypeBean;
 import com.mukul.onnwayloader.updateProfilePOJO.updateProfileBean;
 
@@ -178,5 +179,19 @@ public interface AllApiIneterface {
     Call<updateProfileBean> cancel_order_loader(
             @Part("id") String id
     );
+
+    @Multipart
+    @POST("android/getLoaderProfile.php")
+    Call<profileBean> getLoaderProfile(
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("android/updateImage.php")
+    Call<confirm_full_bean> updateImage(
+            @Part("user_id") String user_id,
+            @Part MultipartBody.Part file
+    );
+
 
 }

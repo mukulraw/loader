@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.downloader.PRDownloader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class AppController extends Application {
@@ -30,6 +31,8 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+
+        PRDownloader.initialize(getApplicationContext());
 
         context = getApplicationContext();
 

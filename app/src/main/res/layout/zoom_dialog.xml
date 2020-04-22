@@ -6,11 +6,9 @@
     app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true">
 
-    <ImageView
+    <com.jsibbold.zoomage.ZoomageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
         android:id="@+id/image"
         />
 

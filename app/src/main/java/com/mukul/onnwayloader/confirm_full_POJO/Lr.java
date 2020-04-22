@@ -13,6 +13,9 @@ public class Lr {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("name2")
+    @Expose
+    private String name2;
 
     public String getId() {
         return id;
@@ -36,5 +39,13 @@ public class Lr {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName2() {
+        return name2;
+    }
+
+    public void setName2(String name2) {
+        this.name2 = name2;
     }
 }

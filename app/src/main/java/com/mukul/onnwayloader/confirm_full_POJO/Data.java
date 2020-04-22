@@ -12,6 +12,9 @@ public class Data {
     @SerializedName("user_id")
     @Expose
     private String userId;
+    @SerializedName("assign_id")
+    @Expose
+    private String assign_id;
     @SerializedName("laod_type")
     @Expose
     private String laodType;
@@ -412,5 +415,13 @@ public class Data {
 
     public void setInvoice(List<Invoice> invoice) {
         this.invoice = invoice;
+    }
+
+    public String getAssign_id() {
+        return assign_id;
+    }
+
+    public void setAssign_id(String assign_id) {
+        this.assign_id = assign_id;
     }
 }

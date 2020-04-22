@@ -81,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 app:cardBackgroundColor="#fefefe"
+                android:id="@+id/truckcard"
                 app:cardUseCompatPadding="true">
 
                 <include layout="@layout/bill3" />

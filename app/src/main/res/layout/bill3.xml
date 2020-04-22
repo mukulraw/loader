@@ -168,24 +168,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pod" />
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/textView87"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Not Available"
-        android:padding="10dp"
-        android:gravity="center_vertical"
-        android:drawableStart="@drawable/ic_download"
-        android:drawablePadding="10dp"
-        android:background="@drawable/grey_back_round"
+        android:clipToPadding="false"
+        android:nestedScrollingEnabled="false"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView86"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView89"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="LR Not Available"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView87" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

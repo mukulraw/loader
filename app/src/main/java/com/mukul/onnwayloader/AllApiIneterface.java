@@ -193,5 +193,12 @@ public interface AllApiIneterface {
             @Part MultipartBody.Part file
     );
 
+    @Multipart
+    @POST("android/updateLoaderKyc.php")
+    Call<confirm_full_bean> updateLoaderKyc(
+            @Part("user_id") String user_id,
+            @Part("type") String type,
+            @Part MultipartBody.Part file
+    );
 
 }

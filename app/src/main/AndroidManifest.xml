@@ -38,7 +38,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GetProfile"></activity>
+        <activity android:name=".KYC"></activity>
+        <activity android:name=".GetProfile" />
         <activity android:name=".OrderDetails2" />
         <activity android:name=".OrderDetails" />
         <activity android:name=".Profile" />

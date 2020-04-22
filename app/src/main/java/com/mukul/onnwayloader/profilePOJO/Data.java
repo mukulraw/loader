@@ -28,6 +28,15 @@ public class Data {
     @SerializedName("image")
     @Expose
     private String image;
+    @SerializedName("pan")
+    @Expose
+    private String pan;
+    @SerializedName("af")
+    @Expose
+    private String af;
+    @SerializedName("ab")
+    @Expose
+    private String ab;
     @SerializedName("created")
     @Expose
     private String created;
@@ -96,6 +105,30 @@ public class Data {
         this.image = image;
     }
 
+    public String getPan() {
+        return pan;
+    }
+
+    public void setPan(String pan) {
+        this.pan = pan;
+    }
+
+    public String getAf() {
+        return af;
+    }
+
+    public void setAf(String af) {
+        this.af = af;
+    }
+
+    public String getAb() {
+        return ab;
+    }
+
+    public void setAb(String ab) {
+        this.ab = ab;
+    }
+
     public String getCreated() {
         return created;
     }
@@ -103,4 +136,5 @@ public class Data {
     public void setCreated(String created) {
         this.created = created;
     }
+
 }

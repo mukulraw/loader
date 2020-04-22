@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -49,6 +50,7 @@ public class PastOrderFragment extends Fragment {
     List<Datum> list;
     OrderAdapter adapter;
     GridLayoutManager manager;
+    LinearLayout hide;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +58,7 @@ public class PastOrderFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_ongoing_order, container, false);
         recyclerView = view.findViewById(R.id.recycler_view_ongoing_order);
         progress = view.findViewById(R.id.progress);
+        hide = view.findViewById(R.id.hide);
         list = new ArrayList<>();
 
         adapter = new OrderAdapter(getContext(), list);
@@ -97,6 +100,15 @@ public class PastOrderFragment extends Fragment {
             @Override
             public void onResponse(Call<orderHistoryBean> call, Response<orderHistoryBean> response) {
 
+
+                if (response.body().getData().size() > 0)
+                {
+                    hide.setVisibility(View.GONE);
+                }
+                else
+                {
+                    hide.setVisibility(View.VISIBLE);
+                }
                 adapter.setData(response.body().getData());
 
                 progress.setVisibility(View.GONE);

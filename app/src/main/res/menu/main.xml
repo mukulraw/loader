@@ -5,6 +5,7 @@
         android:id="@+id/action_settings"
         android:orderInCategory="1"
         android:title="Notifications"
+        android:visible="false"
         android:icon="@drawable/ic_truck"
         app:showAsAction="always" />
 </menu>

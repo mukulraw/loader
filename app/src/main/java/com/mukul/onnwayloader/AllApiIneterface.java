@@ -173,4 +173,10 @@ public interface AllApiIneterface {
             @Part MultipartBody.Part file
     );
 
+    @Multipart
+    @POST("android/cancel_order_loader.php")
+    Call<updateProfileBean> cancel_order_loader(
+            @Part("id") String id
+    );
+
 }

@@ -49,6 +49,7 @@ import com.mukul.onnwayloader.confirm_full_POJO.Lr;
 import com.mukul.onnwayloader.confirm_full_POJO.Pod;
 import com.mukul.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.mukul.onnwayloader.networking.AppController;
+import com.mukul.onnwayloader.updateProfilePOJO.updateProfileBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -215,6 +216,53 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
+
+        request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                progress.setVisibility(View.VISIBLE);
+
+                AppController b = (AppController) getApplicationContext();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(b.baseurl)
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                Call<updateProfileBean> call = cr.cancel_order_loader(
+                        id
+                );
+
+                call.enqueue(new Callback<updateProfileBean>() {
+                    @Override
+                    public void onResponse(Call<updateProfileBean> call, Response<updateProfileBean> response) {
+
+                        if (response.body().getStatus().equals("1"))
+                        {
+                            Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        else
+                        {
+                            Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        progress.setVisibility(View.GONE);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<updateProfileBean> call, Throwable t) {
+                        progress.setVisibility(View.GONE);
+                    }
+                });
+
+            }
+        });
 
     }
 

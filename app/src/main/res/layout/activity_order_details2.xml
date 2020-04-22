@@ -74,6 +74,18 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="#fefefe"
+                android:id="@+id/truckcard"
+                app:cardUseCompatPadding="true">
+
+                <include layout="@layout/bill3" />
+
+            </androidx.cardview.widget.CardView>
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

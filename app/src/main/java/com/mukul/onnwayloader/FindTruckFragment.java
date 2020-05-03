@@ -107,7 +107,7 @@ public class FindTruckFragment extends Fragment
 
 
     //TextView
-    private TextView sourceAddress, destinationAddress, schedulePickupDate;
+    private TextView sourceAddress, destinationAddress, schedulePickupDate , sel_truck;
 
     //Buttons
     private LinearLayout openTruckBtn, containerBtn, trailerBtn;
@@ -138,6 +138,7 @@ public class FindTruckFragment extends Fragment
     }
 
     String tid = "";
+    String max = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -159,6 +160,8 @@ public class FindTruckFragment extends Fragment
         fullLoad = view.findViewById(R.id.full_load_card);
         nextCard = view.findViewById(R.id.next_card);
         truck = view.findViewById(R.id.truck);
+        sel_truck = view.findViewById(R.id.sel_truck);
+
 
         //imageview
 
@@ -261,7 +264,7 @@ public class FindTruckFragment extends Fragment
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                String dateFormat = (String) setDateFormat(dayOfMonth, (monthOfYear + 1), year);
+                                String dateFormat = setDateFormat(dayOfMonth, (monthOfYear + 1), year);
                                 schedulePickupDate.setText(dateFormat);
                                 pickUpDate = schedulePickupDate.getText().toString();
                             }
@@ -294,6 +297,7 @@ public class FindTruckFragment extends Fragment
                                     intent.putExtra("source" , srcAddress);
                                     intent.putExtra("destination" , destAddress);
                                     intent.putExtra("tid" , tid);
+                                    intent.putExtra("max" , max);
                                     intent.putExtra("loadtype" , loadType);
                                     intent.putExtra("date" , pickUpDate);
                                     startActivity(intent);
@@ -344,16 +348,6 @@ public class FindTruckFragment extends Fragment
                     Toast.makeText(getActivity(), "Please enter source", Toast.LENGTH_SHORT).show();
                 }
 
-                /*getPrice = new GetPrice();
-                getPrice.currentMobile = EnterNumberActivity.mCurrentMobileNumber;
-                getPrice.sourceAddress = srcAddress;
-                getPrice.destinationAddress = destAddress;
-                getPrice.truckType = truckType;
-//                new Post().getPrice(getActivity(), getPrice);
-                getMaterialType();
-                Toast.makeText(getContext(), Post.price, Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(getContext(), ShipmentActivity.class);
-//                startActivity(intent);*/
             }
         });
 
@@ -492,32 +486,28 @@ public class FindTruckFragment extends Fragment
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                                           String[] permissions, int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                    if (ContextCompat.checkSelfPermission(getContext(),
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
+                // permission was granted, yay! Do the
+                // contacts-related task you need to do.
+                if (ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
 
-                        if (mGoogleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                        mGoogleMap.setMyLocationEnabled(true);
+                    if (mGoogleApiClient == null) {
+                        buildGoogleApiClient();
                     }
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Toast.makeText((AppCompatActivity) getActivity(), "permission denied", Toast.LENGTH_LONG).show();
+                    mGoogleMap.setMyLocationEnabled(true);
                 }
-                return;
+
+            } else {
+
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
+                Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show();
             }
 
             // other 'case' lines to check for other
@@ -525,13 +515,13 @@ public class FindTruckFragment extends Fragment
         }
     }
 
-    public boolean checkLocationPermission() {
+    private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale((AppCompatActivity) getActivity(),
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
                 // Show an expanation to the user *asynchronously* -- don't block
@@ -539,20 +529,17 @@ public class FindTruckFragment extends Fragment
                 // sees the explanation, try again to request the permission.
 
                 //Prompt the user once explanation has been shown
-                ActivityCompat.requestPermissions((AppCompatActivity) getActivity(),
+                ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
 
 
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions((AppCompatActivity) getActivity(),
+                ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
-            return false;
-        } else {
-            return true;
         }
     }
 
@@ -872,7 +859,7 @@ public class FindTruckFragment extends Fragment
                 @Override
                 public void onClick(View v) {
 
-                    checktruckType(item.getId() , item.getType());
+                    checktruckType(item.getId() , item.getType() , item.getTitle() , item.getMax_load());
                     dialog.dismiss();
 
                 }
@@ -903,9 +890,15 @@ public class FindTruckFragment extends Fragment
         }
     }
 
-    private void checktruckType(String id, String type)
+    private void checktruckType(String id, String type , String title , String max)
     {
         this.tid = id;
+        this.max = max;
+
+
+        sel_truck.setText(type + " - " + title);
+        sel_truck.setVisibility(View.VISIBLE);
+
 
         if (type.equals("open truck"))
         {

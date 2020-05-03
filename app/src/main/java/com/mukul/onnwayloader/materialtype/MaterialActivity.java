@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -41,14 +42,14 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MaterialActivity extends AppCompatActivity {
 
-    BubbleThumbSeekbar seekBar;
-    TextView weight;
+    EditText weight;
+    TextView weighttitle;
     RecyclerView grid;
     Button checkFare;
     String mid = "";
     ProgressBar progress;
 
-    String src , des , tid , dat , loa;
+    String src, des, tid, dat, loa, max;
 
 
     @Override
@@ -61,6 +62,7 @@ public class MaterialActivity extends AppCompatActivity {
         tid = getIntent().getStringExtra("tid");
         dat = getIntent().getStringExtra("date");
         loa = getIntent().getStringExtra("loadtype");
+        max = getIntent().getStringExtra("max");
 
         //adding toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
@@ -75,35 +77,13 @@ public class MaterialActivity extends AppCompatActivity {
             }
         });
 
-        seekBar = findViewById(R.id.seekBar);
-        weight = findViewById(R.id.textView14);
+        weight = findViewById(R.id.seekBar);
         grid = findViewById(R.id.grid);
         checkFare = findViewById(R.id.button);
         progress = findViewById(R.id.progressBar);
+        weighttitle = findViewById(R.id.textView11);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        seekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number number) {
-                weight.setText(number + " kg");
-            }
-        });
-
+        weighttitle.setText("Enter Weight (Max. load capacity - " + max + ")");
 
 
         progress.setVisibility(View.VISIBLE);
@@ -124,8 +104,8 @@ public class MaterialActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<truckTypeBean>> call, Response<List<truckTypeBean>> response) {
 
-                TruckAdapter adapter = new TruckAdapter(MaterialActivity.this , response.body() , "container");
-                GridLayoutManager manager = new GridLayoutManager(MaterialActivity.this , 1);
+                TruckAdapter adapter = new TruckAdapter(MaterialActivity.this, response.body(), "container");
+                GridLayoutManager manager = new GridLayoutManager(MaterialActivity.this, 1);
 
                 grid.setAdapter(adapter);
                 grid.setLayoutManager(manager);
@@ -139,33 +119,42 @@ public class MaterialActivity extends AppCompatActivity {
         });
 
 
-
-
         checkFare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                String w = weight.getText().toString();
 
-                if (mid.length() > 0)
-                {
+                if (w.length() > 0) {
+
+                    float we = Float.parseFloat(w);
+                    float ma = Float.parseFloat(max);
+
+                    if (we <= ma) {
+                        if (mid.length() > 0) {
 
 
+                            Intent intent = new Intent(MaterialActivity.this, Shipment.class);
+                            intent.putExtra("src", src);
+                            intent.putExtra("des", des);
+                            intent.putExtra("tid", tid);
+                            intent.putExtra("dat", dat);
+                            intent.putExtra("wei", weight.getText().toString());
+                            intent.putExtra("mid", mid);
+                            intent.putExtra("loa", loa);
+                            startActivity(intent);
 
-                    Intent intent = new Intent(MaterialActivity.this, Shipment.class);
-                    intent.putExtra("src" , src);
-                    intent.putExtra("des" , des);
-                    intent.putExtra("tid" , tid);
-                    intent.putExtra("dat" , dat);
-                    intent.putExtra("wei" , weight.getText().toString());
-                    intent.putExtra("mid" , mid);
-                    intent.putExtra("loa" , loa);
-                    startActivity(intent);
+                        } else {
+                            Toast.makeText(MaterialActivity.this, "Please select a material type", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(MaterialActivity.this, "Entered weight can not be greater than max. load capacity", Toast.LENGTH_SHORT).show();
+                    }
 
+                } else {
+                    Toast.makeText(MaterialActivity.this, "Please enter a weight", Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                    Toast.makeText(MaterialActivity.this, "Please select a material type", Toast.LENGTH_SHORT).show();
-                }
+
 
                 /*
                 getPrice.currentMobile = EnterNumberActivity.mCurrentMobileNumber;
@@ -178,15 +167,13 @@ public class MaterialActivity extends AppCompatActivity {
     }
 
 
-    class TruckAdapter extends RecyclerView.Adapter<TruckAdapter.ViewHolder>
-    {
+    class TruckAdapter extends RecyclerView.Adapter<TruckAdapter.ViewHolder> {
         Context context;
         List<truckTypeBean> list = new ArrayList<>();
         String type;
 
 
-        TruckAdapter(Context context, List<truckTypeBean> list, String type)
-        {
+        TruckAdapter(Context context, List<truckTypeBean> list, String type) {
             this.context = context;
             this.list = list;
             this.type = type;
@@ -195,8 +182,8 @@ public class MaterialActivity extends AppCompatActivity {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.truck_list_model , parent , false);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.truck_list_model, parent, false);
             return new ViewHolder(view);
         }
 
@@ -205,12 +192,9 @@ public class MaterialActivity extends AppCompatActivity {
 
             final truckTypeBean item = list.get(position);
 
-            if (mid.equals(item.getId()))
-            {
+            if (mid.equals(item.getId())) {
                 holder.card.setCardBackgroundColor(Color.parseColor("#F5DEDE"));
-            }
-            else
-            {
+            } else {
                 holder.card.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
             }
 /*
@@ -250,8 +234,7 @@ public class MaterialActivity extends AppCompatActivity {
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder
-        {
+        class ViewHolder extends RecyclerView.ViewHolder {
 
             ImageView image;
             TextView text;

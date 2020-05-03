@@ -32,7 +32,7 @@ public class Shipment extends AppCompatActivity {
 
 
     TextView orderid , orderdate , truck , source , destination , material , weight;
-    TextView freight , other , cgst , sgst , grand;
+    TextView freight , other , cgst , sgst , grand , tnc;
     CheckBox insurance;
     Button confirm , request;
     ProgressBar progress;
@@ -78,6 +78,7 @@ public class Shipment extends AppCompatActivity {
         destination = findViewById(R.id.textView21);
         material = findViewById(R.id.textView23);
         weight = findViewById(R.id.textView25);
+        tnc = findViewById(R.id.textView41);
 
         freight = findViewById(R.id.textView29);
         other = findViewById(R.id.textView35);
@@ -86,6 +87,8 @@ public class Shipment extends AppCompatActivity {
         grand = findViewById(R.id.textView38);
         insurance = findViewById(R.id.checkBox);
         progress = findViewById(R.id.progressBar);
+
+
 
         progress.setVisibility(View.VISIBLE);
 

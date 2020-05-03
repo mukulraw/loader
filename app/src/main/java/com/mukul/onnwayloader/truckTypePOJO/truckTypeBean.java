@@ -13,6 +13,9 @@ public class truckTypeBean {
     @SerializedName("title")
     @Expose
     private String title;
+    @SerializedName("max_load")
+    @Expose
+    private String max_load;
     @SerializedName("created")
     @Expose
     private String created;
@@ -47,5 +50,13 @@ public class truckTypeBean {
 
     public void setCreated(String created) {
         this.created = created;
+    }
+
+    public String getMax_load() {
+        return max_load;
+    }
+
+    public void setMax_load(String max_load) {
+        this.max_load = max_load;
     }
 }

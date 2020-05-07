@@ -1,11 +1,20 @@
 package com.mukul.onnwayloader;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Selection;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.util.Pair;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -31,8 +40,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class Shipment extends AppCompatActivity {
 
 
-    TextView orderid , orderdate , truck , source , destination , material , weight;
-    TextView freight , other , cgst , sgst , grand , tnc;
+    TextView orderid , orderdate , truck , source , destination , material , weight , details;
+    TextView grand , tnc;
     CheckBox insurance;
     Button confirm , request;
     ProgressBar progress;
@@ -43,6 +52,8 @@ public class Shipment extends AppCompatActivity {
     boolean ins = false;
 
     String src , des , tid , dat , wei , mid , loa;
+
+    TextView discountterms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +90,40 @@ public class Shipment extends AppCompatActivity {
         material = findViewById(R.id.textView23);
         weight = findViewById(R.id.textView25);
         tnc = findViewById(R.id.textView41);
+        discountterms = findViewById(R.id.textView111);
+        details = findViewById(R.id.textView14);
 
-        freight = findViewById(R.id.textView29);
-        other = findViewById(R.id.textView35);
-        cgst = findViewById(R.id.textView36);
-        sgst = findViewById(R.id.textView37);
         grand = findViewById(R.id.textView38);
         insurance = findViewById(R.id.checkBox);
         progress = findViewById(R.id.progressBar);
 
+
+        String text = "Read T&C and Cancellation Policy";
+        SpannableString spannableString = new SpannableString(text);
+        ClickableSpan clickableSpan1 = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                String url = "https://www.onnway.com/terms-n-condition.php";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        };
+
+        ClickableSpan clickableSpan2 = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                String url = "https://www.onnway.com/privacy_policy.php";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        };
+
+        spannableString.setSpan(clickableSpan1, 5,8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan2, 13,32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tnc.setText(spannableString);
+        tnc.setMovementMethod(LinkMovementMethod.getInstance());
 
 
         progress.setVisibility(View.VISIBLE);
@@ -102,7 +138,8 @@ public class Shipment extends AppCompatActivity {
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Call<fareBean> call = cr.getFare(src , des , tid , mid , wei);
+        //Call<fareBean> call = cr.getFare(src , des , tid , mid , wei);
+        Call<fareBean> call = cr.getFare("Delhi" , "Mumbai" , "1" , "1" , "10000");
 
         call.enqueue(new Callback<fareBean>() {
             @Override
@@ -110,17 +147,17 @@ public class Shipment extends AppCompatActivity {
 
                 if (response.body().getStatus().equals("1"))
                 {
-                    Data item = response.body().getData();
+                    final Data item = response.body().getData();
                     truck.setText(item.getTruckId());
                     source.setText(item.getSource());
                     destination.setText(item.getDestination());
                     material.setText(item.getMaterial());
                     weight.setText(item.getWeight());
-
+/*
                     freight.setText("\u20B9" + item.getFreight());
                     other.setText("\u20B9" + item.getOtherCharges());
                     cgst.setText("\u20B9" + item.getCgst());
-                    sgst.setText("\u20B9" + item.getSgst());
+                    sgst.setText("\u20B9" + item.getSgst());*/
                     insurance.setText("\u20B9" + item.getInsurance());
 
                     fr = Float.parseFloat(item.getFreight());
@@ -130,6 +167,29 @@ public class Shipment extends AppCompatActivity {
                     in = Float.parseFloat(item.getInsurance());
 
                     updateSummary();
+
+                    details.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Dialog dialog = new Dialog(Shipment.this);
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setCancelable(true);
+                            dialog.setContentView(R.layout.fare_breakdown_dialog);
+                            dialog.show();
+
+                            TextView frr = dialog.findViewById(R.id.textView117);
+                            TextView oth = dialog.findViewById(R.id.textView118);
+                            TextView cgs = dialog.findViewById(R.id.textView119);
+                            TextView sgs = dialog.findViewById(R.id.textView120);
+
+                            frr.setText("\u20B9" + item.getFreight());
+                            oth.setText("\u20B9" + item.getOtherCharges());
+                            cgs.setText("\u20B9" + item.getCgst());
+                            sgs.setText("\u20B9" + item.getSgst());
+
+                        }
+                    });
 
                 }
                 else
@@ -196,6 +256,17 @@ public class Shipment extends AppCompatActivity {
             }
         });
 
+        discountterms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String url = "https://www.onnway.com/payment_terms.php";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+
+            }
+        });
 
         insurance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -292,5 +363,6 @@ public class Shipment extends AppCompatActivity {
         }
 
     }
+
 
 }

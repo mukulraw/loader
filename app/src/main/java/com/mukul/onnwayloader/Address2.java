@@ -211,7 +211,7 @@ public class Address2 extends AppCompatActivity {
                                                             Dialog dialog = new Dialog(Address2.this);
                                                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                                             dialog.setCancelable(true);
-                                                            dialog.setContentView(R.layout.booking_qoute_dialog);
+                                                            dialog.setContentView(R.layout.booking_qoute_dialog1);
                                                             dialog.show();
 
                                                             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {

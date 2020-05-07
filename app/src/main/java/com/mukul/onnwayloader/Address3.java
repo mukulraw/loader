@@ -226,7 +226,7 @@ public class Address3 extends AppCompatActivity {
                                                     Dialog dialog = new Dialog(Address3.this);
                                                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                                     dialog.setCancelable(true);
-                                                    dialog.setContentView(R.layout.booking_qoute_dialog);
+                                                    dialog.setContentView(R.layout.booking_qoute_dialog1);
                                                     dialog.show();
 
                                                     dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {

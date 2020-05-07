@@ -2,9 +2,11 @@ package com.mukul.onnwayloader;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,13 +16,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mukul.onnwayloader.networking.AppController;
 import com.mukul.onnwayloader.orderHistoryPOJO.Datum;
 import com.mukul.onnwayloader.orderHistoryPOJO.orderHistoryBean;
+import com.mukul.onnwayloader.updateProfilePOJO.updateProfileBean;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,7 +49,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class WaitingTruckFragment extends Fragment {
 
     RecyclerView recyclerView;
-    ProgressBar progress;
+    static ProgressBar progress;
     List<Datum> list;
     OrderAdapter adapter;
     GridLayoutManager manager;
@@ -60,8 +65,8 @@ public class WaitingTruckFragment extends Fragment {
         hide = view.findViewById(R.id.hide);
         list = new ArrayList<>();
 
-        adapter = new OrderAdapter(getContext(), list);
-        manager = new GridLayoutManager(getContext() , 1);
+        adapter = new OrderAdapter(getActivity(), list);
+        manager = new GridLayoutManager(getActivity() , 1);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
@@ -113,7 +118,7 @@ public class WaitingTruckFragment extends Fragment {
 
     }
 
-    static class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
+    class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
     {
 
         Context context;
@@ -207,6 +212,78 @@ public class WaitingTruckFragment extends Fragment {
             }
 
 
+            holder.cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    new AlertDialog.Builder(context)
+                            .setTitle("Cancel Booking")
+                            .setMessage("Are you sure you want to cancel this booking?")
+
+                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                            // The dialog is automatically dismissed when a dialog button is clicked.
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(final DialogInterface dialog, int which) {
+
+
+                                    progress.setVisibility(View.VISIBLE);
+
+                                    AppController b = (AppController) context.getApplicationContext();
+
+                                    Retrofit retrofit = new Retrofit.Builder()
+                                            .baseUrl(b.baseurl)
+                                            .addConverterFactory(ScalarsConverterFactory.create())
+                                            .addConverterFactory(GsonConverterFactory.create())
+                                            .build();
+
+                                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                                    Call<updateProfileBean> call = cr.cancel_order_loader(
+                                            item.getId()
+                                    );
+
+                                    call.enqueue(new Callback<updateProfileBean>() {
+                                        @Override
+                                        public void onResponse(Call<updateProfileBean> call, Response<updateProfileBean> response) {
+
+                                            if (response.body().getStatus().equals("1"))
+                                            {
+                                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
+                                                onResume();
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
+                                            }
+
+
+                                            progress.setVisibility(View.GONE);
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<updateProfileBean> call, Throwable t) {
+                                            progress.setVisibility(View.GONE);
+                                        }
+                                    });
+
+
+                                }
+                            })
+
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+
+                }
+            });
 
 
 
@@ -229,18 +306,19 @@ public class WaitingTruckFragment extends Fragment {
             return list.size();
         }
 
-        public static String convertSecondsToHMmSs(long seconds) {
+        public String convertSecondsToHMmSs(long seconds) {
             long s = seconds % 60;
             long m = (seconds / 60) % 60;
             long h = (seconds / (60 * 60)) % 24;
             return String.format("%d:%02d:%02d", h,m,s);
         }
 
-        static class ViewHolder extends RecyclerView.ViewHolder
+        class ViewHolder extends RecyclerView.ViewHolder
         {
 
             TextView type , orderid , date , source , destination , material , weight , freight , truck , status;
 
+            Button cancel;
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
@@ -254,6 +332,7 @@ public class WaitingTruckFragment extends Fragment {
                 freight = itemView.findViewById(R.id.textView76);
                 truck = itemView.findViewById(R.id.textView64);
                 status = itemView.findViewById(R.id.textView79);
+                cancel = itemView.findViewById(R.id.button13);
 
             }
         }

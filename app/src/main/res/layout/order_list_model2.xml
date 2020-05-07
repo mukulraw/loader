@@ -49,9 +49,9 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="8dp"
-                android:background="#cdcdcd"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:background="#cdcdcd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView66" />
@@ -181,12 +181,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:text="2000"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView75" />
 
@@ -230,12 +228,32 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="TextView"
-                android:textColor="#42A5F5"
                 android:textAllCaps="true"
+                android:textColor="#42A5F5"
                 app:layout_constraintBottom_toBottomOf="@+id/textView78"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView78"
                 app:layout_constraintTop_toTopOf="@+id/textView78" />
+
+            <Button
+                android:id="@+id/button13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="CANCEL BOOKING"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:background="@drawable/grey_back_round"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView76"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -245,19 +263,19 @@
         android:id="@+id/textView65"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PART"
-        android:elevation="2dp"
         android:background="@drawable/black_back_round2"
-        android:textColor="#ffffff"
+        android:elevation="2dp"
         android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:textAllCaps="true"
-        android:paddingBottom="3dp"
         android:paddingTop="3dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="3dp"
+        android:text="PART"
+        android:textAllCaps="true"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@id/card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/card"
-        app:layout_constraintBottom_toTopOf="@id/card"/>
+        app:layout_constraintTop_toTopOf="@id/card" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

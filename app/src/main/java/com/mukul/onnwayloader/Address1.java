@@ -49,7 +49,7 @@ public class Address1 extends AppCompatActivity {
 
     Button confirm;
 
-    String src, des, tid, dat, wei, mid, loa;
+    String src, des, tid, dat, wei, mid, loa , desc;
     String freight, other_charges, cgst, sgst, insurance;
 
     float pvalue = 0;
@@ -71,6 +71,7 @@ public class Address1 extends AppCompatActivity {
         mid = getIntent().getStringExtra("mid");
         loa = getIntent().getStringExtra("loa");
         pid = getIntent().getStringExtra("pid");
+        desc = getIntent().getStringExtra("desc");
         pvalue = getIntent().getFloatExtra("pvalue", 0);
         freight = getIntent().getStringExtra("freight");
         other_charges = getIntent().getStringExtra("other_charges");
@@ -189,7 +190,7 @@ public class Address1 extends AppCompatActivity {
                                                 dcit,
                                                 dpin,
                                                 dmob,
-                                                "",
+                                                desc,
                                                 "",
                                                 "",
                                                 "",
@@ -207,7 +208,7 @@ public class Address1 extends AppCompatActivity {
                                                     Dialog dialog = new Dialog(Address1.this);
                                                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                                     dialog.setCancelable(true);
-                                                    dialog.setContentView(R.layout.booking_confirm_dialog);
+                                                    dialog.setContentView(R.layout.booking_qoute_dialog);
                                                     dialog.show();
 
                                                     dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {

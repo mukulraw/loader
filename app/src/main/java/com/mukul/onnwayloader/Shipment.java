@@ -42,17 +42,19 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class Shipment extends AppCompatActivity {
 
 
-    TextView orderid , orderdate , truck , source , destination , material , weight , details;
+    TextView orderid , orderdate , truck , source , destination , material , weight , details , schedule , status, statustitle , loadtype;
     TextView grand , tnc;
     CheckBox insurance;
     Button confirm , request , apply;
     ProgressBar progress;
 
+    Button pay80 , pay100;
+
     float fr = 0, ot = 0 , cg = 0 , sg = 0 , in = 0;
     float gr = 0;
 
     boolean ins = false;
-EditText promo;
+EditText promo , decs;
 
     String src , des , tid , dat , wei , mid , loa;
 
@@ -100,6 +102,20 @@ EditText promo;
         details = findViewById(R.id.textView14);
         promo = findViewById(R.id.editText13);
         apply = findViewById(R.id.button11);
+        schedule = findViewById(R.id.textView81);
+        status = findViewById(R.id.textView83);
+        statustitle = findViewById(R.id.textView82);
+        loadtype = findViewById(R.id.textView85);
+        pay80 = findViewById(R.id.button2);
+        pay100 = findViewById(R.id.button3);
+        decs = findViewById(R.id.editText14);
+
+
+        status.setVisibility(View.GONE);
+        statustitle.setVisibility(View.GONE);
+
+        schedule.setText(dat);
+        loadtype.setText("FULL");
 
         grand = findViewById(R.id.textView38);
         insurance = findViewById(R.id.checkBox);
@@ -157,6 +173,25 @@ EditText promo;
 
             }
         });
+
+        pay80.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(Shipment.this, "Please confirm booking before payment", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        pay100.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(Shipment.this, "Please confirm booking before payment", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
 
         progress.setVisibility(View.VISIBLE);
 
@@ -247,6 +282,7 @@ EditText promo;
                                 intent.putExtra("wei" , wei);
                                 intent.putExtra("mid" , mid);
                                 intent.putExtra("loa" , loa);
+                                intent.putExtra("desc" , decs.getText().toString());
                                 intent.putExtra("freight" , String.valueOf(fr));
                                 intent.putExtra("other_charges" , "" + ot);
                                 intent.putExtra("cgst" , "" + cg);
@@ -396,6 +432,7 @@ EditText promo;
                     intent.putExtra("wei" , wei);
                     intent.putExtra("mid" , mid);
                     intent.putExtra("loa" , loa);
+                    intent.putExtra("desc" , decs.getText().toString());
                     intent.putExtra("pvalue" , pvalue);
                     intent.putExtra("pid" , pid);
                     intent.putExtra("freight" , String.valueOf(fr));
@@ -431,6 +468,7 @@ EditText promo;
                     intent.putExtra("dat" , dat);
                     intent.putExtra("wei" , wei);
                     intent.putExtra("mid" , mid);
+                    intent.putExtra("desc" , decs.getText().toString());
                     intent.putExtra("loa" , loa);
                     intent.putExtra("freight" , String.valueOf(fr));
                     intent.putExtra("other_charges" , "" + ot);

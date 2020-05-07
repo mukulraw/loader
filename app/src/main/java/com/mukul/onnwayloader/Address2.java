@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -14,8 +17,20 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.mukul.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.mukul.onnwayloader.networking.AppController;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,13 +40,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Address2 extends AppCompatActivity {
+    private static final String TAG = "Address2";
     ProgressBar progress;
     EditText paddress , pcity , ppincode , pmobile;
     EditText daddress , dcity , dpincode , dmobile;
 
     Button confirm;
 
-    String src , des , tid , dat , wei , mid , loa;
+    String src , des , tid , dat , wei , mid , loa , desc;
     String freight , other_charges , cgst , sgst , insurance;
 
 
@@ -41,6 +57,8 @@ public class Address2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address1);
 
+        Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
+
         src = getIntent().getStringExtra("src");
         des = getIntent().getStringExtra("des");
         tid = getIntent().getStringExtra("tid");
@@ -48,6 +66,7 @@ public class Address2 extends AppCompatActivity {
         wei = getIntent().getStringExtra("wei");
         mid = getIntent().getStringExtra("mid");
         loa = getIntent().getStringExtra("loa");
+        desc = getIntent().getStringExtra("desc");
         freight = getIntent().getStringExtra("freight");
         other_charges = getIntent().getStringExtra("other_charges");
         cgst = getIntent().getStringExtra("cgst");
@@ -77,6 +96,36 @@ public class Address2 extends AppCompatActivity {
         dmobile = findViewById(R.id.mobile);
         confirm = findViewById(R.id.button);
 
+        pcity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.FULLSCREEN, fields)
+                        .setCountries(Collections.singletonList("IN"))
+                        .setTypeFilter(TypeFilter.REGIONS)
+                        .build(Address2.this);
+                startActivityForResult(intent, 12);
+
+            }
+        });
+
+        dcity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.FULLSCREEN, fields)
+                        .setCountries(Collections.singletonList("IN"))
+                        .setTypeFilter(TypeFilter.REGIONS)
+                        .build(Address2.this);
+                startActivityForResult(intent, 14);
+
+            }
+        });
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,16 +145,14 @@ public class Address2 extends AppCompatActivity {
                     {
                         if (ppin.length() > 0)
                         {
-                            if (pmob.length() == 10)
-                            {
+
                                 if (dadd.length() > 0)
                                 {
                                     if (dcit.length() > 0)
                                     {
                                         if (dpin.length() > 0)
                                         {
-                                            if (dmob.length() == 10)
-                                            {
+
 
                                                 progress.setVisibility(View.VISIBLE);
 
@@ -144,7 +191,7 @@ public class Address2 extends AppCompatActivity {
                                                         dcit,
                                                         dpin,
                                                         dmob,
-                                                        "",
+                                                        desc,
                                                         "",
                                                         "",
                                                         "",
@@ -193,11 +240,7 @@ public class Address2 extends AppCompatActivity {
                                                     }
                                                 });
 
-                                            }
-                                            else
-                                            {
-                                                Toast.makeText(Address2.this, "Invalid drop mobile", Toast.LENGTH_SHORT).show();
-                                            }
+
                                         }
                                         else
                                         {
@@ -213,11 +256,7 @@ public class Address2 extends AppCompatActivity {
                                 {
                                     Toast.makeText(Address2.this, "Invalid drop address", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                            else
-                            {
-                                Toast.makeText(Address2.this, "Invalid pickup mobile", Toast.LENGTH_SHORT).show();
-                            }
+
                         }
                         else
                         {
@@ -239,4 +278,65 @@ public class Address2 extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == 12) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+
+                Geocoder geocoder = new Geocoder(Address2.this);
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
+                    Log.d("addresss", String.valueOf(addresses.get(0)));
+                    String cii = place.getName();
+                    String stat = addresses.get(0).getAdminArea();
+
+                    pcity.setText(cii);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+
+
+        if (requestCode == 14) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+
+
+                Geocoder geocoder = new Geocoder(Address2.this);
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
+                    String cii = place.getName();
+                    String stat = addresses.get(0).getAdminArea();
+                    dcity.setText(cii);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+
+    }
+
 }

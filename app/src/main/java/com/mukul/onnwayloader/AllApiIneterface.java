@@ -112,7 +112,8 @@ public interface AllApiIneterface {
             @Part("length") String length,
             @Part("width") String width,
             @Part("height") String height,
-            @Part("quantity") String quantity
+            @Part("quantity") String quantity,
+            @Part MultipartBody.Part file
     );
 
     @Multipart

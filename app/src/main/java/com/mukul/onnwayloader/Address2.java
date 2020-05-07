@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -166,6 +167,7 @@ public class Address2 extends AppCompatActivity {
 
                                                 AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
+                                            MultipartBody.Part body = null;
 
                                                 Call<confirm_full_bean> call = cr.quote_full_load(
                                                         SharePreferenceUtils.getInstance().getString("userId"),
@@ -195,7 +197,8 @@ public class Address2 extends AppCompatActivity {
                                                         "",
                                                         "",
                                                         "",
-                                                        ""
+                                                        "",
+                                                        body
                                                 );
 
                                                 call.enqueue(new Callback<confirm_full_bean>() {

@@ -20,11 +20,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.mukul.onnwayloader.checkPromoPOJO.checkPromoBean;
 import com.mukul.onnwayloader.farePOJO.Data;
 import com.mukul.onnwayloader.farePOJO.fareBean;
 import com.mukul.onnwayloader.materialtype.MaterialActivity;
@@ -43,17 +45,21 @@ public class Shipment extends AppCompatActivity {
     TextView orderid , orderdate , truck , source , destination , material , weight , details;
     TextView grand , tnc;
     CheckBox insurance;
-    Button confirm , request;
+    Button confirm , request , apply;
     ProgressBar progress;
 
     float fr = 0, ot = 0 , cg = 0 , sg = 0 , in = 0;
     float gr = 0;
 
     boolean ins = false;
+EditText promo;
 
     String src , des , tid , dat , wei , mid , loa;
 
     TextView discountterms;
+
+    float pvalue = 0;
+    String pid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +98,8 @@ public class Shipment extends AppCompatActivity {
         tnc = findViewById(R.id.textView41);
         discountterms = findViewById(R.id.textView111);
         details = findViewById(R.id.textView14);
+        promo = findViewById(R.id.editText13);
+        apply = findViewById(R.id.button11);
 
         grand = findViewById(R.id.textView38);
         insurance = findViewById(R.id.checkBox);
@@ -125,6 +133,30 @@ public class Shipment extends AppCompatActivity {
         tnc.setText(spannableString);
         tnc.setMovementMethod(LinkMovementMethod.getInstance());
 
+        details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Dialog dialog = new Dialog(Shipment.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.fare_breakdown_dialog);
+                dialog.show();
+
+                TextView frr = dialog.findViewById(R.id.textView117);
+                TextView oth = dialog.findViewById(R.id.textView118);
+                TextView cgs = dialog.findViewById(R.id.textView119);
+                TextView sgs = dialog.findViewById(R.id.textView120);
+                TextView pdis = dialog.findViewById(R.id.textView122);
+
+                frr.setText("\u20B9" + fr);
+                oth.setText("\u20B9" + ot);
+                cgs.setText("\u20B9" + cg);
+                sgs.setText("\u20B9" + sg);
+                pdis.setText("\u20B9" + pvalue);
+
+            }
+        });
 
         progress.setVisibility(View.VISIBLE);
 
@@ -158,6 +190,9 @@ public class Shipment extends AppCompatActivity {
                     other.setText("\u20B9" + item.getOtherCharges());
                     cgst.setText("\u20B9" + item.getCgst());
                     sgst.setText("\u20B9" + item.getSgst());*/
+
+
+
                     insurance.setText("\u20B9" + item.getInsurance());
 
                     fr = Float.parseFloat(item.getFreight());
@@ -166,30 +201,18 @@ public class Shipment extends AppCompatActivity {
                     sg = Float.parseFloat(item.getSgst());
                     in = Float.parseFloat(item.getInsurance());
 
+                    if (in > 0)
+                    {
+                        insurance.setEnabled(true);
+                    }
+                    else
+                    {
+                        insurance.setEnabled(false);
+                    }
+
                     updateSummary();
 
-                    details.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
 
-                            Dialog dialog = new Dialog(Shipment.this);
-                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                            dialog.setCancelable(true);
-                            dialog.setContentView(R.layout.fare_breakdown_dialog);
-                            dialog.show();
-
-                            TextView frr = dialog.findViewById(R.id.textView117);
-                            TextView oth = dialog.findViewById(R.id.textView118);
-                            TextView cgs = dialog.findViewById(R.id.textView119);
-                            TextView sgs = dialog.findViewById(R.id.textView120);
-
-                            frr.setText("\u20B9" + item.getFreight());
-                            oth.setText("\u20B9" + item.getOtherCharges());
-                            cgs.setText("\u20B9" + item.getCgst());
-                            sgs.setText("\u20B9" + item.getSgst());
-
-                        }
-                    });
 
                 }
                 else
@@ -256,6 +279,87 @@ public class Shipment extends AppCompatActivity {
             }
         });
 
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String pc = promo.getText().toString();
+
+                if (pc.length() > 0)
+                {
+
+                    apply.setEnabled(false);
+                    apply.setClickable(false);
+
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
+
+                    progress.setVisibility(View.VISIBLE);
+
+                    AppController b = (AppController) getApplicationContext();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(b.baseurl)
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                    Call<checkPromoBean> call = cr.checkPromo(pc , SharePreferenceUtils.getInstance().getString("userId"));
+
+                    call.enqueue(new Callback<checkPromoBean>() {
+                        @Override
+                        public void onResponse(Call<checkPromoBean> call, Response<checkPromoBean> response) {
+
+                            if (response.body().getStatus().equals("1"))
+                            {
+
+                                pvalue = Float.parseFloat(response.body().getData().getDiscount());
+
+                                float na = gr - pvalue;
+
+                                grand.setText("₹ " + na);
+
+                                pid = response.body().getData().getPid();
+
+                                Toast.makeText(Shipment.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                            else
+                            {
+                                Toast.makeText(Shipment.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                apply.setEnabled(true);
+                                apply.setClickable(true);
+
+                                promo.setEnabled(true);
+                                promo.setClickable(true);
+                            }
+
+                            progress.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<checkPromoBean> call, Throwable t) {
+                            progress.setVisibility(View.GONE);
+                            apply.setEnabled(true);
+                            apply.setClickable(true);
+
+                            promo.setEnabled(true);
+                            promo.setClickable(true);
+                        }
+                    });
+
+                }
+                else
+                {
+                    Toast.makeText(Shipment.this, "Invalid PROMO code", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
         discountterms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,6 +396,8 @@ public class Shipment extends AppCompatActivity {
                     intent.putExtra("wei" , wei);
                     intent.putExtra("mid" , mid);
                     intent.putExtra("loa" , loa);
+                    intent.putExtra("pvalue" , pvalue);
+                    intent.putExtra("pid" , pid);
                     intent.putExtra("freight" , String.valueOf(fr));
                     intent.putExtra("other_charges" , "" + ot);
                     intent.putExtra("cgst" , "" + cg);

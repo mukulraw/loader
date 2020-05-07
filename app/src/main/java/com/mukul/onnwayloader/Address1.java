@@ -5,7 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -14,8 +18,21 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.mukul.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.mukul.onnwayloader.networking.AppController;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,21 +42,26 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Address1 extends AppCompatActivity {
+    private static final String TAG = "Address1";
     ProgressBar progress;
-    EditText paddress , pcity , ppincode , pmobile;
-    EditText daddress , dcity , dpincode , dmobile;
+    EditText paddress, pcity, ppincode, pmobile;
+    EditText daddress, dcity, dpincode, dmobile;
 
     Button confirm;
 
-    String src , des , tid , dat , wei , mid , loa;
-    String freight , other_charges , cgst , sgst , insurance;
+    String src, des, tid, dat, wei, mid, loa;
+    String freight, other_charges, cgst, sgst, insurance;
 
+    float pvalue = 0;
+    String pid;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address1);
+
+        Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
 
         src = getIntent().getStringExtra("src");
         des = getIntent().getStringExtra("des");
@@ -48,6 +70,8 @@ public class Address1 extends AppCompatActivity {
         wei = getIntent().getStringExtra("wei");
         mid = getIntent().getStringExtra("mid");
         loa = getIntent().getStringExtra("loa");
+        pid = getIntent().getStringExtra("pid");
+        pvalue = getIntent().getFloatExtra("pvalue", 0);
         freight = getIntent().getStringExtra("freight");
         other_charges = getIntent().getStringExtra("other_charges");
         cgst = getIntent().getStringExtra("cgst");
@@ -77,6 +101,37 @@ public class Address1 extends AppCompatActivity {
         dmobile = findViewById(R.id.mobile);
         confirm = findViewById(R.id.button);
 
+        pcity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.FULLSCREEN, fields)
+                        .setCountries(Collections.singletonList("IN"))
+                        .setTypeFilter(TypeFilter.REGIONS)
+                        .build(Address1.this);
+                startActivityForResult(intent, 12);
+
+            }
+        });
+
+        dcity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.FULLSCREEN, fields)
+                        .setCountries(Collections.singletonList("IN"))
+                        .setTypeFilter(TypeFilter.REGIONS)
+                        .build(Address1.this);
+                startActivityForResult(intent, 14);
+
+            }
+        });
+
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,147 +145,115 @@ public class Address1 extends AppCompatActivity {
                 String dpin = dpincode.getText().toString();
                 String dmob = dmobile.getText().toString();
 
-                if (padd.length() > 0)
-                {
-                    if (pcit.length() > 0)
-                    {
-                        if (ppin.length() > 0)
-                        {
-                            if (pmob.length() == 10)
-                            {
-                                if (dadd.length() > 0)
-                                {
-                                    if (dcit.length() > 0)
-                                    {
-                                        if (dpin.length() > 0)
-                                        {
-                                            if (dmob.length() == 10)
-                                            {
+                if (padd.length() > 0) {
+                    if (pcit.length() > 0) {
+                        if (ppin.length() > 0) {
+                            if (dadd.length() > 0) {
+                                if (dcit.length() > 0) {
+                                    if (dpin.length() > 0) {
 
-                                                progress.setVisibility(View.VISIBLE);
+                                        progress.setVisibility(View.VISIBLE);
 
-                                                AppController b = (AppController) getApplicationContext();
+                                        AppController b = (AppController) getApplicationContext();
 
-                                                Retrofit retrofit = new Retrofit.Builder()
-                                                        .baseUrl(b.baseurl)
-                                                        .addConverterFactory(ScalarsConverterFactory.create())
-                                                        .addConverterFactory(GsonConverterFactory.create())
-                                                        .build();
+                                        Retrofit retrofit = new Retrofit.Builder()
+                                                .baseUrl(b.baseurl)
+                                                .addConverterFactory(ScalarsConverterFactory.create())
+                                                .addConverterFactory(GsonConverterFactory.create())
+                                                .build();
 
-                                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+                                        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
 
-                                                Call<confirm_full_bean> call = cr.confirm_full_load(
-                                                  SharePreferenceUtils.getInstance().getString("userId"),
-                                                        loa,
-                                                        src,
-                                                        des,
-                                                        tid,
-                                                        dat,
-                                                        wei,
-                                                        mid,
-                                                        freight,
-                                                        other_charges,
-                                                        cgst,
-                                                        sgst,
-                                                        insurance,
-                                                        "",
-                                                        "",
-                                                        padd,
-                                                        pcit,
-                                                        ppin,
-                                                        pmob,
-                                                        dadd,
-                                                        dcit,
-                                                        dpin,
-                                                        dmob,
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        ""
-                                                );
+                                        Call<confirm_full_bean> call = cr.confirm_full_load(
+                                                SharePreferenceUtils.getInstance().getString("userId"),
+                                                loa,
+                                                src,
+                                                des,
+                                                tid,
+                                                dat,
+                                                wei,
+                                                mid,
+                                                freight,
+                                                other_charges,
+                                                cgst,
+                                                sgst,
+                                                insurance,
+                                                "",
+                                                "",
+                                                padd,
+                                                pcit,
+                                                ppin,
+                                                pmob,
+                                                dadd,
+                                                dcit,
+                                                dpin,
+                                                dmob,
+                                                "",
+                                                "",
+                                                "",
+                                                "",
+                                                "",
+                                                String.valueOf(pvalue),
+                                                pid
+                                        );
 
-                                                call.enqueue(new Callback<confirm_full_bean>() {
-                                                    @Override
-                                                    public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
+                                        call.enqueue(new Callback<confirm_full_bean>() {
+                                            @Override
+                                            public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
 
-                                                        if (response.body().getStatus().equals("1"))
-                                                        {
+                                                if (response.body().getStatus().equals("1")) {
 
-                                                            Dialog dialog = new Dialog(Address1.this);
-                                                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                                            dialog.setCancelable(true);
-                                                            dialog.setContentView(R.layout.booking_confirm_dialog);
-                                                            dialog.show();
+                                                    Dialog dialog = new Dialog(Address1.this);
+                                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                    dialog.setCancelable(true);
+                                                    dialog.setContentView(R.layout.booking_confirm_dialog);
+                                                    dialog.show();
 
-                                                            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                                                @Override
-                                                                public void onCancel(DialogInterface dialog) {
+                                                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                                        @Override
+                                                        public void onCancel(DialogInterface dialog) {
 
-                                                                    Intent intent = new Intent(Address1.this , MainActivity.class);
-                                                                    startActivity(intent);
-                                                                    finishAffinity();
+                                                            Intent intent = new Intent(Address1.this, MainActivity.class);
+                                                            startActivity(intent);
+                                                            finishAffinity();
 
-                                                                }
-                                                            });
-
-                                                            Toast.makeText(Address1.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                         }
-                                                        else
-                                                        {
-                                                            Toast.makeText(Address1.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                    });
+
+                                                    Toast.makeText(Address1.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(Address1.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
 
 
-                                                        progress.setVisibility(View.GONE);
-
-                                                    }
-
-                                                    @Override
-                                                    public void onFailure(Call<confirm_full_bean> call, Throwable t) {
-                                                        progress.setVisibility(View.GONE);
-                                                    }
-                                                });
+                                                progress.setVisibility(View.GONE);
 
                                             }
-                                            else
-                                            {
-                                                Toast.makeText(Address1.this, "Invalid drop mobile", Toast.LENGTH_SHORT).show();
+
+                                            @Override
+                                            public void onFailure(Call<confirm_full_bean> call, Throwable t) {
+                                                progress.setVisibility(View.GONE);
                                             }
-                                        }
-                                        else
-                                        {
-                                            Toast.makeText(Address1.this, "Invalid drop PIN code", Toast.LENGTH_SHORT).show();
-                                        }
+                                        });
+
+                                    } else {
+                                        Toast.makeText(Address1.this, "Invalid drop PIN code", Toast.LENGTH_SHORT).show();
                                     }
-                                    else
-                                    {
-                                        Toast.makeText(Address1.this, "Invalid drop city", Toast.LENGTH_SHORT).show();
-                                    }
+                                } else {
+                                    Toast.makeText(Address1.this, "Invalid drop city", Toast.LENGTH_SHORT).show();
                                 }
-                                else
-                                {
-                                    Toast.makeText(Address1.this, "Invalid drop address", Toast.LENGTH_SHORT).show();
-                                }
+                            } else {
+                                Toast.makeText(Address1.this, "Invalid drop address", Toast.LENGTH_SHORT).show();
                             }
-                            else
-                            {
-                                Toast.makeText(Address1.this, "Invalid pickup mobile", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        else
-                        {
+
+                        } else {
                             Toast.makeText(Address1.this, "Invalid pickup PIN code", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(Address1.this, "Invalid pickup city", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else
-                {
+                } else {
                     Toast.makeText(Address1.this, "Invalid pickup address", Toast.LENGTH_SHORT).show();
                 }
 
@@ -239,4 +262,65 @@ public class Address1 extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == 12) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+
+                Geocoder geocoder = new Geocoder(Address1.this);
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
+                    Log.d("addresss", String.valueOf(addresses.get(0)));
+                    String cii = place.getName();
+                    String stat = addresses.get(0).getAdminArea();
+
+                    pcity.setText(cii);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+
+
+        if (requestCode == 14) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+
+
+                Geocoder geocoder = new Geocoder(Address1.this);
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
+                    String cii = place.getName();
+                    String stat = addresses.get(0).getAdminArea();
+                    dcity.setText(cii);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+
+    }
+
 }

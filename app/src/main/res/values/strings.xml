@@ -49,5 +49,6 @@
     <string name="shipment_address">Address</string>
     <string name="alarm_notification">alarm_notification</string>
     <string name="default_notification_channel_id">123</string>
+    <string name="google_maps_key">AIzaSyDg928l41AL20avLOGqYVVHHYHyNTM3DMY</string>
 
 </resources>

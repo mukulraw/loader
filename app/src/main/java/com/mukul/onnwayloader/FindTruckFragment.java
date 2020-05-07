@@ -145,6 +145,8 @@ public class FindTruckFragment extends Fragment
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_find_truck, container, false);
 
+        Places.initialize(getContext(), getString(R.string.google_maps_key));
+
         //checking location permission
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -547,7 +549,7 @@ public class FindTruckFragment extends Fragment
     private void getLocation() {
 
         //this method is used to get the places by places autocomplete
-        Places.initialize(getActivity(), "AIzaSyDg928l41AL20avLOGqYVVHHYHyNTM3DMY");
+
 
         // Set the fields to specify which types of place data to return.
         List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);

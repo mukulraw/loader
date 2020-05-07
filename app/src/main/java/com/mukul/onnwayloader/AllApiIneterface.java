@@ -1,5 +1,6 @@
 package com.mukul.onnwayloader;
 
+import com.mukul.onnwayloader.checkPromoPOJO.checkPromoBean;
 import com.mukul.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.mukul.onnwayloader.farePOJO.fareBean;
 import com.mukul.onnwayloader.orderHistoryPOJO.orderHistoryBean;
@@ -76,7 +77,9 @@ public interface AllApiIneterface {
             @Part("length") String length,
             @Part("width") String width,
             @Part("height") String height,
-            @Part("quantity") String quantity
+            @Part("quantity") String quantity,
+            @Part("pvalue") String pvalue,
+            @Part("pid") String pid
     );
 
     @Multipart
@@ -199,6 +202,13 @@ public interface AllApiIneterface {
             @Part("user_id") String user_id,
             @Part("type") String type,
             @Part MultipartBody.Part file
+    );
+
+    @Multipart
+    @POST("android/checkPromo.php")
+    Call<checkPromoBean> checkPromo(
+            @Part("promo") String promo,
+            @Part("user_id") String user_id
     );
 
 }

@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +22,11 @@ import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.mukul.onnwayloader.networking.AppController;
+import com.mukul.onnwayloader.profilePOJO.Data;
+import com.mukul.onnwayloader.profilePOJO.profileBean;
 import com.mukul.onnwayloader.updateProfilePOJO.updateProfileBean;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,9 +38,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class Profile extends AppCompatActivity {
+public class EditProfile extends AppCompatActivity {
 
-    EditText name , email , city , company;
+    EditText name , email , city , company , gst;
     RadioGroup type;
     Button submit;
     ProgressBar progress;
@@ -45,10 +49,12 @@ public class Profile extends AppCompatActivity {
     boolean comp = true;
     String t = "";
 
+    RadioButton compp , indi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile2);
+        setContentView(R.layout.activity_edit_profile);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
         mToolbar.setTitle("Short Profile");
@@ -68,6 +74,10 @@ public class Profile extends AppCompatActivity {
         type = findViewById(R.id.textView63);
         submit = findViewById(R.id.button);
         progress = findViewById(R.id.progressBar);
+        gst = findViewById(R.id.editText16);
+        compp = findViewById(R.id.company);
+        indi = findViewById(R.id.indi);
+
 
 
 
@@ -75,7 +85,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Places.initialize(Profile.this, "AIzaSyDg928l41AL20avLOGqYVVHHYHyNTM3DMY");
+                Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
 
                 // Set the fields to specify which types of place data to return.
                 List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
@@ -84,7 +94,7 @@ public class Profile extends AppCompatActivity {
                         AutocompleteActivityMode.FULLSCREEN, fields)
                         .setCountry("ind")
                         .setTypeFilter(TypeFilter.CITIES)
-                        .build(Profile.this);
+                        .build(EditProfile.this);
                 startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
 
             }
@@ -120,6 +130,7 @@ public class Profile extends AppCompatActivity {
                 String e = email.getText().toString();
                 String c = city.getText().toString();
                 String co = company.getText().toString();
+                String g = gst.getText().toString();
 
                 if (n.length() > 0)
                 {
@@ -134,45 +145,46 @@ public class Profile extends AppCompatActivity {
                                 {
                                     if (co.length() > 0)
                                     {
-                                        update(n , e , c , t , co);
+                                        update(n , e , c , t , co , g);
                                     }
                                     else
                                     {
-                                        Toast.makeText(Profile.this, "Invalid company name", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(EditProfile.this, "Invalid company name", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                                 else
                                 {
-                                    update(n , e , c , t , "");
+                                    update(n , e , c , t , "" , g);
                                 }
                             }
                             else
                             {
-                                Toast.makeText(Profile.this, "Please choose type", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditProfile.this, "Please choose type", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else
                         {
-                            Toast.makeText(Profile.this, "Invalid address", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditProfile.this, "Invalid address", Toast.LENGTH_SHORT).show();
                         }
                     }
                     else
                     {
-                        Toast.makeText(Profile.this, "Invalid email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfile.this, "Invalid email", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else
                 {
-                    Toast.makeText(Profile.this, "Invalid name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfile.this, "Invalid name", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
 
+        setPrevious();
+
     }
 
-
-    void update(String n , String e , String c , String t , String co)
+    void setPrevious()
     {
         progress.setVisibility(View.VISIBLE);
 
@@ -186,14 +198,74 @@ public class Profile extends AppCompatActivity {
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Call<updateProfileBean> call = cr.update_loader_profile(
-          SharePreferenceUtils.getInstance().getString("userId"),
+        Log.d("progie" , SharePreferenceUtils.getInstance().getString("userId"));
+
+        Call<profileBean> call = cr.getLoaderProfile(SharePreferenceUtils.getInstance().getString("userId"));
+
+        call.enqueue(new Callback<profileBean>() {
+            @Override
+            public void onResponse(Call<profileBean> call, Response<profileBean> response) {
+
+                Data item = response.body().getData();
+
+                name.setText(item.getName());
+                if (item.getType().equals("Individual"))
+                {
+                    indi.setChecked(true);
+                    //company.setVisibility(View.GONE);
+                    //companytitle.setVisibility(View.GONE);
+                    company.setText("---");
+                }
+                else
+                {
+                    compp.setChecked(true);
+                    //company.setVisibility(View.VISIBLE);
+                    //companytitle.setVisibility(View.VISIBLE);
+                    company.setText(item.getCompany());
+                }
+
+
+
+
+
+                email.setText(item.getEmail());
+                city.setText(item.getCity());
+                gst.setText(item.getGst());
+
+                progress.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<profileBean> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    void update(String n , String e , String c , String t , String co , String g)
+    {
+        progress.setVisibility(View.VISIBLE);
+
+        AppController b = (AppController) getApplicationContext();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+        Call<updateProfileBean> call = cr.update_loader_profile2(
+                SharePreferenceUtils.getInstance().getString("userId"),
                 n,
                 e,
                 c,
                 t,
                 co,
-                ""
+                g
         );
 
         call.enqueue(new Callback<updateProfileBean>() {
@@ -209,12 +281,12 @@ public class Profile extends AppCompatActivity {
                     SharePreferenceUtils.getInstance().saveString("type" , response.body().getData().getType());
                     SharePreferenceUtils.getInstance().saveString("company" , response.body().getData().getCompany());
 
-                    Toast.makeText(Profile.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfile.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else
                 {
-                    Toast.makeText(Profile.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfile.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 progress.setVisibility(View.GONE);
@@ -242,7 +314,7 @@ public class Profile extends AppCompatActivity {
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 Status status = Autocomplete.getStatusFromIntent(data);
-                Toast.makeText(Profile.this, status.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditProfile.this, status.toString(), Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }

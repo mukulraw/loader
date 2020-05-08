@@ -38,7 +38,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PayNow"></activity>
+        <activity android:name=".EditProfile"></activity>
+        <activity android:name=".PayNow" />
         <activity android:name=".KYC" />
         <activity android:name=".GetProfile" />
         <activity android:name=".OrderDetails2" />
@@ -48,7 +49,7 @@
         <activity android:name=".MaterialActivity2" />
         <activity android:name=".Address2" />
         <activity android:name=".Address1" />
-        <activity android:name=".Shipment"></activity>
+        <activity android:name=".Shipment" />
 
         <uses-library
             android:name="org.apache.http.legacy"

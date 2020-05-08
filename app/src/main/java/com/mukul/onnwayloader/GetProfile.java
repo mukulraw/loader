@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ public class GetProfile extends AppCompatActivity {
     ProgressBar progress;
     private Uri uri1;
     private File f1;
+    Button edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class GetProfile extends AppCompatActivity {
         kyc = findViewById(R.id.textView97);
         progress = findViewById(R.id.progressBar);
         companytitle = findViewById(R.id.textView91);
+        edit = findViewById(R.id.button);
 
         change.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +132,16 @@ public class GetProfile extends AppCompatActivity {
                     }
                 });
                 builder.show();
+
+            }
+        });
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(GetProfile.this , EditProfile.class);
+                startActivity(intent);
 
             }
         });

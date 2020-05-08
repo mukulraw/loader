@@ -124,7 +124,20 @@ public interface AllApiIneterface {
             @Part("email") String email,
             @Part("city") String city,
             @Part("type") String type,
-            @Part("company") String company
+            @Part("company") String company,
+            @Part("gst") String gst
+    );
+
+    @Multipart
+    @POST("android/update_loader_profile2.php")
+    Call<updateProfileBean> update_loader_profile2(
+            @Part("user_id") String user_id,
+            @Part("name") String name,
+            @Part("email") String email,
+            @Part("city") String city,
+            @Part("type") String type,
+            @Part("company") String company,
+            @Part("gst") String gst
     );
 
     @Multipart

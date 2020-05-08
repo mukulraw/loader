@@ -212,4 +212,20 @@ public interface AllApiIneterface {
             @Part("user_id") String user_id
     );
 
+
+    @Multipart
+    @POST("android/uploadReceipt.php")
+    Call<confirm_full_bean> uploadReceipt(
+            @Part("order_id") String order_id,
+            @Part("user_id") String user_id,
+            @Part("type") String type,
+            @Part("pid") String pid,
+            @Part("pvalue") String pvalue,
+            @Part("insused") String insused,
+            @Part("inin") String inin,
+            @Part("isinsurance") String isinsurance,
+            @Part MultipartBody.Part file
+    );
+
+
 }

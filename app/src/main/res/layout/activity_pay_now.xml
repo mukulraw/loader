@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="#f5f5f5"
-    tools:context=".OrderDetails">
+    android:layout_height="match_parent"
+    tools:context=".PayNow">
 
     <Toolbar
         android:id="@+id/toolbar_activity_shipment"
@@ -20,31 +20,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/button"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="confirm loading"
-        android:visibility="gone"
-        android:background="@drawable/black_back_round"
-        android:textColor="#ffffff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:clipToPadding="false"
         android:fillViewport="true"
         android:paddingStart="16dp"
         android:paddingTop="8dp"
         android:paddingEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_shipment">
@@ -61,7 +45,7 @@
                 app:cardBackgroundColor="#fefefe"
                 app:cardUseCompatPadding="true">
 
-                <include layout="@layout/summary" />
+                <include layout="@layout/online" />
 
             </androidx.cardview.widget.CardView>
 
@@ -72,41 +56,57 @@
                 app:cardBackgroundColor="#fefefe"
                 app:cardUseCompatPadding="true">
 
-                <include layout="@layout/bill1" />
+                <include layout="@layout/bank" />
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                app:cardBackgroundColor="#fefefe"
-                android:id="@+id/truckcard"
-                app:cardUseCompatPadding="true">
+                android:layout_height="wrap_content">
 
-                <include layout="@layout/bill3" />
+                <TextView
+                    android:id="@+id/textView131"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="LET US KNOW ABOUT YOUR PAYMENT "
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/imageView14"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView131"
+                    app:srcCompat="@drawable/notfound" />
 
+                <Button
+                    android:id="@+id/button15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UPLOAD RECEIPT"
+                    android:minHeight="0dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:minWidth="0dp"
+                    android:background="@drawable/grey_back_round"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView14"
+                    app:layout_constraintTop_toTopOf="@+id/imageView14" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <TextView
-        android:id="@+id/button4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="CANCEL BOOKING"
-        android:gravity="center"
-        android:visibility="visible"
-        android:padding="10dp"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -118,6 +118,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

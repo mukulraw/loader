@@ -1,6 +1,7 @@
 package com.mukul.onnwayloader;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
@@ -18,7 +19,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.format.DateFormat;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +33,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,6 +49,7 @@ import com.downloader.OnStartOrResumeListener;
 import com.downloader.PRDownloader;
 import com.downloader.PRDownloaderConfig;
 import com.downloader.Progress;
+import com.mukul.onnwayloader.checkPromoPOJO.checkPromoBean;
 import com.mukul.onnwayloader.confirm_full_POJO.Data;
 import com.mukul.onnwayloader.confirm_full_POJO.Invoice;
 import com.mukul.onnwayloader.confirm_full_POJO.Lr;
@@ -72,17 +79,19 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class OrderDetails extends AppCompatActivity {
 
-    TextView orderid , orderdate , truck , source , destination , material , weight , date , status , loadtype;
-    TextView freight , other , cgst , sgst , grand;
+    TextView orderid , orderdate , truck , source , destination , material , weight , date , status , loadtype , details;
+    TextView grand , tnc ,request;
     CheckBox insurance;
-    Button confirm , request;
+    Button confirm;
     ProgressBar progress;
 
     TextView vehiclenumber , drivernumber , pending , pending2;
 
-    Button add , upload1 , upload2;
+    Button add , upload1 , upload2 , apply;
 
     RecyclerView pod , documents , lrdownload;
+
+    Button pay80 , pay100;
 
 
     float fr = 0, ot = 0 , cg = 0 , sg = 0 , in = 0;
@@ -93,9 +102,18 @@ public class OrderDetails extends AppCompatActivity {
     private Uri uri1;
     private File f1;
 
+    TextView discountterms;
+
     String id , assign_id;
 
     CardView truckcard;
+
+    float pvalue = 0;
+    String pid = "";
+
+    EditText promo , decs;
+
+    String insused = "no";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +133,8 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
-
+        tnc = findViewById(R.id.textView41);
+        details = findViewById(R.id.textView14);
         orderid = findViewById(R.id.textView16);
         confirm = findViewById(R.id.button);
         request = findViewById(R.id.button4);
@@ -132,19 +151,17 @@ public class OrderDetails extends AppCompatActivity {
         truckcard = findViewById(R.id.truckcard);
         lrdownload = findViewById(R.id.textView87);
         pending2 = findViewById(R.id.textView89);
-
-        freight = findViewById(R.id.textView29);
-        other = findViewById(R.id.textView35);
-        cgst = findViewById(R.id.textView36);
-        sgst = findViewById(R.id.textView37);
+        pay80 = findViewById(R.id.button2);
+        pay100 = findViewById(R.id.button3);
+        decs = findViewById(R.id.editText14);
         grand = findViewById(R.id.textView38);
         insurance = findViewById(R.id.checkBox);
         progress = findViewById(R.id.progressBar);
-
+        discountterms = findViewById(R.id.textView111);
+        apply = findViewById(R.id.button11);
         vehiclenumber = findViewById(R.id.textView291);
         drivernumber = findViewById(R.id.textView351);
-
-        add = findViewById(R.id.button3);
+        promo = findViewById(R.id.editText13);
         upload1 = findViewById(R.id.button5);
         upload2 = findViewById(R.id.button6);
 
@@ -152,6 +169,8 @@ public class OrderDetails extends AppCompatActivity {
         documents = findViewById(R.id.recyclerView);
 
 
+        decs.setHint("");
+        decs.setFocusable(false);
 
 
         /*insurance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -215,62 +234,288 @@ public class OrderDetails extends AppCompatActivity {
 
             }
         });
+        String text = "Read T&C and Cancellation Policy";
+        SpannableString spannableString = new SpannableString(text);
+        ClickableSpan clickableSpan1 = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                String url = "https://www.onnway.com/terms-n-condition.php";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        };
 
+        ClickableSpan clickableSpan2 = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                String url = "https://www.onnway.com/privacy_policy.php";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        };
+
+        spannableString.setSpan(clickableSpan1, 5,8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan2, 13,32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tnc.setText(spannableString);
+        tnc.setMovementMethod(LinkMovementMethod.getInstance());
+
+        details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Dialog dialog = new Dialog(OrderDetails.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.fare_breakdown_dialog);
+                dialog.show();
+
+                TextView frr = dialog.findViewById(R.id.textView117);
+                TextView oth = dialog.findViewById(R.id.textView118);
+                TextView cgs = dialog.findViewById(R.id.textView119);
+                TextView sgs = dialog.findViewById(R.id.textView120);
+                TextView pdis = dialog.findViewById(R.id.textView122);
+
+                frr.setText("\u20B9" + fr);
+                oth.setText("\u20B9" + ot);
+                cgs.setText("\u20B9" + cg);
+                sgs.setText("\u20B9" + sg);
+                pdis.setText("\u20B9" + pvalue);
+
+            }
+        });
+
+        pay80.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(OrderDetails.this , PayNow.class);
+                intent.putExtra("percent" , "80");
+                intent.putExtra("pid" , pid);
+                intent.putExtra("pvalue" , pvalue);
+                intent.putExtra("insused" , insused);
+                intent.putExtra("insurance" , in);
+                intent.putExtra("isinsurance" , ins);
+                intent.putExtra("oid" , id);
+                startActivity(intent);
+
+            }
+        });
+
+        pay100.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(OrderDetails.this , PayNow.class);
+                intent.putExtra("percent" , "100");
+                intent.putExtra("pid" , pid);
+                intent.putExtra("pvalue" , pvalue);
+                intent.putExtra("insused" , insused);
+                intent.putExtra("insurance" , in);
+                intent.putExtra("isinsurance" , ins);
+                intent.putExtra("oid" , id);
+                startActivity(intent);
+
+            }
+        });
 
         request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                progress.setVisibility(View.VISIBLE);
+                new AlertDialog.Builder(OrderDetails.this)
+                        .setTitle("Cancel Booking")
+                        .setMessage("Are you sure you want to cancel this booking?")
 
-                AppController b = (AppController) getApplicationContext();
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, int which) {
 
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(b.baseurl)
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
 
-                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+                                progress.setVisibility(View.VISIBLE);
 
-                Call<updateProfileBean> call = cr.cancel_order_loader(
-                        id
-                );
+                                AppController b = (AppController) getApplicationContext();
 
-                call.enqueue(new Callback<updateProfileBean>() {
-                    @Override
-                    public void onResponse(Call<updateProfileBean> call, Response<updateProfileBean> response) {
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(b.baseurl)
+                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
 
-                        if (response.body().getStatus().equals("1"))
-                        {
-                            Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                        else
-                        {
-                            Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                        progress.setVisibility(View.GONE);
+                                Call<updateProfileBean> call = cr.cancel_order_loader(
+                                        id
+                                );
 
-                    }
+                                call.enqueue(new Callback<updateProfileBean>() {
+                                    @Override
+                                    public void onResponse(Call<updateProfileBean> call, Response<updateProfileBean> response) {
 
-                    @Override
-                    public void onFailure(Call<updateProfileBean> call, Throwable t) {
-                        progress.setVisibility(View.GONE);
-                    }
-                });
+                                        if (response.body().getStatus().equals("1"))
+                                        {
+                                            Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                            finish();
+                                        }
+                                        else
+                                        {
+                                            Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        progress.setVisibility(View.GONE);
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<updateProfileBean> call, Throwable t) {
+                                        progress.setVisibility(View.GONE);
+                                    }
+                                });
+
+
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
+
+
 
             }
         });
+
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String pc = promo.getText().toString();
+
+                if (pc.length() > 0)
+                {
+
+                    apply.setEnabled(false);
+                    apply.setClickable(false);
+
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
+
+                    progress.setVisibility(View.VISIBLE);
+
+                    AppController b = (AppController) getApplicationContext();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(b.baseurl)
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                    Call<checkPromoBean> call = cr.checkPromo(pc , SharePreferenceUtils.getInstance().getString("userId"));
+
+                    call.enqueue(new Callback<checkPromoBean>() {
+                        @Override
+                        public void onResponse(Call<checkPromoBean> call, Response<checkPromoBean> response) {
+
+                            if (response.body().getStatus().equals("1"))
+                            {
+
+                                pvalue = Float.parseFloat(response.body().getData().getDiscount());
+
+                                gr = gr - pvalue;
+
+                                grand.setText("₹ " + gr);
+
+                                pid = response.body().getData().getPid();
+
+                                Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                            else
+                            {
+                                Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                apply.setEnabled(true);
+                                apply.setClickable(true);
+
+                                promo.setEnabled(true);
+                                promo.setClickable(true);
+                            }
+
+                            progress.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<checkPromoBean> call, Throwable t) {
+                            progress.setVisibility(View.GONE);
+                            apply.setEnabled(true);
+                            apply.setClickable(true);
+
+                            promo.setEnabled(true);
+                            promo.setClickable(true);
+                        }
+                    });
+
+                }
+                else
+                {
+                    Toast.makeText(OrderDetails.this, "Invalid PROMO code", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        discountterms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String url = "https://www.onnway.com/payment_terms.php";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+
+            }
+        });
+
+        insurance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                ins = isChecked;
+                updateSummary();
+
+            }
+        });
+
 
     }
 
     void updateSummary()
     {
 
+        if (ins)
+        {
             gr = fr + ot + cg + sg + in;
             grand.setText("\u20B9" + gr);
+        }
+        else
+        {
+            gr = fr + ot + cg + sg;
+            grand.setText("\u20B9" + gr);
+        }
+
+            /*gr = fr + ot + cg + sg + in;
+            grand.setText("\u20B9" + gr);*/
 
 
     }
@@ -307,6 +552,10 @@ public class OrderDetails extends AppCompatActivity {
                 date.setText(item.getSchedule());
                 status.setText(item.getStatus());
                 loadtype.setText(item.getLaodType());
+
+                decs.setText(item.getRemarks());
+
+                insused = item.getInsurance_used();
 
                 if (item.getAssign_id() != null)
                 {
@@ -368,15 +617,7 @@ public class OrderDetails extends AppCompatActivity {
 
 
 
-                freight.setText("\u20B9" + item.getFreight());
-                other.setText("\u20B9" + item.getOtherCharges());
-                cgst.setText("\u20B9" + item.getCgst());
-                sgst.setText("\u20B9" + item.getSgst());
                 insurance.setText("\u20B9" + item.getInsurance());
-
-
-
-
 
                 fr = Float.parseFloat(item.getFreight());
                 ot = Float.parseFloat(item.getOtherCharges());
@@ -386,18 +627,65 @@ public class OrderDetails extends AppCompatActivity {
 
                 if (in > 0)
                 {
-                    insurance.setChecked(true);
+
+                    if (item.getInsurance_used().equals("yes"))
+                    {
+                        insurance.setChecked(true);
+                        insurance.setEnabled(false);
+                    }
+                    else
+                    {
+                        insurance.setEnabled(true);
+                        insurance.setChecked(false);
+                    }
+
+
                 }
                 else
                 {
-                    insurance.setChecked(false);
+                    insurance.setEnabled(false);
                 }
+
+
+
+
+
 
 
 
                 updateSummary();
 
+                try {
+                    pvalue = Float.parseFloat(response.body().getData().getPvalue());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
 
+
+
+                promo.setText(item.getPromo_code());
+
+                gr = gr - pvalue;
+
+                grand.setText("₹ " + gr);
+
+                if (pvalue > 0)
+                {
+                    apply.setEnabled(false);
+                    apply.setClickable(false);
+
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
+                }
+                else
+                {
+                    apply.setEnabled(true);
+                    apply.setClickable(true);
+
+                    promo.setEnabled(true);
+                    promo.setClickable(true);
+                }
 
 
                 progress.setVisibility(View.GONE);

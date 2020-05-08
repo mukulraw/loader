@@ -120,6 +120,15 @@ public class Data {
     @SerializedName("invoice")
     @Expose
     private List<Invoice> invoice = null;
+    @SerializedName("promo_code")
+    @Expose
+    private String promo_code;
+    @SerializedName("pvalue")
+    @Expose
+    private String pvalue;
+    @SerializedName("insurance_used")
+    @Expose
+    private String insurance_used;
 
     public String getId() {
         return id;
@@ -423,5 +432,29 @@ public class Data {
 
     public void setAssign_id(String assign_id) {
         this.assign_id = assign_id;
+    }
+
+    public String getPromo_code() {
+        return promo_code;
+    }
+
+    public String getPvalue() {
+        return pvalue;
+    }
+
+    public void setPromo_code(String promo_code) {
+        this.promo_code = promo_code;
+    }
+
+    public void setPvalue(String pvalue) {
+        this.pvalue = pvalue;
+    }
+
+    public String getInsurance_used() {
+        return insurance_used;
+    }
+
+    public void setInsurance_used(String insurance_used) {
+        this.insurance_used = insurance_used;
     }
 }

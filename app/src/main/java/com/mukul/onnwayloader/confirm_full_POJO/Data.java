@@ -129,6 +129,12 @@ public class Data {
     @SerializedName("insurance_used")
     @Expose
     private String insurance_used;
+    @SerializedName("per80")
+    @Expose
+    private String per80;
+    @SerializedName("per100")
+    @Expose
+    private String per100;
 
     public String getId() {
         return id;
@@ -457,4 +463,21 @@ public class Data {
     public void setInsurance_used(String insurance_used) {
         this.insurance_used = insurance_used;
     }
+
+    public String getPer80() {
+        return per80;
+    }
+
+    public String getPer100() {
+        return per100;
+    }
+
+    public void setPer80(String per80) {
+        this.per80 = per80;
+    }
+
+    public void setPer100(String per100) {
+        this.per100 = per100;
+    }
 }
+

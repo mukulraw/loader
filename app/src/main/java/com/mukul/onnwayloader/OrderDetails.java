@@ -557,6 +557,30 @@ public class OrderDetails extends AppCompatActivity {
 
                 insused = item.getInsurance_used();
 
+                if (item.getPer80().equals("pending"))
+                {
+                    pay80.setText("80%");
+                    pay80.setEnabled(true);
+                }
+                else
+                {
+                    pay80.setText("80%\n" + item.getPer80());
+                    pay80.setEnabled(false);
+                }
+
+
+                if (item.getPer100().equals("pending"))
+                {
+                    pay100.setText("100%");
+                    pay100.setEnabled(true);
+                }
+                else
+                {
+                    pay100.setText("100%\n" + item.getPer100());
+                    pay100.setEnabled(false);
+                }
+
+
                 if (item.getAssign_id() != null)
                 {
 

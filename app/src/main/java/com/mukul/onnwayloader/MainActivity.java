@@ -249,17 +249,35 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
 
         } else if (id == R.id.nav_about) {
-
+            Intent intent = new Intent(MainActivity.this , Web.class);
+            intent.putExtra("title" , "About Onnway");
+            intent.putExtra("url" , "https://www.onnway.com/aboutonway.php");
+            startActivity(intent);
         } else if (id == R.id.nav_faq) {
-
+            Intent intent = new Intent(MainActivity.this , Web.class);
+            intent.putExtra("title" , "FAQs");
+            intent.putExtra("url" , "https://www.onnway.com/faqonnway.php");
+            startActivity(intent);
         } else if (id == R.id.nav_contact) {
-
+            Intent intent = new Intent(MainActivity.this , Web.class);
+            intent.putExtra("title" , "Contact Us");
+            intent.putExtra("url" , "https://www.onnway.com/contactonnway.php");
+            startActivity(intent);
         } else if (id == R.id.nav_payment_terms) {
-
+            Intent intent = new Intent(MainActivity.this , Web.class);
+            intent.putExtra("title" , "Payment Terms");
+            intent.putExtra("url" , "https://www.onnway.com/paymentonnway.php");
+            startActivity(intent);
         } else if (id == R.id.nav_security) {
-
+            Intent intent = new Intent(MainActivity.this , Web.class);
+            intent.putExtra("title" , "Privacy Policy");
+            intent.putExtra("url" , "https://www.onnway.com/privacyonnway.php");
+            startActivity(intent);
         } else if (id == R.id.nav_terms_and_condition) {
-
+            Intent intent = new Intent(MainActivity.this , Web.class);
+            intent.putExtra("title" , "Terms and Conditions");
+            intent.putExtra("url" , "https://www.onnway.com/termsonnway.php");
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_logout) {

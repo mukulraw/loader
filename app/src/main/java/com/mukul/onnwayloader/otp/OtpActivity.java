@@ -57,7 +57,7 @@ public class OtpActivity extends AppCompatActivity implements OTPListener{
         mobileTv = findViewById(R.id.mobile_tv);
         mobileTv.setText(EnterNumberActivity.mCurrentMobileNumber);
         //automatic OTP reader, library used: "swarajsaaj:otpreader:1.1"
-        OtpReader.bind(OtpActivity.this,"ONNWAY");
+        OtpReader.bind(OtpActivity.this,"SNDOTP");
     }
 
     @Override

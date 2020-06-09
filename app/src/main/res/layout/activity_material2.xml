@@ -208,7 +208,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/white_back_round"
-                android:hint="sq. ft."
+                android:hint="cu. ft."
                 android:padding="10dp"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"

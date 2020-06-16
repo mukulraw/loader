@@ -95,14 +95,11 @@ public class SplashActivity extends AppCompatActivity {
 
                                 String userId = SharePreferenceUtils.getInstance().getString("userId");
 
-                                if (userId.length() > 0)
-                                {
+                                if (userId.length() > 0) {
                                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finishAffinity();
-                                }
-                                else
-                                {
+                                } else {
                                     Intent intent = new Intent(SplashActivity.this, GettingStarted.class);
                                     startActivity(intent);
                                     finishAffinity();

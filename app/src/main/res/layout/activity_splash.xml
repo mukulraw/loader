@@ -1,19 +1,24 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#ffffff"
+    android:background="@color/colorPrimary"
     android:gravity="center">
 
 
     <ImageView
         android:id="@+id/splash_imageview"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="8dp"
-        android:src="@mipmap/splash_logo"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/splash"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -24,15 +29,13 @@
         android:id="@+id/progressBar_cyclic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
         android:minWidth="50dp"
         android:minHeight="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/splash_imageview"
-        app:layout_constraintEnd_toEndOf="@+id/splash_imageview"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/splash_imageview"
-        app:layout_constraintVertical_bias="0.574" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

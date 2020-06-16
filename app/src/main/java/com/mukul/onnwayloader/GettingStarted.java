@@ -10,14 +10,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.mukul.onnwayloader.otp.NumberActivity;
 
 public class GettingStarted extends AppCompatActivity {
 
-    private CardView gettingStartedCard;
-    private TextView gettingStartedTv;
+    private Button gettingStartedCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,6 @@ public class GettingStarted extends AppCompatActivity {
         }
 
         gettingStartedCard = findViewById(R.id.get_started_card);
-        gettingStartedTv = findViewById(R.id.get_started_tv);
 
         gettingStartedCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,13 +42,6 @@ public class GettingStarted extends AppCompatActivity {
             }
         });
 
-        gettingStartedTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(GettingStarted.this, NumberActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+
     }
 }

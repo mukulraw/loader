@@ -1,8 +1,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#f5f5f5">
 
     <TextView
         android:id="@+id/textView2"
@@ -38,7 +39,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/montserrat_regular"
-        android:text="Enter your mobile number \nto get OTP"
+        android:text="Enter your mobile number"
         android:textAlignment="center"
         android:textColor="#707070"
         android:textSize="20sp"
@@ -47,30 +48,69 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 
-    <androidx.cardview.widget.CardView
+    <EditText
         android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:elevation="4dp"
-        app:cardCornerRadius="11dp"
-        app:cardElevation="4dp"
+        android:padding="12dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:inputType="phone"
+        android:maxLength="10"
+        android:hint="Enter mobile number here"
+        android:background="@drawable/white_back_round2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView132" />
+
+    <TextView
+        android:id="@+id/textView132"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:text="We will send you one time password (OTP)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <TextView
-            android:id="@+id/mPhoneNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/montserrat_regular"
-            android:hint="Enter mobile no. here"
-            android:textColorHint="#707070"
-            android:textSize="16sp" />
-    </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/red_back_round2"
+        android:gravity="center"
+        android:minWidth="0dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:text="Get OTP"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <ProgressBar
+        android:id="@+id/progressBar4"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

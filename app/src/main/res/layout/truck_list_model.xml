@@ -10,20 +10,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
         android:orientation="vertical"
         >
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
             android:id="@+id/image"
-            android:src="@drawable/ic_material_type"/>
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_material_type"
+            android:background="@drawable/circle"
+            android:padding="10dp"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/text"
             android:text="20 Feet\n16 MT"
             android:gravity="center"
-            android:padding="5dp"/>
+            android:paddingTop="5dp"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -205,8 +205,8 @@ EditText promo , decs;
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        //Call<fareBean> call = cr.getFare(src , des , tid , mid , wei);
-        Call<fareBean> call = cr.getFare("Delhi" , "Mumbai" , "1" , "1" , "10000");
+        Call<fareBean> call = cr.getFare(src , des , tid , mid , wei);
+        //Call<fareBean> call = cr.getFare("Delhi" , "Mumbai" , "1" , "1" , "10000");
 
         call.enqueue(new Callback<fareBean>() {
             @Override

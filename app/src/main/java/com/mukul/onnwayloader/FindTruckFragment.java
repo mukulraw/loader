@@ -905,19 +905,19 @@ public class FindTruckFragment extends Fragment
         if (type.equals("open truck"))
         {
             openTruckBtn.setBackgroundResource(R.drawable.red_back_round);
-            containerBtn.setBackgroundResource(R.drawable.white_back_round);
-            trailerBtn.setBackgroundResource(R.drawable.white_back_round);
+            containerBtn.setBackgroundResource(0);
+            trailerBtn.setBackgroundResource(0);
         }
         else if (type.equals("container"))
         {
-            openTruckBtn.setBackgroundResource(R.drawable.white_back_round);
+            openTruckBtn.setBackgroundResource(0);
             containerBtn.setBackgroundResource(R.drawable.red_back_round);
-            trailerBtn.setBackgroundResource(R.drawable.white_back_round);
+            trailerBtn.setBackgroundResource(0);
         }
         else
         {
-            openTruckBtn.setBackgroundResource(R.drawable.white_back_round);
-            containerBtn.setBackgroundResource(R.drawable.white_back_round);
+            openTruckBtn.setBackgroundResource(0);
+            containerBtn.setBackgroundResource(0);
             trailerBtn.setBackgroundResource(R.drawable.red_back_round);
         }
     }

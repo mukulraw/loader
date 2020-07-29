@@ -38,7 +38,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Web"></activity>
+        <activity android:name=".Web"/>
         <activity android:name=".EditProfile" />
         <activity android:name=".PayNow" />
         <activity android:name=".KYC" />
@@ -95,7 +95,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDg928l41AL20avLOGqYVVHHYHyNTM3DMY" />
+            android:value="@string/google_maps_key" />
 
         <activity android:name=".MainActivity" />
 

@@ -2,10 +2,12 @@ package com.mukul.onnwayloader;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -23,6 +25,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,10 +41,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -50,6 +60,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
@@ -61,6 +74,7 @@ import com.mukul.onnwayloader.materialtype.MaterialActivity;
 import com.mukul.onnwayloader.networking.AppController;
 import com.mukul.onnwayloader.truckTypePOJO.truckTypeBean;
 import com.mukul.onnwayloader.vehicletype.OpenTruckType;
+import com.shivtechs.maplocationpicker.MapUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,6 +101,7 @@ public class FindTruckFragment extends Fragment
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
         OpenTruckType.DialogListener {
+    private static final String TAG = "FindTruckFragment";
 
     /*
      * This fragment is used to load the findtruckfragment
@@ -102,12 +117,12 @@ public class FindTruckFragment extends Fragment
     Button partLoad, fullLoad;
 
 
-    LinearLayout bottom , truck;
+    LinearLayout bottom, truck;
     //ImageView
 
 
     //TextView
-    private TextView sourceAddress, destinationAddress, schedulePickupDate , sel_truck;
+    private TextView sourceAddress, destinationAddress, schedulePickupDate, sel_truck;
 
     //Buttons
     private LinearLayout openTruckBtn, containerBtn, trailerBtn;
@@ -127,7 +142,7 @@ public class FindTruckFragment extends Fragment
     //taking details
     public static String truckType;
 
-    private String loadType = "1", srcAddress = "", destAddress = "",pickUpDate = "";
+    private String loadType = "1", srcAddress = "", destAddress = "", pickUpDate = "";
 
     private int addressTyp = 0;
 
@@ -140,12 +155,26 @@ public class FindTruckFragment extends Fragment
     String tid = "";
     String max = "";
 
+    private FusedLocationProviderClient fusedLocationClient;
+
+    double sourceLAT = 0, sourceLNG = 0, destinationLAT = 0, destinationLNG = 0;
+
+    LocationSettingsRequest.Builder builder;
+    LocationRequest locationRequest;
+
+    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_find_truck, container, false);
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
         Places.initialize(getContext(), getString(R.string.google_maps_key));
+
+        MapUtility.apiKey = getResources().getString(R.string.google_maps_key);
 
         //checking location permission
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -282,77 +311,57 @@ public class FindTruckFragment extends Fragment
             @Override
             public void onClick(View view) {
 
-                if (srcAddress.length() > 0)
-                {
-                    if (destAddress.length() > 0)
-                    {
+                if (srcAddress.length() > 0) {
+                    if (destAddress.length() > 0) {
 
-                        if (loadType.equals("1"))
-                        {
-                            if (tid.length() > 0)
-                            {
-                                if (pickUpDate.length() > 0)
-                                {
+                        if (loadType.equals("1")) {
+                            if (tid.length() > 0) {
+                                if (pickUpDate.length() > 0) {
 
 
                                     Intent intent = new Intent(getContext(), MaterialActivity.class);
-                                    intent.putExtra("source" , srcAddress);
-                                    intent.putExtra("destination" , destAddress);
-                                    intent.putExtra("tid" , tid);
-                                    intent.putExtra("max" , max);
-                                    intent.putExtra("loadtype" , loadType);
-                                    intent.putExtra("date" , pickUpDate);
+                                    intent.putExtra("source", srcAddress);
+                                    intent.putExtra("destination", destAddress);
+                                    intent.putExtra("tid", tid);
+                                    intent.putExtra("max", max);
+                                    intent.putExtra("loadtype", loadType);
+                                    intent.putExtra("date", pickUpDate);
                                     startActivity(intent);
 
 
-                                }
-                                else
-                                {
+                                } else {
                                     Toast.makeText(getActivity(), "Please select a pickup date", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(getActivity(), "Please select truck type", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else
-                        {
-                            if (pickUpDate.length() > 0)
-                            {
+                        } else {
+                            if (pickUpDate.length() > 0) {
 
 
                                 Intent intent = new Intent(getContext(), MaterialActivity2.class);
-                                intent.putExtra("source" , srcAddress);
-                                intent.putExtra("destination" , destAddress);
-                                intent.putExtra("loadtype" , loadType);
-                                intent.putExtra("date" , pickUpDate);
+                                intent.putExtra("source", srcAddress);
+                                intent.putExtra("destination", destAddress);
+                                intent.putExtra("loadtype", loadType);
+                                intent.putExtra("date", pickUpDate);
                                 startActivity(intent);
 
 
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(getActivity(), "Please select a pickup date", Toast.LENGTH_SHORT).show();
                             }
                         }
 
 
-
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(getActivity(), "Please enter destination", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getActivity(), "Please enter source", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
-
 
 
         return view;
@@ -384,7 +393,7 @@ public class FindTruckFragment extends Fragment
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         final int[] h = {0};
-        final int[] w = { 0 };
+        final int[] w = {0};
 
         bottom.postDelayed(new Runnable() {
             @Override
@@ -396,11 +405,16 @@ public class FindTruckFragment extends Fragment
 
                 System.out.println("Height yourView: " + bottom.getHeight());
                 System.out.println("Width yourView: " + bottom.getWidth());
+
+                mGoogleMap.setPadding(0, 0, 0, bottom.getHeight());
+
             }
         }, 1);
 
+        createLocationRequest();
+
         //Initialize Google Play Services
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        /*if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
@@ -428,7 +442,7 @@ public class FindTruckFragment extends Fragment
                     mGoogleMap.setPadding(0 , 0 , 0 , h[0] + 22);
                 }
             });
-        }
+        }*/
     }
 
     private synchronized void buildGoogleApiClient() {
@@ -466,8 +480,7 @@ public class FindTruckFragment extends Fragment
 
     @Override
     public void onLocationChanged(Location location) {
-        /*Toast.makeText(getContext(), "Location Changed " + location.getLatitude()
-                + " " + location.getLongitude(), Toast.LENGTH_SHORT).show();*/
+
 
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
@@ -486,7 +499,7 @@ public class FindTruckFragment extends Fragment
     }
 
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions, int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {// If request is cancelled, the result arrays are empty.
@@ -515,7 +528,7 @@ public class FindTruckFragment extends Fragment
             // other 'case' lines to check for other
             // permissions this app might request
         }
-    }
+    }*/
 
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(getContext(),
@@ -583,6 +596,20 @@ public class FindTruckFragment extends Fragment
                 // The user canceled the operation.
             }
         }
+
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    Log.i(TAG, "User agreed to make required location settings changes.");
+                    getLocation2();
+                    break;
+                case Activity.RESULT_CANCELED:
+                    Toast.makeText(getActivity(), "Location is required for this app", Toast.LENGTH_LONG).show();
+                    getActivity().finishAffinity();
+                    break;
+            }
+        }
+
     }
 
     private void getOpenTruckType() {
@@ -618,8 +645,8 @@ public class FindTruckFragment extends Fragment
             @Override
             public void onResponse(Call<List<truckTypeBean>> call, Response<List<truckTypeBean>> response) {
 
-                TruckAdapter adapter = new TruckAdapter(getContext() , response.body() , "open truck" , dialog);
-                GridLayoutManager manager = new GridLayoutManager(getContext() , 3);
+                TruckAdapter adapter = new TruckAdapter(getContext(), response.body(), "open truck", dialog);
+                GridLayoutManager manager = new GridLayoutManager(getContext(), 3);
 
                 grid.setAdapter(adapter);
                 grid.setLayoutManager(manager);
@@ -633,18 +660,6 @@ public class FindTruckFragment extends Fragment
             }
         });
 
-        /*OpenTruckType openTruckType = new OpenTruckType();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("notAlertDialog", true);
-        openTruckType.setArguments(bundle);
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        openTruckType.show(ft, "dialog");
-        Toast.makeText(getActivity(), truckType, Toast.LENGTH_LONG).show();*/
     }
 
     private void getContainerType() {
@@ -679,8 +694,8 @@ public class FindTruckFragment extends Fragment
             @Override
             public void onResponse(Call<List<truckTypeBean>> call, Response<List<truckTypeBean>> response) {
 
-                TruckAdapter adapter = new TruckAdapter(getContext() , response.body() , "container" , dialog);
-                GridLayoutManager manager = new GridLayoutManager(getContext() , 3);
+                TruckAdapter adapter = new TruckAdapter(getContext(), response.body(), "container", dialog);
+                GridLayoutManager manager = new GridLayoutManager(getContext(), 3);
 
                 grid.setAdapter(adapter);
                 grid.setLayoutManager(manager);
@@ -727,8 +742,8 @@ public class FindTruckFragment extends Fragment
             @Override
             public void onResponse(Call<List<truckTypeBean>> call, Response<List<truckTypeBean>> response) {
 
-                TruckAdapter adapter = new TruckAdapter(getContext() , response.body() , "trailer" , dialog);
-                GridLayoutManager manager = new GridLayoutManager(getContext() , 3);
+                TruckAdapter adapter = new TruckAdapter(getContext(), response.body(), "trailer", dialog);
+                GridLayoutManager manager = new GridLayoutManager(getContext(), 3);
 
                 grid.setAdapter(adapter);
                 grid.setLayoutManager(manager);
@@ -743,35 +758,9 @@ public class FindTruckFragment extends Fragment
         });
     }
 
-    private void getMaterialType() {
-//        MaterialType materialType = new MaterialType();
-//        Bundle bundle = new Bundle();
-//        bundle.putBoolean("notAlertDialog", true);
-//        materialType.setArguments(bundle);
-//        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-//        Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag("dialog");
-//        if (prev != null) {
-//            ft.remove(prev);
-//        }
-//        ft.addToBackStack(null);
-//        materialType.show(ft, "dialog");
-        Intent intent = new Intent(getContext(), MaterialActivity.class);
-        startActivity(intent);
-
-        Toast.makeText(getContext(), "Move to step 2...", Toast.LENGTH_SHORT).show();
-
-    }
 
     @Override
     public void onFinishEditDialog(String truckType) {
-//        if (TextUtils.isEmpty(truckType)) {
-////            textView.setText("Email was not entered");
-//        } else {
-//            truckType = truckType;
-////            matTypeTv.setText(matTy);
-//        }
-////            materialType.setText("Email entered: " + inputText);
-//        Toast.makeText(getActivity(), truckType, Toast.LENGTH_LONG).show();
     }
 
     private String setDateFormat(int day, int month, int year) {
@@ -805,15 +794,13 @@ public class FindTruckFragment extends Fragment
         return finalDate;
     }
 
-    class TruckAdapter extends RecyclerView.Adapter<TruckAdapter.ViewHolder>
-    {
+    class TruckAdapter extends RecyclerView.Adapter<TruckAdapter.ViewHolder> {
         Context context;
         List<truckTypeBean> list = new ArrayList<>();
         String type;
         Dialog dialog;
 
-        TruckAdapter(Context context, List<truckTypeBean> list, String type , Dialog dialog)
-        {
+        TruckAdapter(Context context, List<truckTypeBean> list, String type, Dialog dialog) {
             this.context = context;
             this.list = list;
             this.type = type;
@@ -823,8 +810,8 @@ public class FindTruckFragment extends Fragment
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.truck_list_model , parent , false);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.truck_list_model, parent, false);
             return new ViewHolder(view);
         }
 
@@ -833,25 +820,17 @@ public class FindTruckFragment extends Fragment
 
             final truckTypeBean item = list.get(position);
 
-            if (tid.equals(item.getId()))
-            {
+            if (tid.equals(item.getId())) {
                 holder.card.setCardBackgroundColor(Color.parseColor("#F5DEDE"));
-            }
-            else
-            {
+            } else {
                 holder.card.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
             }
 
-            if (type.equals("open truck"))
-            {
+            if (type.equals("open truck")) {
                 holder.image.setImageResource(R.drawable.ic_truck);
-            }
-            else if (type.equals("container"))
-            {
+            } else if (type.equals("container")) {
                 holder.image.setImageResource(R.drawable.ic_container);
-            }
-            else
-            {
+            } else {
                 holder.image.setImageResource(R.drawable.ic_trailer);
             }
 
@@ -861,7 +840,7 @@ public class FindTruckFragment extends Fragment
                 @Override
                 public void onClick(View v) {
 
-                    checktruckType(item.getId() , item.getType() , item.getTitle() , item.getMax_load());
+                    checktruckType(item.getId(), item.getType(), item.getTitle(), item.getMax_load());
                     dialog.dismiss();
 
                 }
@@ -874,8 +853,7 @@ public class FindTruckFragment extends Fragment
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder
-        {
+        class ViewHolder extends RecyclerView.ViewHolder {
 
             ImageView image;
             TextView text;
@@ -892,8 +870,7 @@ public class FindTruckFragment extends Fragment
         }
     }
 
-    private void checktruckType(String id, String type , String title , String max)
-    {
+    private void checktruckType(String id, String type, String title, String max) {
         this.tid = id;
         this.max = max;
 
@@ -902,24 +879,110 @@ public class FindTruckFragment extends Fragment
         sel_truck.setVisibility(View.VISIBLE);
 
 
-        if (type.equals("open truck"))
-        {
+        if (type.equals("open truck")) {
             openTruckBtn.setBackgroundResource(R.drawable.red_back_round);
             containerBtn.setBackgroundResource(0);
             trailerBtn.setBackgroundResource(0);
-        }
-        else if (type.equals("container"))
-        {
+        } else if (type.equals("container")) {
             openTruckBtn.setBackgroundResource(0);
             containerBtn.setBackgroundResource(R.drawable.red_back_round);
             trailerBtn.setBackgroundResource(0);
-        }
-        else
-        {
+        } else {
             openTruckBtn.setBackgroundResource(0);
             containerBtn.setBackgroundResource(0);
             trailerBtn.setBackgroundResource(R.drawable.red_back_round);
         }
+    }
+
+    protected void createLocationRequest() {
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+
+        SettingsClient client = LocationServices.getSettingsClient(getActivity());
+        Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+
+
+        task.addOnSuccessListener(getActivity(), new OnSuccessListener<LocationSettingsResponse>() {
+            @Override
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                getLocation2();
+            }
+        });
+
+        task.addOnFailureListener(getActivity(), new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if (e instanceof ResolvableApiException) {
+                    // Location settings are not satisfied, but this can be fixed
+                    // by showing the user a dialog.
+                    try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+                        ResolvableApiException resolvable = (ResolvableApiException) e;
+                        resolvable.startResolutionForResult(getActivity(),
+                                REQUEST_CHECK_SETTINGS);
+                    } catch (IntentSender.SendIntentException sendEx) {
+                        // Ignore the error.
+                    }
+                }
+            }
+        });
+
+    }
+
+    void getLocation2() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        LocationCallback mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if (location != null) {
+                        //TODO: UI updates.
+                        sourceLAT = location.getLatitude();
+                        sourceLNG = location.getLongitude();
+
+                        if (mCurrLocationMarker != null) {
+                            mCurrLocationMarker.remove();
+                        }
+                        //Place current location marker
+                        com.google.android.gms.maps.model.LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(latLng);
+                        markerOptions.title("Current Position");
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+
+                        //move map camera
+                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+                        LocationServices.getFusedLocationProviderClient(getActivity()).removeLocationUpdates(this);
+
+                    }
+                }
+            }
+        };
+
+        LocationServices.getFusedLocationProviderClient(getActivity()).requestLocationUpdates(locationRequest, mLocationCallback, null);
+
     }
 
 }

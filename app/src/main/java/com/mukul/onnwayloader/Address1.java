@@ -109,7 +109,10 @@ public class Address1 extends AppCompatActivity {
         dmobile = findViewById(R.id.mobile);
         confirm = findViewById(R.id.button);
 
-        pcity.setOnClickListener(new View.OnClickListener() {
+        pcity.setText(src);
+        dcity.setText(des);
+
+        /*pcity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -118,13 +121,13 @@ public class Address1 extends AppCompatActivity {
                 intent.putExtra(MapUtility.LONGITUDE, sourceLNG);
                 startActivityForResult(intent, 12);
 
-                /*List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                *//*List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
                 Intent intent = new Autocomplete.IntentBuilder(
                         AutocompleteActivityMode.FULLSCREEN, fields)
                         .setCountries(Collections.singletonList("IN"))
                         .setTypeFilter(TypeFilter.REGIONS)
                         .build(Address1.this);
-                startActivityForResult(intent, 12);*/
+                startActivityForResult(intent, 12);*//*
 
             }
         });
@@ -138,16 +141,16 @@ public class Address1 extends AppCompatActivity {
                 intent.putExtra(MapUtility.LONGITUDE, destinationLNG);
                 startActivityForResult(intent, 14);
 
-                /*List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                *//*List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
                 Intent intent = new Autocomplete.IntentBuilder(
                         AutocompleteActivityMode.FULLSCREEN, fields)
                         .setCountries(Collections.singletonList("IN"))
                         .setTypeFilter(TypeFilter.REGIONS)
                         .build(Address1.this);
-                startActivityForResult(intent, 14);*/
+                startActivityForResult(intent, 14);*//*
 
             }
-        });
+        });*/
 
 
         confirm.setOnClickListener(new View.OnClickListener() {

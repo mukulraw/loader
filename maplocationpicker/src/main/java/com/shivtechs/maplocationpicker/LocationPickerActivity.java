@@ -735,6 +735,7 @@ public class LocationPickerActivity extends AppCompatActivity implements OnMapRe
 
 
                     String city = addresses.get(0).getLocality();
+                    ccii = addresses.get(0).getLocality();
                     if (city != null)
                         addressBundle.putString("city",city);
                         sb.append(city).append(" ");
@@ -782,6 +783,7 @@ public class LocationPickerActivity extends AppCompatActivity implements OnMapRe
 
             LocationPickerActivity.this.userAddress = userAddress.getString("fulladdress");
             LocationPickerActivity.this.userCity = userAddress.getString("city");
+            ccii = userAddress.getString("city");
             LocationPickerActivity.this.userState = userAddress.getString("state");
             LocationPickerActivity.this.userPostalCode = userAddress.getString("postalcode");
             LocationPickerActivity.this.userCountry = userAddress.getString("country");

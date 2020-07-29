@@ -30,6 +30,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/text"
             android:text="20 Feet\n16 MT"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:gravity="center"
             android:paddingTop="5dp"/>
     </LinearLayout>

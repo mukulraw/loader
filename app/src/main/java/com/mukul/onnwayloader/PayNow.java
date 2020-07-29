@@ -114,7 +114,7 @@ public class PayNow extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            uri1 = FileProvider.getUriForFile(Objects.requireNonNull(PayNow.this), BuildConfig.APPLICATION_ID + ".provider", f1);
+                            uri1 = FileProvider.getUriForFile(Objects.requireNonNull(PayNow.this), getPackageName() + ".provider", f1);
 
 
                             Intent getpic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

@@ -71,6 +71,8 @@ public class MaterialActivity2 extends AppCompatActivity {
 
     ImageView image;
 
+    double sourceLAT , sourceLNG , destinationLAT , destinationLNG;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +86,10 @@ public class MaterialActivity2 extends AppCompatActivity {
         des = getIntent().getStringExtra("destination");
         dat = getIntent().getStringExtra("date");
         loa = getIntent().getStringExtra("loadtype");
+        sourceLAT = getIntent().getDoubleExtra("sourceLAT" , 0);
+        sourceLNG = getIntent().getDoubleExtra("sourceLNG" , 0);
+        destinationLAT = getIntent().getDoubleExtra("destinationLAT" , 0);
+        destinationLNG = getIntent().getDoubleExtra("destinationLNG" , 0);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
         mToolbar.setTitle("Booking Details");
@@ -437,6 +443,10 @@ public class MaterialActivity2 extends AppCompatActivity {
                             intent.putExtra("wid" , width.getText().toString());
                             intent.putExtra("hei" , height.getText().toString());
                             intent.putExtra("qua" , quantity.getText().toString());
+                            intent.putExtra("sourceLAT", sourceLAT);
+                            intent.putExtra("sourceLNG", sourceLNG);
+                            intent.putExtra("destinationLAT", destinationLAT);
+                            intent.putExtra("destinationLNG", destinationLNG);
                             startActivity(intent);
                         }
                         else
@@ -454,6 +464,10 @@ public class MaterialActivity2 extends AppCompatActivity {
                             intent.putExtra("wid" , width.getText().toString());
                             intent.putExtra("hei" , height.getText().toString());
                             intent.putExtra("qua" , quantity.getText().toString());
+                            intent.putExtra("sourceLAT", sourceLAT);
+                            intent.putExtra("sourceLNG", sourceLNG);
+                            intent.putExtra("destinationLAT", destinationLAT);
+                            intent.putExtra("destinationLNG", destinationLNG);
                             startActivity(intent);
                         }
 

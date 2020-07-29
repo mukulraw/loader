@@ -51,6 +51,7 @@ public class MaterialActivity extends AppCompatActivity {
 
     String src, des, tid, dat, loa, max;
 
+    double sourceLAT , sourceLNG , destinationLAT , destinationLNG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,10 @@ public class MaterialActivity extends AppCompatActivity {
         dat = getIntent().getStringExtra("date");
         loa = getIntent().getStringExtra("loadtype");
         max = getIntent().getStringExtra("max");
+        sourceLAT = getIntent().getDoubleExtra("sourceLAT" , 0);
+        sourceLNG = getIntent().getDoubleExtra("sourceLNG" , 0);
+        destinationLAT = getIntent().getDoubleExtra("destinationLAT" , 0);
+        destinationLNG = getIntent().getDoubleExtra("destinationLNG" , 0);
 
         //adding toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
@@ -142,6 +147,10 @@ public class MaterialActivity extends AppCompatActivity {
                             intent.putExtra("wei", weight.getText().toString());
                             intent.putExtra("mid", mid);
                             intent.putExtra("loa", loa);
+                            intent.putExtra("sourceLAT", sourceLAT);
+                            intent.putExtra("sourceLNG", sourceLNG);
+                            intent.putExtra("destinationLAT", destinationLAT);
+                            intent.putExtra("destinationLNG", destinationLNG);
                             startActivity(intent);
 
                         } else {

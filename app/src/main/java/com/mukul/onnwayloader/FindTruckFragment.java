@@ -74,6 +74,7 @@ import com.mukul.onnwayloader.materialtype.MaterialActivity;
 import com.mukul.onnwayloader.networking.AppController;
 import com.mukul.onnwayloader.truckTypePOJO.truckTypeBean;
 import com.mukul.onnwayloader.vehicletype.OpenTruckType;
+import com.shivtechs.maplocationpicker.LocationPickerActivity;
 import com.shivtechs.maplocationpicker.MapUtility;
 
 import java.util.ArrayList;
@@ -120,7 +121,7 @@ public class FindTruckFragment extends Fragment
     private Marker mCurrLocationMarker;
 
     //places auto complete
-    private int AUTOCOMPLETE_REQUEST_CODE = 1;
+    private int AUTOCOMPLETE_REQUEST_CODE = 12;
 
 
     //taking details
@@ -193,7 +194,10 @@ public class FindTruckFragment extends Fragment
             @Override
             public void onClick(View view) {
                 addressTyp = 1;
-                getLocation();
+                Intent intent = new Intent(getActivity(), LocationPickerActivity.class);
+                intent.putExtra(MapUtility.LATITUDE , sourceLAT);
+                intent.putExtra(MapUtility.LONGITUDE , sourceLNG);
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
             }
         });
 
@@ -201,7 +205,10 @@ public class FindTruckFragment extends Fragment
             @Override
             public void onClick(View view) {
                 addressTyp = 2;
-                getLocation();
+                Intent intent = new Intent(getActivity(), LocationPickerActivity.class);
+                intent.putExtra(MapUtility.LATITUDE , destinationLAT);
+                intent.putExtra(MapUtility.LONGITUDE , destinationLNG);
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
             }
         });
 
@@ -305,6 +312,10 @@ public class FindTruckFragment extends Fragment
                                     intent.putExtra("max", max);
                                     intent.putExtra("loadtype", loadType);
                                     intent.putExtra("date", pickUpDate);
+                                    intent.putExtra("sourceLAT", sourceLAT);
+                                    intent.putExtra("sourceLNG", sourceLNG);
+                                    intent.putExtra("destinationLAT", destinationLAT);
+                                    intent.putExtra("destinationLNG", destinationLNG);
                                     startActivity(intent);
 
 
@@ -323,6 +334,10 @@ public class FindTruckFragment extends Fragment
                                 intent.putExtra("destination", destAddress);
                                 intent.putExtra("loadtype", loadType);
                                 intent.putExtra("date", pickUpDate);
+                                intent.putExtra("sourceLAT", sourceLAT);
+                                intent.putExtra("sourceLNG", sourceLNG);
+                                intent.putExtra("destinationLAT", destinationLAT);
+                                intent.putExtra("destinationLNG", destinationLNG);
                                 startActivity(intent);
 
 
@@ -376,35 +391,54 @@ public class FindTruckFragment extends Fragment
     }
 
 
-    private void getLocation() {
-
-        //this method is used to get the places by places autocomplete
-
-
-        // Set the fields to specify which types of place data to return.
-        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
-        // Start the autocomplete intent.
-        Intent intent = new Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.FULLSCREEN, fields)
-                .setCountry("ind")
-                .setTypeFilter(TypeFilter.CITIES)
-                .build(getActivity());
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                if (addressTyp == 1) {
-                    srcAddress = place.getName();
-                    sourceAddress.setText(place.getName());
-                } else if (addressTyp == 2) {
-                    destAddress = place.getName();
-                    destinationAddress.setText(place.getName());
+
+                try {
+                    if (data != null && data.getStringExtra(MapUtility.ADDRESS) != null) {
+                        // String address = data.getStringExtra(MapUtility.ADDRESS);
+
+                    /* data in completeAddress bundle
+                    "fulladdress"
+                    "city"
+                    "state"
+                    "postalcode"
+                    "country"
+                    "addressline1"
+                    "addressline2"
+                     */
+
+                        if (addressTyp == 1) {
+
+                            sourceLAT = data.getDoubleExtra(MapUtility.LATITUDE, 0.0);
+                            sourceLNG = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0);
+
+                            srcAddress = data.getStringExtra("city");
+                            sourceAddress.setText(srcAddress);
+
+                            Log.d("loc1" , String.valueOf(sourceLAT));
+                            Log.d("loc1" , String.valueOf(sourceLNG));
+
+                        } else if (addressTyp == 2) {
+
+                            destinationLAT = data.getDoubleExtra(MapUtility.LATITUDE, 0.0);
+                            destinationLNG = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0);
+
+                            destAddress = data.getStringExtra("city");
+                            destinationAddress.setText(destAddress);
+
+                            Log.d("loc2" , destAddress);
+
+                        }
+
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
+
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 Status status = Autocomplete.getStatusFromIntent(data);

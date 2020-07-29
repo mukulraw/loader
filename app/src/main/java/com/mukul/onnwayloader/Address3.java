@@ -55,7 +55,7 @@ public class Address3 extends AppCompatActivity {
     String freight, other_charges, cgst, sgst, insurance;
 
     File image = null;
-
+    double sourceLAT , sourceLNG , destinationLAT , destinationLNG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,10 @@ public class Address3 extends AppCompatActivity {
         mid = getIntent().getStringExtra("mid");
         loa = getIntent().getStringExtra("loa");
         desc = getIntent().getStringExtra("desc");
+        sourceLAT = getIntent().getDoubleExtra("sourceLAT" , 0);
+        sourceLNG = getIntent().getDoubleExtra("sourceLNG" , 0);
+        destinationLAT = getIntent().getDoubleExtra("destinationLAT" , 0);
+        destinationLNG = getIntent().getDoubleExtra("destinationLNG" , 0);
 
         if (getIntent().getStringExtra("image").length() > 0)
         {

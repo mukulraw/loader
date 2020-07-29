@@ -63,6 +63,8 @@ EditText promo , decs;
     float pvalue = 0;
     String pid = "";
 
+    double sourceLAT , sourceLNG , destinationLAT , destinationLNG;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +77,10 @@ EditText promo , decs;
         wei = getIntent().getStringExtra("wei");
         mid = getIntent().getStringExtra("mid");
         loa = getIntent().getStringExtra("loa");
+        sourceLAT = getIntent().getDoubleExtra("sourceLAT" , 0);
+        sourceLNG = getIntent().getDoubleExtra("sourceLNG" , 0);
+        destinationLAT = getIntent().getDoubleExtra("destinationLAT" , 0);
+        destinationLNG = getIntent().getDoubleExtra("destinationLNG" , 0);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
         mToolbar.setTitle("Shipment Details");
@@ -288,6 +294,10 @@ EditText promo , decs;
                                 intent.putExtra("cgst" , "" + cg);
                                 intent.putExtra("sgst" , "" + sg);
                                 intent.putExtra("insurance" , "" + in);
+                                intent.putExtra("sourceLAT", sourceLAT);
+                                intent.putExtra("sourceLNG", sourceLNG);
+                                intent.putExtra("destinationLAT", destinationLAT);
+                                intent.putExtra("destinationLNG", destinationLNG);
                                 startActivity(intent);
                             }
                             else
@@ -440,6 +450,10 @@ EditText promo , decs;
                     intent.putExtra("cgst" , "" + cg);
                     intent.putExtra("sgst" , "" + sg);
                     intent.putExtra("insurance" , "" + in);
+                    intent.putExtra("sourceLAT", sourceLAT);
+                    intent.putExtra("sourceLNG", sourceLNG);
+                    intent.putExtra("destinationLAT", destinationLAT);
+                    intent.putExtra("destinationLNG", destinationLNG);
                     startActivity(intent);
                 }
                 else
@@ -475,6 +489,10 @@ EditText promo , decs;
                     intent.putExtra("cgst" , "" + cg);
                     intent.putExtra("sgst" , "" + sg);
                     intent.putExtra("insurance" , "" + in);
+                    intent.putExtra("sourceLAT", sourceLAT);
+                    intent.putExtra("sourceLNG", sourceLNG);
+                    intent.putExtra("destinationLAT", destinationLAT);
+                    intent.putExtra("destinationLNG", destinationLNG);
                     startActivity(intent);
                 }
                 else

@@ -1,1 +1,2 @@
+include ':maplocationpicker'
 include ':app'

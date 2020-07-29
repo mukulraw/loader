@@ -79,7 +79,11 @@ public interface AllApiIneterface {
             @Part("height") String height,
             @Part("quantity") String quantity,
             @Part("pvalue") String pvalue,
-            @Part("pid") String pid
+            @Part("pid") String pid,
+            @Part("sourceLAT") String sourceLAT,
+            @Part("sourceLNG") String sourceLNG,
+            @Part("destinationLAT") String destinationLAT,
+            @Part("destinationLNG") String destinationLNG
     );
 
     @Multipart

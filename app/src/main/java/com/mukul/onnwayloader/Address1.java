@@ -27,6 +27,8 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.mukul.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.mukul.onnwayloader.networking.AppController;
+import com.shivtechs.maplocationpicker.LocationPickerActivity;
+import com.shivtechs.maplocationpicker.MapUtility;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,19 +51,20 @@ public class Address1 extends AppCompatActivity {
 
     Button confirm;
 
-    String src, des, tid, dat, wei, mid, loa , desc;
+    String src, des, tid, dat, wei, mid, loa, desc;
     String freight, other_charges, cgst, sgst, insurance;
 
     float pvalue = 0;
     String pid;
 
+    double sourceLAT, sourceLNG, destinationLAT, destinationLNG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address1);
 
-        Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
+        MapUtility.apiKey = getResources().getString(R.string.google_maps_key);
 
         src = getIntent().getStringExtra("src");
         des = getIntent().getStringExtra("des");
@@ -78,6 +81,10 @@ public class Address1 extends AppCompatActivity {
         cgst = getIntent().getStringExtra("cgst");
         sgst = getIntent().getStringExtra("sgst");
         insurance = getIntent().getStringExtra("insurance");
+        sourceLAT = getIntent().getDoubleExtra("sourceLAT", 0);
+        sourceLNG = getIntent().getDoubleExtra("sourceLNG", 0);
+        destinationLAT = getIntent().getDoubleExtra("destinationLAT", 0);
+        destinationLNG = getIntent().getDoubleExtra("destinationLNG", 0);
 
         Toolbar mToolbar = findViewById(R.id.toolbar_activity_shipment);
         mToolbar.setTitle("Address");
@@ -106,13 +113,18 @@ public class Address1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                Intent intent = new Intent(Address1.this, LocationPickerActivity.class);
+                intent.putExtra(MapUtility.LATITUDE, sourceLAT);
+                intent.putExtra(MapUtility.LONGITUDE, sourceLNG);
+                startActivityForResult(intent, 12);
+
+                /*List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
                 Intent intent = new Autocomplete.IntentBuilder(
                         AutocompleteActivityMode.FULLSCREEN, fields)
                         .setCountries(Collections.singletonList("IN"))
                         .setTypeFilter(TypeFilter.REGIONS)
                         .build(Address1.this);
-                startActivityForResult(intent, 12);
+                startActivityForResult(intent, 12);*/
 
             }
         });
@@ -121,13 +133,18 @@ public class Address1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                Intent intent = new Intent(Address1.this, LocationPickerActivity.class);
+                intent.putExtra(MapUtility.LATITUDE, destinationLAT);
+                intent.putExtra(MapUtility.LONGITUDE, destinationLNG);
+                startActivityForResult(intent, 14);
+
+                /*List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
                 Intent intent = new Autocomplete.IntentBuilder(
                         AutocompleteActivityMode.FULLSCREEN, fields)
                         .setCountries(Collections.singletonList("IN"))
                         .setTypeFilter(TypeFilter.REGIONS)
                         .build(Address1.this);
-                startActivityForResult(intent, 14);
+                startActivityForResult(intent, 14);*/
 
             }
         });
@@ -196,7 +213,11 @@ public class Address1 extends AppCompatActivity {
                                                 "",
                                                 "",
                                                 String.valueOf(pvalue),
-                                                pid
+                                                pid,
+                                                String.valueOf(sourceLAT),
+                                                String.valueOf(sourceLNG),
+                                                String.valueOf(destinationLAT),
+                                                String.valueOf(destinationLNG)
                                         );
 
                                         call.enqueue(new Callback<confirm_full_bean>() {
@@ -271,6 +292,26 @@ public class Address1 extends AppCompatActivity {
 
         if (requestCode == 12) {
             if (resultCode == RESULT_OK) {
+
+                try {
+                    if (data != null && data.getStringExtra(MapUtility.ADDRESS) != null) {
+
+                        sourceLAT = data.getDoubleExtra(MapUtility.LATITUDE, 0.0);
+                        sourceLNG = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0);
+
+                        String srcAddress = data.getStringExtra("city");
+                        pcity.setText(srcAddress);
+
+                        Log.d("loc1", String.valueOf(sourceLAT));
+                        Log.d("loc1", String.valueOf(sourceLNG));
+
+
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+/*
                 Place place = Autocomplete.getPlaceFromIntent(data);
 
                 Geocoder geocoder = new Geocoder(Address1.this);
@@ -284,7 +325,7 @@ public class Address1 extends AppCompatActivity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
@@ -299,7 +340,26 @@ public class Address1 extends AppCompatActivity {
 
         if (requestCode == 14) {
             if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
+
+                try {
+                    if (data != null && data.getStringExtra(MapUtility.ADDRESS) != null) {
+
+                        destinationLAT = data.getDoubleExtra(MapUtility.LATITUDE, 0.0);
+                        destinationLNG = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0);
+
+                        String srcAddress = data.getStringExtra("city");
+                        dcity.setText(srcAddress);
+
+                        Log.d("loc1", String.valueOf(destinationLAT));
+                        Log.d("loc1", String.valueOf(destinationLNG));
+
+
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                /*Place place = Autocomplete.getPlaceFromIntent(data);
 
 
                 Geocoder geocoder = new Geocoder(Address1.this);
@@ -310,7 +370,7 @@ public class Address1 extends AppCompatActivity {
                     dcity.setText(cii);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {

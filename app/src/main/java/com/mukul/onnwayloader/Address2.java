@@ -51,7 +51,7 @@ public class Address2 extends AppCompatActivity {
     String src , des , tid , dat , wei , mid , loa , desc;
     String freight , other_charges , cgst , sgst , insurance;
 
-
+    double sourceLAT, sourceLNG, destinationLAT, destinationLNG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,10 @@ public class Address2 extends AppCompatActivity {
         cgst = getIntent().getStringExtra("cgst");
         sgst = getIntent().getStringExtra("sgst");
         insurance = getIntent().getStringExtra("insurance");
+        sourceLAT = getIntent().getDoubleExtra("sourceLAT", 0);
+        sourceLNG = getIntent().getDoubleExtra("sourceLNG", 0);
+        destinationLAT = getIntent().getDoubleExtra("destinationLAT", 0);
+        destinationLNG = getIntent().getDoubleExtra("destinationLNG", 0);
 
         Toolbar mToolbar = findViewById(R.id.toolbar_activity_shipment);
         mToolbar.setTitle("Address");
@@ -97,7 +101,10 @@ public class Address2 extends AppCompatActivity {
         dmobile = findViewById(R.id.mobile);
         confirm = findViewById(R.id.button);
 
-        pcity.setOnClickListener(new View.OnClickListener() {
+        pcity.setText(src);
+        dcity.setText(des);
+
+        /*pcity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -125,7 +132,7 @@ public class Address2 extends AppCompatActivity {
                 startActivityForResult(intent, 14);
 
             }
-        });
+        });*/
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +205,10 @@ public class Address2 extends AppCompatActivity {
                                                         "",
                                                         "",
                                                         "",
+                                                        String.valueOf(sourceLAT),
+                                                        String.valueOf(sourceLNG),
+                                                        String.valueOf(destinationLAT),
+                                                        String.valueOf(destinationLNG),
                                                         body
                                                 );
 

@@ -114,7 +114,10 @@ public class Address3 extends AppCompatActivity {
         dmobile = findViewById(R.id.mobile);
         confirm = findViewById(R.id.button);
 
-        pcity.setOnClickListener(new View.OnClickListener() {
+        pcity.setText(src);
+        dcity.setText(des);
+
+        /*pcity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -142,7 +145,7 @@ public class Address3 extends AppCompatActivity {
                 startActivityForResult(intent, 14);
 
             }
-        });
+        });*/
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,6 +221,10 @@ public class Address3 extends AppCompatActivity {
                                                 wid,
                                                 hei,
                                                 qua,
+                                                String.valueOf(sourceLAT),
+                                                String.valueOf(sourceLNG),
+                                                String.valueOf(destinationLAT),
+                                                String.valueOf(destinationLNG),
                                                 body
                                         );
 

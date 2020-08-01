@@ -117,6 +117,10 @@ public interface AllApiIneterface {
             @Part("width") String width,
             @Part("height") String height,
             @Part("quantity") String quantity,
+            @Part("sourceLAT") String sourceLAT,
+            @Part("sourceLNG") String sourceLNG,
+            @Part("destinationLAT") String destinationLAT,
+            @Part("destinationLNG") String destinationLNG,
             @Part MultipartBody.Part file
     );
 

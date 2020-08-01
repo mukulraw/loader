@@ -248,5 +248,10 @@ public interface AllApiIneterface {
             @Part MultipartBody.Part file
     );
 
+    @Multipart
+    @POST("android/getLogs.php")
+    Call<trackBean> getLogs(
+            @Part("order_id") String order_id
+    );
 
 }

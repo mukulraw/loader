@@ -49,6 +49,7 @@ import com.downloader.OnStartOrResumeListener;
 import com.downloader.PRDownloader;
 import com.downloader.PRDownloaderConfig;
 import com.downloader.Progress;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mukul.onnwayloader.checkPromoPOJO.checkPromoBean;
 import com.mukul.onnwayloader.confirm_full_POJO.Data;
 import com.mukul.onnwayloader.confirm_full_POJO.Invoice;
@@ -115,6 +116,8 @@ public class OrderDetails extends AppCompatActivity {
 
     String insused = "no";
 
+    FloatingActionButton track;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,6 +167,7 @@ public class OrderDetails extends AppCompatActivity {
         promo = findViewById(R.id.editText13);
         upload1 = findViewById(R.id.button5);
         upload2 = findViewById(R.id.button6);
+        track = findViewById(R.id.floatingActionButton);
 
         pod = findViewById(R.id.pod);
         documents = findViewById(R.id.recyclerView);
@@ -497,6 +501,17 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
+        track.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(OrderDetails.this, MapsActivity.class);
+                intent.putExtra("order", id);
+                startActivity(intent);
+
+            }
+        });
+
 
     }
 
@@ -672,6 +687,11 @@ public class OrderDetails extends AppCompatActivity {
 
 
 
+                if (item.getStatus().equals("started")) {
+                    track.setVisibility(View.VISIBLE);
+                } else {
+                    track.setVisibility(View.GONE);
+                }
 
 
 

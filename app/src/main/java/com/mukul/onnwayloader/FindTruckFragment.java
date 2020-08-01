@@ -195,8 +195,8 @@ public class FindTruckFragment extends Fragment
             public void onClick(View view) {
                 addressTyp = 1;
                 Intent intent = new Intent(getActivity(), LocationPickerActivity.class);
-                intent.putExtra(MapUtility.LATITUDE , sourceLAT);
-                intent.putExtra(MapUtility.LONGITUDE , sourceLNG);
+                intent.putExtra(MapUtility.LATITUDE, sourceLAT);
+                intent.putExtra(MapUtility.LONGITUDE, sourceLNG);
                 startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
             }
         });
@@ -206,8 +206,8 @@ public class FindTruckFragment extends Fragment
             public void onClick(View view) {
                 addressTyp = 2;
                 Intent intent = new Intent(getActivity(), LocationPickerActivity.class);
-                intent.putExtra(MapUtility.LATITUDE , destinationLAT);
-                intent.putExtra(MapUtility.LONGITUDE , destinationLNG);
+                intent.putExtra(MapUtility.LATITUDE, destinationLAT);
+                intent.putExtra(MapUtility.LONGITUDE, destinationLNG);
                 startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
             }
         });
@@ -419,8 +419,8 @@ public class FindTruckFragment extends Fragment
                             srcAddress = data.getStringExtra("city");
                             sourceAddress.setText(srcAddress);
 
-                            Log.d("loc1" , String.valueOf(sourceLAT));
-                            Log.d("loc1" , String.valueOf(sourceLNG));
+                            Log.d("loc1", String.valueOf(sourceLAT));
+                            Log.d("loc1", String.valueOf(sourceLNG));
 
                         } else if (addressTyp == 2) {
 
@@ -430,7 +430,7 @@ public class FindTruckFragment extends Fragment
                             destAddress = data.getStringExtra("city");
                             destinationAddress.setText(destAddress);
 
-                            Log.d("loc2" , destAddress);
+                            Log.d("loc2", destAddress);
 
                         }
 
@@ -825,7 +825,12 @@ public class FindTruckFragment extends Fragment
                         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
-                        LocationServices.getFusedLocationProviderClient(getActivity()).removeLocationUpdates(this);
+                        try {
+                            LocationServices.getFusedLocationProviderClient(getActivity()).removeLocationUpdates(this);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
 
                     }
                 }

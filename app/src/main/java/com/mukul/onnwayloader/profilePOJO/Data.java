@@ -40,6 +40,15 @@ public class Data {
     @SerializedName("created")
     @Expose
     private String created;
+    @SerializedName("pan_verify")
+    @Expose
+    private String pan_verify;
+    @SerializedName("af_verify")
+    @Expose
+    private String af_verify;
+    @SerializedName("ab_verify")
+    @Expose
+    private String ab_verify;
 
     public String getUserId() {
         return userId;
@@ -137,4 +146,27 @@ public class Data {
         this.created = created;
     }
 
+    public String getAb_verify() {
+        return ab_verify;
+    }
+
+    public String getAf_verify() {
+        return af_verify;
+    }
+
+    public String getPan_verify() {
+        return pan_verify;
+    }
+
+    public void setPan_verify(String pan_verify) {
+        this.pan_verify = pan_verify;
+    }
+
+    public void setAb_verify(String ab_verify) {
+        this.ab_verify = ab_verify;
+    }
+
+    public void setAf_verify(String af_verify) {
+        this.af_verify = af_verify;
+    }
 }

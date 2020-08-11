@@ -53,6 +53,8 @@ public class KYC extends AppCompatActivity {
     private File f1;
     String ty = "";
 
+    ImageView pan_verify , af_verify , ab_verify;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +78,9 @@ public class KYC extends AppCompatActivity {
         upload2 = findViewById(R.id.button9);
         upload3 = findViewById(R.id.button10);
         progress = findViewById(R.id.progressBar);
+        pan_verify = findViewById(R.id.imageView15);
+        af_verify = findViewById(R.id.imageView16);
+        ab_verify = findViewById(R.id.imageView17);
 
 
         upload1.setOnClickListener(new View.OnClickListener() {
@@ -274,6 +279,38 @@ public class KYC extends AppCompatActivity {
                 loader.displayImage(item.getAb() , ab , options);
                 loader.displayImage(item.getAf() , af , options);
 
+                if (item.getPan_verify().equals("verified"))
+                {
+                    pan_verify.setVisibility(View.VISIBLE);
+                    upload1.setEnabled(false);
+                }
+                else
+                {
+                    pan_verify.setVisibility(View.GONE);
+                    upload1.setEnabled(true);
+                }
+
+                if (item.getAf_verify().equals("verified"))
+                {
+                    af_verify.setVisibility(View.VISIBLE);
+                    upload2.setEnabled(false);
+                }
+                else
+                {
+                    af_verify.setVisibility(View.GONE);
+                    upload2.setEnabled(true);
+                }
+
+                if (item.getAb_verify().equals("verified"))
+                {
+                    ab_verify.setVisibility(View.VISIBLE);
+                    upload3.setEnabled(false);
+                }
+                else
+                {
+                    ab_verify.setVisibility(View.GONE);
+                    upload3.setEnabled(true);
+                }
 
                 progress.setVisibility(View.GONE);
 

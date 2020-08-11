@@ -80,22 +80,22 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class OrderDetails extends AppCompatActivity {
 
-    TextView orderid , orderdate , truck , source , destination , material , weight , date , status , loadtype , details;
-    TextView grand , tnc ,request;
+    TextView orderid, orderdate, truck, source, destination, material, weight, date, status, loadtype, details;
+    TextView grand, tnc, request;
     CheckBox insurance;
     Button confirm;
     ProgressBar progress;
 
-    TextView vehiclenumber , drivernumber , pending , pending2;
+    TextView vehiclenumber, drivernumber, pending, pending2;
 
-    Button add , upload1 , upload2 , apply;
+    Button add, upload1, upload2, apply;
 
-    RecyclerView pod , documents , lrdownload;
+    RecyclerView pod, documents, lrdownload;
 
-    Button pay80 , pay100;
+    Button pay80, pay100;
 
 
-    float fr = 0, ot = 0 , cg = 0 , sg = 0 , in = 0;
+    float fr = 0, ot = 0, cg = 0, sg = 0, in = 0;
     float gr = 0;
 
     boolean ins = false;
@@ -105,14 +105,14 @@ public class OrderDetails extends AppCompatActivity {
 
     TextView discountterms;
 
-    String id , assign_id;
+    String id, assign_id;
 
     CardView truckcard;
 
     float pvalue = 0;
     String pid = "";
 
-    EditText promo , decs;
+    EditText promo, decs;
 
     String insused = "no";
 
@@ -260,8 +260,8 @@ public class OrderDetails extends AppCompatActivity {
             }
         };
 
-        spannableString.setSpan(clickableSpan1, 5,8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(clickableSpan2, 13,32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan1, 5, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan2, 13, 32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tnc.setText(spannableString);
         tnc.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -294,14 +294,14 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(OrderDetails.this , PayNow.class);
-                intent.putExtra("percent" , "80");
-                intent.putExtra("pid" , pid);
-                intent.putExtra("pvalue" , pvalue);
-                intent.putExtra("insused" , insused);
-                intent.putExtra("insurance" , in);
-                intent.putExtra("isinsurance" , ins);
-                intent.putExtra("oid" , id);
+                Intent intent = new Intent(OrderDetails.this, PayNow.class);
+                intent.putExtra("percent", "80");
+                intent.putExtra("pid", pid);
+                intent.putExtra("pvalue", pvalue);
+                intent.putExtra("insused", insused);
+                intent.putExtra("insurance", in);
+                intent.putExtra("isinsurance", ins);
+                intent.putExtra("oid", id);
                 startActivity(intent);
 
             }
@@ -311,14 +311,14 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(OrderDetails.this , PayNow.class);
-                intent.putExtra("percent" , "100");
-                intent.putExtra("pid" , pid);
-                intent.putExtra("pvalue" , pvalue);
-                intent.putExtra("insused" , insused);
-                intent.putExtra("insurance" , in);
-                intent.putExtra("isinsurance" , ins);
-                intent.putExtra("oid" , id);
+                Intent intent = new Intent(OrderDetails.this, PayNow.class);
+                intent.putExtra("percent", "100");
+                intent.putExtra("pid", pid);
+                intent.putExtra("pvalue", pvalue);
+                intent.putExtra("insused", insused);
+                intent.putExtra("insurance", in);
+                intent.putExtra("isinsurance", ins);
+                intent.putExtra("oid", id);
                 startActivity(intent);
 
             }
@@ -358,14 +358,11 @@ public class OrderDetails extends AppCompatActivity {
                                     @Override
                                     public void onResponse(Call<updateProfileBean> call, Response<updateProfileBean> response) {
 
-                                        if (response.body().getStatus().equals("1"))
-                                        {
+                                        if (response.body().getStatus().equals("1")) {
                                             Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                             dialog.dismiss();
                                             finish();
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
 
@@ -393,8 +390,6 @@ public class OrderDetails extends AppCompatActivity {
                         .show();
 
 
-
-
             }
         });
 
@@ -404,8 +399,7 @@ public class OrderDetails extends AppCompatActivity {
 
                 String pc = promo.getText().toString();
 
-                if (pc.length() > 0)
-                {
+                if (pc.length() > 0) {
 
                     apply.setEnabled(false);
                     apply.setClickable(false);
@@ -425,14 +419,13 @@ public class OrderDetails extends AppCompatActivity {
 
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                    Call<checkPromoBean> call = cr.checkPromo(pc , SharePreferenceUtils.getInstance().getString("userId"));
+                    Call<checkPromoBean> call = cr.checkPromo(pc, SharePreferenceUtils.getInstance().getString("userId"));
 
                     call.enqueue(new Callback<checkPromoBean>() {
                         @Override
                         public void onResponse(Call<checkPromoBean> call, Response<checkPromoBean> response) {
 
-                            if (response.body().getStatus().equals("1"))
-                            {
+                            if (response.body().getStatus().equals("1")) {
 
                                 pvalue = Float.parseFloat(response.body().getData().getDiscount());
 
@@ -444,9 +437,7 @@ public class OrderDetails extends AppCompatActivity {
 
                                 Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 apply.setEnabled(true);
                                 apply.setClickable(true);
@@ -470,9 +461,7 @@ public class OrderDetails extends AppCompatActivity {
                         }
                     });
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(OrderDetails.this, "Invalid PROMO code", Toast.LENGTH_SHORT).show();
                 }
 
@@ -515,16 +504,12 @@ public class OrderDetails extends AppCompatActivity {
 
     }
 
-    void updateSummary()
-    {
+    void updateSummary() {
 
-        if (ins)
-        {
+        if (ins) {
             gr = fr + ot + cg + sg + in;
             grand.setText("\u20B9" + gr);
-        }
-        else
-        {
+        } else {
             gr = fr + ot + cg + sg;
             grand.setText("\u20B9" + gr);
         }
@@ -560,8 +545,8 @@ public class OrderDetails extends AppCompatActivity {
 
                 Data item = response.body().getData();
                 truck.setText(item.getTruckType());
-                source.setText(item.getSource());
-                destination.setText(item.getDestination());
+                source.setText(item.getPickupAddress() + ", " + item.getPickupPincode() + ", " + item.getPickupPhone() + ", " + item.getPickupCity());
+                destination.setText(item.getDropAddress() + ", " + item.getDropPincode() + ", " + item.getDropPhone() + ", " + item.getDropCity());
                 material.setText(item.getMaterial());
                 weight.setText(item.getWeight());
                 date.setText(item.getSchedule());
@@ -572,88 +557,69 @@ public class OrderDetails extends AppCompatActivity {
 
                 insused = item.getInsurance_used();
 
-                if (item.getPer80().equals("pending"))
-                {
+                if (item.getPer80().equals("pending")) {
                     pay80.setText("80%");
                     pay80.setEnabled(true);
-                }
-                else
-                {
-                    pay80.setText("80%\n" + item.getPer80());
+                } else {
+                    pay80.setText("Paid\n₹ " + item.getPaidAmount());
                     pay80.setEnabled(false);
                 }
 
 
-                if (item.getPer100().equals("pending"))
-                {
+                if (item.getPer100().equals("pending")) {
                     pay100.setText("100%");
                     pay100.setEnabled(true);
-                }
-                else
-                {
+                } else {
                     pay100.setText("100%\n" + item.getPer100());
                     pay100.setEnabled(false);
                 }
 
 
-                if (item.getAssign_id() != null)
-                {
+                if (item.getAssign_id() != null) {
 
                     assign_id = item.getAssign_id();
 
-                    if (item.getVehicleNumber() != null)
-                    {
+                    if (item.getVehicleNumber() != null) {
                         vehiclenumber.setText(item.getVehicleNumber());
                         drivernumber.setText(item.getDriverNumber());
-                    }
-                    else
-                    {
+                    } else {
                         vehiclenumber.setText("Not Available");
                         drivernumber.setText("Not Available");
                     }
 
-                    if (response.body().getData().getPod().size() > 0)
-                    {
+                    if (response.body().getData().getPod().size() > 0) {
                         pending.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         pending.setVisibility(View.VISIBLE);
                     }
 
-                    PODAdapter adapter = new PODAdapter(OrderDetails.this , item.getPod());
-                    GridLayoutManager manager = new GridLayoutManager(OrderDetails.this , 2);
+                    PODAdapter adapter = new PODAdapter(OrderDetails.this, item.getPod());
+                    GridLayoutManager manager = new GridLayoutManager(OrderDetails.this, 2);
                     pod.setAdapter(adapter);
                     pod.setLayoutManager(manager);
 
-                    DocAdapter adapter2 = new DocAdapter(OrderDetails.this , item.getInvoice());
-                    GridLayoutManager manager2 = new GridLayoutManager(OrderDetails.this , 2);
+                    DocAdapter adapter2 = new DocAdapter(OrderDetails.this, item.getInvoice());
+                    GridLayoutManager manager2 = new GridLayoutManager(OrderDetails.this, 2);
                     documents.setAdapter(adapter2);
                     documents.setLayoutManager(manager2);
                     truckcard.setVisibility(View.VISIBLE);
 
-                    LRAdapter adapter3 = new LRAdapter(OrderDetails.this , item.getLr());
-                    GridLayoutManager manager3 = new GridLayoutManager(OrderDetails.this , 1);
+                    LRAdapter adapter3 = new LRAdapter(OrderDetails.this, item.getLr());
+                    GridLayoutManager manager3 = new GridLayoutManager(OrderDetails.this, 1);
                     lrdownload.setAdapter(adapter3);
                     lrdownload.setLayoutManager(manager3);
 
 
-                    if (response.body().getData().getLr().size() > 0)
-                    {
+                    if (response.body().getData().getLr().size() > 0) {
                         pending2.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         pending2.setVisibility(View.VISIBLE);
                     }
 
 
-                }
-                else
-                {
+                } else {
                     truckcard.setVisibility(View.GONE);
                 }
-
 
 
                 insurance.setText("\u20B9" + item.getInsurance());
@@ -664,27 +630,20 @@ public class OrderDetails extends AppCompatActivity {
                 sg = Float.parseFloat(item.getSgst());
                 in = Float.parseFloat(item.getInsurance());
 
-                if (in > 0)
-                {
+                if (in > 0) {
 
-                    if (item.getInsurance_used().equals("yes"))
-                    {
+                    if (item.getInsurance_used().equals("yes")) {
                         insurance.setChecked(true);
                         insurance.setEnabled(false);
-                    }
-                    else
-                    {
+                    } else {
                         insurance.setEnabled(true);
                         insurance.setChecked(false);
                     }
 
 
-                }
-                else
-                {
+                } else {
                     insurance.setEnabled(false);
                 }
-
 
 
                 if (item.getStatus().equals("started")) {
@@ -694,18 +653,13 @@ public class OrderDetails extends AppCompatActivity {
                 }
 
 
-
-
-
                 updateSummary();
 
                 try {
                     pvalue = Float.parseFloat(response.body().getData().getPvalue());
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-
 
 
                 promo.setText(item.getPromo_code());
@@ -714,16 +668,13 @@ public class OrderDetails extends AppCompatActivity {
 
                 grand.setText("₹ " + gr);
 
-                if (pvalue > 0)
-                {
+                if (pvalue > 0) {
                     apply.setEnabled(false);
                     apply.setClickable(false);
 
                     promo.setEnabled(false);
                     promo.setClickable(false);
-                }
-                else
-                {
+                } else {
                     apply.setEnabled(true);
                     apply.setClickable(true);
 
@@ -743,14 +694,12 @@ public class OrderDetails extends AppCompatActivity {
         });
     }
 
-    class PODAdapter extends RecyclerView.Adapter<PODAdapter.ViewHolder>
-    {
+    class PODAdapter extends RecyclerView.Adapter<PODAdapter.ViewHolder> {
 
         List<Pod> list = new ArrayList<>();
         Context context;
 
-        public PODAdapter(Context context , List<Pod> list)
-        {
+        public PODAdapter(Context context, List<Pod> list) {
             this.context = context;
             this.list = list;
         }
@@ -770,26 +719,24 @@ public class OrderDetails extends AppCompatActivity {
 
             final DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).resetViewBeforeLoading(false).build();
             final ImageLoader loader = ImageLoader.getInstance();
-            loader.displayImage(item.getName() , holder.image , options);
+            loader.displayImage(item.getName(), holder.image, options);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Dialog dialog = new Dialog(context , android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+                    Dialog dialog = new Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
                     //dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-                      //      WindowManager.LayoutParams.MATCH_PARENT);
+                    //      WindowManager.LayoutParams.MATCH_PARENT);
                     dialog.setContentView(R.layout.zoom_dialog);
                     dialog.setCancelable(true);
                     dialog.show();
 
                     ImageView img = dialog.findViewById(R.id.image);
-                    loader.displayImage(item.getName() , img , options);
+                    loader.displayImage(item.getName(), img, options);
 
                 }
             });
-
-
 
 
         }
@@ -799,9 +746,9 @@ public class OrderDetails extends AppCompatActivity {
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder
-        {
+        class ViewHolder extends RecyclerView.ViewHolder {
             ImageView image;
+
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 image = itemView.findViewById(R.id.image);
@@ -809,14 +756,12 @@ public class OrderDetails extends AppCompatActivity {
         }
     }
 
-    class DocAdapter extends RecyclerView.Adapter<DocAdapter.ViewHolder>
-    {
+    class DocAdapter extends RecyclerView.Adapter<DocAdapter.ViewHolder> {
 
         List<Invoice> list = new ArrayList<>();
         Context context;
 
-        public DocAdapter(Context context , List<Invoice> list)
-        {
+        public DocAdapter(Context context, List<Invoice> list) {
             this.context = context;
             this.list = list;
         }
@@ -836,13 +781,13 @@ public class OrderDetails extends AppCompatActivity {
 
             final DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).resetViewBeforeLoading(false).build();
             final ImageLoader loader = ImageLoader.getInstance();
-            loader.displayImage(item.getName() , holder.image , options);
+            loader.displayImage(item.getName(), holder.image, options);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Dialog dialog = new Dialog(context , android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+                    Dialog dialog = new Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
                     //dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
                     //      WindowManager.LayoutParams.MATCH_PARENT);
                     dialog.setContentView(R.layout.zoom_dialog);
@@ -850,7 +795,7 @@ public class OrderDetails extends AppCompatActivity {
                     dialog.show();
 
                     ImageView img = dialog.findViewById(R.id.image);
-                    loader.displayImage(item.getName() , img , options);
+                    loader.displayImage(item.getName(), img, options);
 
                 }
             });
@@ -862,9 +807,9 @@ public class OrderDetails extends AppCompatActivity {
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder
-        {
+        class ViewHolder extends RecyclerView.ViewHolder {
             ImageView image;
+
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 image = itemView.findViewById(R.id.image);
@@ -872,14 +817,12 @@ public class OrderDetails extends AppCompatActivity {
         }
     }
 
-    class LRAdapter extends RecyclerView.Adapter<LRAdapter.ViewHolder>
-    {
+    class LRAdapter extends RecyclerView.Adapter<LRAdapter.ViewHolder> {
 
         List<Lr> list = new ArrayList<>();
         Context context;
 
-        public LRAdapter(Context context , List<Lr> list)
-        {
+        public LRAdapter(Context context, List<Lr> list) {
             this.context = context;
             this.list = list;
         }
@@ -910,7 +853,7 @@ public class OrderDetails extends AppCompatActivity {
                             .build();
                     PRDownloader.initialize(getApplicationContext(), config);
 
-                    int downloadId = PRDownloader.download(item.getName(), Utils.getRootDirPath(getApplicationContext()) , item.getName2())
+                    int downloadId = PRDownloader.download(item.getName(), Utils.getRootDirPath(getApplicationContext()), item.getName2())
                             .build()
                             .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                                 @Override
@@ -944,9 +887,9 @@ public class OrderDetails extends AppCompatActivity {
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder
-        {
+        class ViewHolder extends RecyclerView.ViewHolder {
             TextView image;
+
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 image = itemView.findViewById(R.id.image);
@@ -993,7 +936,7 @@ public class OrderDetails extends AppCompatActivity {
 
             AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-            Call<confirm_full_bean> call = cr.uploadDocuments(assign_id , body);
+            Call<confirm_full_bean> call = cr.uploadDocuments(assign_id, body);
 
             call.enqueue(new Callback<confirm_full_bean>() {
                 @Override
@@ -1036,7 +979,7 @@ public class OrderDetails extends AppCompatActivity {
 
             AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-            Call<confirm_full_bean> call = cr.uploadDocuments(assign_id , body);
+            Call<confirm_full_bean> call = cr.uploadDocuments(assign_id, body);
 
             call.enqueue(new Callback<confirm_full_bean>() {
                 @Override
@@ -1055,10 +998,6 @@ public class OrderDetails extends AppCompatActivity {
             });
 
         }
-
-
-
-
 
 
     }

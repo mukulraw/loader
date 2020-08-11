@@ -181,8 +181,8 @@ public class OrderDetails2 extends AppCompatActivity {
 
                 Data item = response.body().getData();
                 truck.setText(item.getTruckType());
-                source.setText(item.getSource());
-                destination.setText(item.getDestination());
+                source.setText(item.getPickupAddress() + ", " + item.getPickupPincode() + ", " + item.getPickupPhone() + ", " + item.getPickupCity());
+                destination.setText(item.getDropAddress() + ", " + item.getDropPincode() + ", " + item.getDropPhone() + ", " + item.getDropCity());
                 material.setText(item.getMaterial());
                 weight.setText(item.getWeight());
                 date.setText(item.getSchedule());

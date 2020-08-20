@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -630,22 +631,19 @@ public class OrderDetails3 extends AppCompatActivity {
 
                 insused = item.getInsurance_used();
 
-                if (item.getPer80().equals("pending")) {
-                    pay80.setText("80%");
-                    pay80.setEnabled(true);
-                } else {
-                    pay80.setText("Paid\n₹ " + item.getPaidAmount());
-                    pay80.setEnabled(false);
-                }
 
 
+
+
+
+/*
                 if (item.getPer100().equals("pending")) {
                     pay100.setText("100%");
                     pay100.setEnabled(true);
                 } else {
                     pay100.setText("100%\n" + item.getPer100());
                     pay100.setEnabled(false);
-                }
+                }*/
 
 
                 if (item.getAssign_id() != null) {
@@ -740,6 +738,103 @@ public class OrderDetails3 extends AppCompatActivity {
                 gr = gr - pvalue;
 
                 grand.setText("₹ " + gr);
+
+                if (item.getPer80().equals("pending")) {
+                    pay80.setText("Pay\n80%");
+                    pay80.setEnabled(true);
+                    pay80.setTextColor(Color.BLACK);
+
+                    if (item.getPer100().equals("pending")) {
+                        pay100.setText("Pay\n100%");
+                        pay100.setEnabled(true);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("processing")) {
+                        pay100.setText("Processing\n100%");
+                        pay100.setEnabled(false);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("accepted")) {
+                        pay100.setText("Paid\n₹ " + item.getPaidAmount());
+                        pay100.setEnabled(false);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("rejected")) {
+                        pay100.setText("Rejected\n₹ " + item.getPaidAmount());
+                        pay100.setEnabled(true);
+                        pay100.setTextColor(Color.RED);
+                    }
+
+                } else if (item.getPer80().equals("processing")) {
+                    pay80.setText("Processing\n80%");
+                    pay80.setEnabled(false);
+                    pay80.setTextColor(Color.BLACK);
+
+                    if (item.getPer100().equals("pending")) {
+                        pay100.setText("Pay\n100%");
+                        pay100.setEnabled(true);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("processing")) {
+                        pay100.setText("Processing\n100%");
+                        pay100.setEnabled(false);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("accepted")) {
+                        pay100.setText("Paid\n₹ " + item.getPaidAmount());
+                        pay100.setEnabled(false);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("rejected")) {
+                        pay100.setText("Rejected\n₹ " + item.getPaidAmount());
+                        pay100.setEnabled(true);
+                        pay100.setTextColor(Color.RED);
+                    }
+
+                } else if (item.getPer80().equals("accepted")) {
+                    pay80.setText("Paid\n₹ " + item.getPaidAmount());
+                    pay80.setEnabled(false);
+                    pay80.setTextColor(Color.BLACK);
+
+                    float pd = Float.parseFloat(item.getPaidAmount());
+                    float rem = gr - pd;
+
+                    if (item.getPer100().equals("pending")) {
+                        pay100.setText("Balance Pay\n₹ " + rem);
+                        pay100.setEnabled(true);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("processing")) {
+                        pay100.setText("Processing\n₹ " + rem);
+                        pay100.setEnabled(false);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("accepted")) {
+                        pay100.setText("Paid\n₹ " + rem);
+                        pay100.setEnabled(false);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("rejected")) {
+                        pay100.setText("Rejected\n₹ " + rem);
+                        pay100.setEnabled(true);
+                        pay100.setTextColor(Color.RED);
+                    }
+
+                } else if (item.getPer80().equals("rejected")) {
+                    pay80.setText("Rejected\n₹ " + item.getPaidAmount());
+                    pay80.setEnabled(true);
+                    pay80.setTextColor(Color.RED);
+
+                    if (item.getPer100().equals("pending")) {
+                        pay100.setText("Pay\n100%");
+                        pay100.setEnabled(true);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("processing")) {
+                        pay100.setText("Processing\n100%");
+                        pay100.setEnabled(false);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("accepted")) {
+                        pay100.setText("Paid\n₹ " + item.getPaidAmount());
+                        pay100.setEnabled(false);
+                        pay100.setTextColor(Color.BLACK);
+                    } else if (item.getPer100().equals("rejected")) {
+                        pay100.setText("Rejected\n₹ " + item.getPaidAmount());
+                        pay100.setEnabled(true);
+                        pay100.setTextColor(Color.RED);
+                    }
+
+                }
 
                 if (pvalue > 0) {
                     apply.setEnabled(false);

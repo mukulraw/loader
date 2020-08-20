@@ -22,9 +22,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="Other Charges"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView113" />
+        app:layout_constraintTop_toBottomOf="@+id/textView113"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView115"
@@ -32,9 +35,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="CGST"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView114" />
+        app:layout_constraintTop_toBottomOf="@+id/textView114"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView116"
@@ -42,51 +48,52 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="SGST"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView115" />
+        app:layout_constraintTop_toBottomOf="@+id/textView115"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView117"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView121"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView118"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/textView117"
-        app:layout_constraintStart_toStartOf="@+id/textView117"
-        app:layout_constraintTop_toBottomOf="@+id/textView117" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView113" />
 
     <TextView
         android:id="@+id/textView119"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/textView118"
-        app:layout_constraintStart_toStartOf="@+id/textView118"
-        app:layout_constraintTop_toBottomOf="@+id/textView118" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView114" />
 
     <TextView
         android:id="@+id/textView120"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/textView119"
-        app:layout_constraintStart_toStartOf="@+id/textView119"
-        app:layout_constraintTop_toBottomOf="@+id/textView119" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView115" />
 
     <TextView
         android:id="@+id/textView121"
@@ -98,16 +105,15 @@
         android:text="Offer Code Discount"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView116"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView116" />
 
     <TextView
         android:id="@+id/textView122"
-        android:layout_width="0dp"
-        android:textColor="@color/black"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView120"
-        app:layout_constraintStart_toStartOf="@+id/textView120"
-        app:layout_constraintTop_toBottomOf="@+id/textView120" />
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView116" />
 </androidx.constraintlayout.widget.ConstraintLayout>

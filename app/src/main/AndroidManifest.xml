@@ -38,7 +38,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapsActivity"></activity>
+        <activity android:name=".OrderDetails3"></activity>
+        <activity android:name=".MapsActivity" />
         <activity android:name=".Web" />
         <activity android:name=".EditProfile" />
         <activity android:name=".PayNow" />

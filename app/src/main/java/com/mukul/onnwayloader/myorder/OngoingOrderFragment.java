@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.mukul.onnwayloader.AllApiIneterface;
 import com.mukul.onnwayloader.OrderDetails;
+import com.mukul.onnwayloader.OrderDetails3;
 import com.mukul.onnwayloader.R;
 import com.mukul.onnwayloader.SharePreferenceUtils;
 import com.mukul.onnwayloader.myorder.ongoingorder.OngoingOrderList;
@@ -178,9 +179,21 @@ public class OngoingOrderFragment extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context , OrderDetails.class);
-                    intent.putExtra("id" , item.getId());
-                    context.startActivity(intent);
+
+                    if (item.getLaodType().equals("full"))
+                    {
+                        Intent intent = new Intent(context , OrderDetails.class);
+                        intent.putExtra("id" , item.getId());
+                        context.startActivity(intent);
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(context , OrderDetails3.class);
+                        intent.putExtra("id" , item.getId());
+                        context.startActivity(intent);
+                    }
+
+
                 }
             });
 

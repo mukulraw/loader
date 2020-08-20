@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
         Cursor cursor = getSetUserData.getAllData();
         if (cursor.getCount() == 0) {
             new Handler().postDelayed(new Runnable() {

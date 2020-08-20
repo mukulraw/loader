@@ -29,7 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -41,14 +40,10 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.downloader.Error;
-import com.downloader.OnCancelListener;
 import com.downloader.OnDownloadListener;
-import com.downloader.OnPauseListener;
-import com.downloader.OnProgressListener;
 import com.downloader.OnStartOrResumeListener;
 import com.downloader.PRDownloader;
 import com.downloader.PRDownloaderConfig;
-import com.downloader.Progress;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mukul.onnwayloader.checkPromoPOJO.checkPromoBean;
 import com.mukul.onnwayloader.confirm_full_POJO.Data;
@@ -78,7 +73,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class OrderDetails extends AppCompatActivity {
+public class OrderDetails3 extends AppCompatActivity {
 
     TextView orderid, orderdate, truck, source, destination, material, weight, date, status, loadtype, details;
     TextView grand, tnc, request;
@@ -118,10 +113,13 @@ public class OrderDetails extends AppCompatActivity {
 
     FloatingActionButton track;
 
+    TextView dimension, equal, quantity, total, phototitle;
+    ImageView photo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_details);
+        setContentView(R.layout.activity_order_details3);
 
         id = getIntent().getStringExtra("id");
 
@@ -136,6 +134,12 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
+        dimension = findViewById(R.id.textView134);
+        phototitle = findViewById(R.id.textView140);
+        equal = findViewById(R.id.textView135);
+        quantity = findViewById(R.id.textView137);
+        total = findViewById(R.id.textView139);
+        photo = findViewById(R.id.imageView18);
         tnc = findViewById(R.id.textView41);
         details = findViewById(R.id.textView14);
         orderid = findViewById(R.id.textView16);
@@ -195,7 +199,7 @@ public class OrderDetails extends AppCompatActivity {
                 final CharSequence[] items = {"Take Photo from Camera",
                         "Choose from Gallery",
                         "Cancel"};
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(OrderDetails.this);
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(OrderDetails3.this);
                 builder.setTitle("Add Photo!");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
@@ -220,7 +224,7 @@ public class OrderDetails extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            uri1 = FileProvider.getUriForFile(Objects.requireNonNull(OrderDetails.this), BuildConfig.APPLICATION_ID + ".provider", f1);
+                            uri1 = FileProvider.getUriForFile(Objects.requireNonNull(OrderDetails3.this), BuildConfig.APPLICATION_ID + ".provider", f1);
 
                             Intent getpic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             getpic.putExtra(MediaStore.EXTRA_OUTPUT, uri1);
@@ -269,7 +273,7 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Dialog dialog = new Dialog(OrderDetails.this);
+                Dialog dialog = new Dialog(OrderDetails3.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.fare_breakdown_dialog);
@@ -340,7 +344,7 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(OrderDetails.this, PayNow.class);
+                Intent intent = new Intent(OrderDetails3.this, PayNow.class);
                 intent.putExtra("percent", "80");
                 intent.putExtra("pid", pid);
                 intent.putExtra("pvalue", pvalue);
@@ -357,7 +361,7 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(OrderDetails.this, PayNow.class);
+                Intent intent = new Intent(OrderDetails3.this, PayNow.class);
                 intent.putExtra("percent", "100");
                 intent.putExtra("pid", pid);
                 intent.putExtra("pvalue", pvalue);
@@ -374,7 +378,7 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                new AlertDialog.Builder(OrderDetails.this)
+                new AlertDialog.Builder(OrderDetails3.this)
                         .setTitle("Cancel Booking")
                         .setMessage("Are you sure you want to cancel this booking?")
 
@@ -405,11 +409,11 @@ public class OrderDetails extends AppCompatActivity {
                                     public void onResponse(Call<updateProfileBean> call, Response<updateProfileBean> response) {
 
                                         if (response.body().getStatus().equals("1")) {
-                                            Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(OrderDetails3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                             dialog.dismiss();
                                             finish();
                                         } else {
-                                            Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(OrderDetails3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
 
                                         progress.setVisibility(View.GONE);
@@ -481,10 +485,10 @@ public class OrderDetails extends AppCompatActivity {
 
                                 pid = response.body().getData().getPid();
 
-                                Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(OrderDetails3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                             } else {
-                                Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(OrderDetails3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 apply.setEnabled(true);
                                 apply.setClickable(true);
 
@@ -508,7 +512,7 @@ public class OrderDetails extends AppCompatActivity {
                     });
 
                 } else {
-                    Toast.makeText(OrderDetails.this, "Invalid PROMO code", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderDetails3.this, "Invalid PROMO code", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -540,13 +544,12 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(OrderDetails.this, MapsActivity.class);
+                Intent intent = new Intent(OrderDetails3.this, MapsActivity.class);
                 intent.putExtra("order", id);
                 startActivity(intent);
 
             }
         });
-
 
     }
 
@@ -601,6 +604,30 @@ public class OrderDetails extends AppCompatActivity {
 
                 decs.setText(item.getRemarks());
 
+                dimension.setText(item.getLength() + " X " + item.getWidth() + " X " + item.getHeight());
+
+                if (item.getMaterial_image().length() > 0) {
+                    DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).resetViewBeforeLoading(false).build();
+                    ImageLoader loader = ImageLoader.getInstance();
+                    loader.displayImage(item.getMaterial_image(), photo, options);
+
+                    photo.setVisibility(View.VISIBLE);
+                    phototitle.setVisibility(View.VISIBLE);
+                } else {
+                    photo.setVisibility(View.GONE);
+                    phototitle.setVisibility(View.GONE);
+                }
+
+
+                float ll = Float.parseFloat(item.getLength());
+                float ww = Float.parseFloat(item.getWidth());
+                float hh = Float.parseFloat(item.getHeight());
+                float qq = Float.parseFloat(item.getQuantity());
+
+                equal.setText("= " + (ll * ww * hh) + " cu.ft.");
+                quantity.setText(item.getQuantity());
+                total.setText((ll * ww * hh * qq) + " cu.ft.");
+
                 insused = item.getInsurance_used();
 
                 if (item.getPer80().equals("pending")) {
@@ -639,19 +666,19 @@ public class OrderDetails extends AppCompatActivity {
                         pending.setVisibility(View.VISIBLE);
                     }
 
-                    PODAdapter adapter = new PODAdapter(OrderDetails.this, item.getPod());
-                    GridLayoutManager manager = new GridLayoutManager(OrderDetails.this, 2);
+                    PODAdapter adapter = new PODAdapter(OrderDetails3.this, item.getPod());
+                    GridLayoutManager manager = new GridLayoutManager(OrderDetails3.this, 2);
                     pod.setAdapter(adapter);
                     pod.setLayoutManager(manager);
 
-                    DocAdapter adapter2 = new DocAdapter(OrderDetails.this, item.getInvoice());
-                    GridLayoutManager manager2 = new GridLayoutManager(OrderDetails.this, 2);
+                    DocAdapter adapter2 = new DocAdapter(OrderDetails3.this, item.getInvoice());
+                    GridLayoutManager manager2 = new GridLayoutManager(OrderDetails3.this, 2);
                     documents.setAdapter(adapter2);
                     documents.setLayoutManager(manager2);
                     truckcard.setVisibility(View.VISIBLE);
 
-                    LRAdapter adapter3 = new LRAdapter(OrderDetails.this, item.getLr());
-                    GridLayoutManager manager3 = new GridLayoutManager(OrderDetails.this, 1);
+                    LRAdapter adapter3 = new LRAdapter(OrderDetails3.this, item.getLr());
+                    GridLayoutManager manager3 = new GridLayoutManager(OrderDetails3.this, 1);
                     lrdownload.setAdapter(adapter3);
                     lrdownload.setLayoutManager(manager3);
 
@@ -952,7 +979,7 @@ public class OrderDetails extends AppCompatActivity {
 
             Log.d("uri", String.valueOf(uri1));
 
-            String ypath = getPath(OrderDetails.this, uri1);
+            String ypath = getPath(OrderDetails3.this, uri1);
             assert ypath != null;
             f1 = new File(ypath);
 
@@ -988,7 +1015,7 @@ public class OrderDetails extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
 
-                    Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderDetails3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     onResume();
 
                     progress.setVisibility(View.GONE);
@@ -1031,7 +1058,7 @@ public class OrderDetails extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
 
-                    Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderDetails3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     onResume();
 
                     progress.setVisibility(View.GONE);
@@ -1144,6 +1171,5 @@ public class OrderDetails extends AppCompatActivity {
         }
         return null;
     }
-
 
 }

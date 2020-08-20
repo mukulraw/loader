@@ -158,15 +158,15 @@ public class MaterialActivity2 extends AppCompatActivity {
         });
 
 
-        weis.add("50 - 100 KG");
-        weis.add("101 - 200 KG");
-        weis.add("201 - 300 KG");
-        weis.add("301 - 400 KG");
-        weis.add("401 - 500 KG");
-        weis.add("501 - 600 KG");
-        weis.add("601 - 700 KG");
-        weis.add("701 - 800 KG");
-        weis.add("801 - 900 KG");
+        weis.add("50 - 100 Kg");
+        weis.add("101 - 200 Kg");
+        weis.add("201 - 300 Kg");
+        weis.add("301 - 400 Kg");
+        weis.add("401 - 500 Kg");
+        weis.add("501 - 600 Kg");
+        weis.add("601 - 700 Kg");
+        weis.add("701 - 800 Kg");
+        weis.add("801 - 900 Kg");
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,weis);

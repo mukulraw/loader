@@ -135,6 +135,9 @@ public class Data {
     @SerializedName("per100")
     @Expose
     private String per100;
+    @SerializedName("material_image")
+    @Expose
+    private String material_image;
 
     public String getId() {
         return id;
@@ -478,6 +481,14 @@ public class Data {
 
     public void setPer100(String per100) {
         this.per100 = per100;
+    }
+
+    public String getMaterial_image() {
+        return material_image;
+    }
+
+    public void setMaterial_image(String material_image) {
+        this.material_image = material_image;
     }
 }
 

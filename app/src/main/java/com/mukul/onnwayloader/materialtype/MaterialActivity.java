@@ -144,7 +144,7 @@ public class MaterialActivity extends AppCompatActivity {
                             intent.putExtra("des", des);
                             intent.putExtra("tid", tid);
                             intent.putExtra("dat", dat);
-                            intent.putExtra("wei", weight.getText().toString());
+                            intent.putExtra("wei", weight.getText().toString() + " Kg");
                             intent.putExtra("mid", mid);
                             intent.putExtra("loa", loa);
                             intent.putExtra("sourceLAT", sourceLAT);

@@ -118,6 +118,8 @@ public class OrderDetails extends AppCompatActivity {
 
     FloatingActionButton track;
 
+    TextView drivernote;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +138,7 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
+        drivernote = findViewById(R.id.textView46);
         tnc = findViewById(R.id.textView41);
         details = findViewById(R.id.textView14);
         orderid = findViewById(R.id.textView16);
@@ -598,7 +601,7 @@ public class OrderDetails extends AppCompatActivity {
                 date.setText(item.getSchedule());
                 status.setText(item.getStatus());
                 loadtype.setText(item.getLaodType());
-
+                drivernote.setText(item.getRemarks2());
                 decs.setText(item.getRemarks());
 
                 insused = item.getInsurance_used();

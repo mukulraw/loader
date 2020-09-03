@@ -20,6 +20,13 @@
             android:id="@+id/nav_contact"
             android:icon="@drawable/ic_contact"
             android:title="Contact Us" />
+
+        <item
+            android:id="@+id/feedback"
+            android:icon="@drawable/ic_review"
+            android:title="Give Feedback" />
+
+
         <item
             android:id="@+id/nav_payment_terms"
             android:icon="@drawable/ic_payment"

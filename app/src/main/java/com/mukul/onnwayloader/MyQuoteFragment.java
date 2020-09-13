@@ -52,19 +52,19 @@ public class MyQuoteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_ongoing_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_ongoing_order, container, false);
         recyclerView = view.findViewById(R.id.recycler_view_ongoing_order);
         progress = view.findViewById(R.id.progress);
         hide = view.findViewById(R.id.hide);
         list = new ArrayList<>();
 
         adapter = new OrderAdapter(getContext(), list);
-        manager = new GridLayoutManager(getContext() , 1);
+        manager = new GridLayoutManager(getContext(), 1);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
 
-        return  view;
+        return view;
     }
 
     @Override
@@ -89,12 +89,9 @@ public class MyQuoteFragment extends Fragment {
             @Override
             public void onResponse(Call<orderHistoryBean> call, Response<orderHistoryBean> response) {
 
-                if (response.body().getData().size() > 0)
-                {
+                if (response.body().getData().size() > 0) {
                     hide.setVisibility(View.GONE);
-                }
-                else
-                {
+                } else {
                     hide.setVisibility(View.VISIBLE);
                 }
 
@@ -111,20 +108,17 @@ public class MyQuoteFragment extends Fragment {
 
     }
 
-    class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
-    {
+    class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
         Context context;
         List<Datum> list = new ArrayList<>();
 
-        OrderAdapter(Context context, List<Datum> list)
-        {
+        OrderAdapter(Context context, List<Datum> list) {
             this.context = context;
             this.list = list;
         }
 
-        void setData(List<Datum> list)
-        {
+        void setData(List<Datum> list) {
             this.list = list;
             notifyDataSetChanged();
         }
@@ -132,8 +126,8 @@ public class MyQuoteFragment extends Fragment {
         @NonNull
         @Override
         public OrderAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.order_list_model3 , parent , false);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.order_list_model3, parent, false);
             return new ViewHolder(view);
         }
 
@@ -158,8 +152,7 @@ public class MyQuoteFragment extends Fragment {
 
                 float gr = fr + ot + cg + sg + in;
                 holder.freight.setText("\u20B9" + gr);
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
                 holder.freight.setText("\u20B9" + "0");
             }
@@ -168,9 +161,9 @@ public class MyQuoteFragment extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context , OrderDetails.class);
+                    /*Intent intent = new Intent(context , OrderDetails.class);
                     intent.putExtra("id" , item.getId());
-                    context.startActivity(intent);
+                    context.startActivity(intent);*/
                 }
             });
 
@@ -200,14 +193,11 @@ public class MyQuoteFragment extends Fragment {
                         @Override
                         public void onResponse(Call<updateProfileBean> call, Response<updateProfileBean> response) {
 
-                            if (response.body().getStatus().equals("1"))
-                            {
+                            if (response.body().getStatus().equals("1")) {
                                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                                 onResume();
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
 
@@ -225,6 +215,19 @@ public class MyQuoteFragment extends Fragment {
             });
 
 
+            holder.getcall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(context, Web.class);
+                    intent.putExtra("title", "Contact Us");
+                    intent.putExtra("url", "https://www.onnway.com/contactonnway.php");
+                    startActivity(intent);
+
+                }
+            });
+
+
         }
 
         @Override
@@ -232,11 +235,10 @@ public class MyQuoteFragment extends Fragment {
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder
-        {
+        class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView type , orderid , date , source , destination , material , weight , freight , truck;
-            Button confirm;
+            TextView type, orderid, date, source, destination, material, weight, freight, truck;
+            Button confirm, getcall;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -251,6 +253,7 @@ public class MyQuoteFragment extends Fragment {
                 freight = itemView.findViewById(R.id.textView76);
                 truck = itemView.findViewById(R.id.textView64);
                 confirm = itemView.findViewById(R.id.button6);
+                getcall = itemView.findViewById(R.id.button7);
 
             }
         }

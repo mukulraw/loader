@@ -168,10 +168,10 @@ public class Address1 extends AppCompatActivity {
 
                 if (padd.length() > 0) {
                     if (pcit.length() > 0) {
-                        if (ppin.length() > 0) {
+                        if (ppin.length() == 6) {
                             if (dadd.length() > 0) {
                                 if (dcit.length() > 0) {
-                                    if (dpin.length() > 0) {
+                                    if (dpin.length() == 6) {
 
                                         progress.setVisibility(View.VISIBLE);
 

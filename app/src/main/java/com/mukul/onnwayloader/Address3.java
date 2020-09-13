@@ -55,7 +55,7 @@ public class Address3 extends AppCompatActivity {
     String freight, other_charges, cgst, sgst, insurance;
 
     File image = null;
-    double sourceLAT , sourceLNG , destinationLAT , destinationLNG;
+    double sourceLAT, sourceLNG, destinationLAT, destinationLNG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +70,12 @@ public class Address3 extends AppCompatActivity {
         mid = getIntent().getStringExtra("mid");
         loa = getIntent().getStringExtra("loa");
         desc = getIntent().getStringExtra("desc");
-        sourceLAT = getIntent().getDoubleExtra("sourceLAT" , 0);
-        sourceLNG = getIntent().getDoubleExtra("sourceLNG" , 0);
-        destinationLAT = getIntent().getDoubleExtra("destinationLAT" , 0);
-        destinationLNG = getIntent().getDoubleExtra("destinationLNG" , 0);
+        sourceLAT = getIntent().getDoubleExtra("sourceLAT", 0);
+        sourceLNG = getIntent().getDoubleExtra("sourceLNG", 0);
+        destinationLAT = getIntent().getDoubleExtra("destinationLAT", 0);
+        destinationLNG = getIntent().getDoubleExtra("destinationLNG", 0);
 
-        if (getIntent().getStringExtra("image").length() > 0)
-        {
+        if (getIntent().getStringExtra("image").length() > 0) {
             image = new File(getIntent().getStringExtra("image"));
         }
 
@@ -162,11 +161,11 @@ public class Address3 extends AppCompatActivity {
 
                 if (padd.length() > 0) {
                     if (pcit.length() > 0) {
-                        if (ppin.length() > 0) {
+                        if (ppin.length() == 6) {
 
                             if (dadd.length() > 0) {
                                 if (dcit.length() > 0) {
-                                    if (dpin.length() > 0) {
+                                    if (dpin.length() == 6) {
                                         MultipartBody.Part body = null;
 
                                         try {

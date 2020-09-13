@@ -43,13 +43,13 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class Address2 extends AppCompatActivity {
     private static final String TAG = "Address2";
     ProgressBar progress;
-    EditText paddress , pcity , ppincode , pmobile;
-    EditText daddress , dcity , dpincode , dmobile;
+    EditText paddress, pcity, ppincode, pmobile;
+    EditText daddress, dcity, dpincode, dmobile;
 
     Button confirm;
 
-    String src , des , tid , dat , wei , mid , loa , desc;
-    String freight , other_charges , cgst , sgst , insurance;
+    String src, des, tid, dat, wei, mid, loa, desc;
+    String freight, other_charges, cgst, sgst, insurance;
 
     double sourceLAT, sourceLNG, destinationLAT, destinationLNG;
 
@@ -147,143 +147,122 @@ public class Address2 extends AppCompatActivity {
                 String dpin = dpincode.getText().toString();
                 String dmob = dmobile.getText().toString();
 
-                if (padd.length() > 0)
-                {
-                    if (pcit.length() > 0)
-                    {
-                        if (ppin.length() > 0)
-                        {
+                if (padd.length() > 0) {
+                    if (pcit.length() > 0) {
+                        if (ppin.length() == 6) {
 
-                                if (dadd.length() > 0)
-                                {
-                                    if (dcit.length() > 0)
-                                    {
-                                        if (dpin.length() > 0)
-                                        {
+                            if (dadd.length() > 0) {
+                                if (dcit.length() > 0) {
+                                    if (dpin.length() == 6) {
 
 
-                                                progress.setVisibility(View.VISIBLE);
+                                        progress.setVisibility(View.VISIBLE);
 
-                                                AppController b = (AppController) getApplicationContext();
+                                        AppController b = (AppController) getApplicationContext();
 
-                                                Retrofit retrofit = new Retrofit.Builder()
-                                                        .baseUrl(b.baseurl)
-                                                        .addConverterFactory(ScalarsConverterFactory.create())
-                                                        .addConverterFactory(GsonConverterFactory.create())
-                                                        .build();
+                                        Retrofit retrofit = new Retrofit.Builder()
+                                                .baseUrl(b.baseurl)
+                                                .addConverterFactory(ScalarsConverterFactory.create())
+                                                .addConverterFactory(GsonConverterFactory.create())
+                                                .build();
 
-                                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+                                        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                                            MultipartBody.Part body = null;
+                                        MultipartBody.Part body = null;
 
-                                                Call<confirm_full_bean> call = cr.quote_full_load(
-                                                        SharePreferenceUtils.getInstance().getString("userId"),
-                                                        loa,
-                                                        src,
-                                                        des,
-                                                        tid,
-                                                        dat,
-                                                        wei,
-                                                        mid,
-                                                        freight,
-                                                        other_charges,
-                                                        cgst,
-                                                        sgst,
-                                                        insurance,
-                                                        "",
-                                                        "",
-                                                        padd,
-                                                        pcit,
-                                                        ppin,
-                                                        pmob,
-                                                        dadd,
-                                                        dcit,
-                                                        dpin,
-                                                        dmob,
-                                                        desc,
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        String.valueOf(sourceLAT),
-                                                        String.valueOf(sourceLNG),
-                                                        String.valueOf(destinationLAT),
-                                                        String.valueOf(destinationLNG),
-                                                        body
-                                                );
+                                        Call<confirm_full_bean> call = cr.quote_full_load(
+                                                SharePreferenceUtils.getInstance().getString("userId"),
+                                                loa,
+                                                src,
+                                                des,
+                                                tid,
+                                                dat,
+                                                wei,
+                                                mid,
+                                                freight,
+                                                other_charges,
+                                                cgst,
+                                                sgst,
+                                                insurance,
+                                                "",
+                                                "",
+                                                padd,
+                                                pcit,
+                                                ppin,
+                                                pmob,
+                                                dadd,
+                                                dcit,
+                                                dpin,
+                                                dmob,
+                                                desc,
+                                                "",
+                                                "",
+                                                "",
+                                                "",
+                                                String.valueOf(sourceLAT),
+                                                String.valueOf(sourceLNG),
+                                                String.valueOf(destinationLAT),
+                                                String.valueOf(destinationLNG),
+                                                body
+                                        );
 
-                                                call.enqueue(new Callback<confirm_full_bean>() {
-                                                    @Override
-                                                    public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
+                                        call.enqueue(new Callback<confirm_full_bean>() {
+                                            @Override
+                                            public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
 
-                                                        if (response.body().getStatus().equals("1"))
-                                                        {
+                                                if (response.body().getStatus().equals("1")) {
 
-                                                            Dialog dialog = new Dialog(Address2.this);
-                                                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                                            dialog.setCancelable(true);
-                                                            dialog.setContentView(R.layout.booking_qoute_dialog1);
-                                                            dialog.show();
+                                                    Dialog dialog = new Dialog(Address2.this);
+                                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                    dialog.setCancelable(true);
+                                                    dialog.setContentView(R.layout.booking_qoute_dialog1);
+                                                    dialog.show();
 
-                                                            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                                                @Override
-                                                                public void onCancel(DialogInterface dialog) {
+                                                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                                        @Override
+                                                        public void onCancel(DialogInterface dialog) {
 
-                                                                    Intent intent = new Intent(Address2.this , MainActivity.class);
-                                                                    startActivity(intent);
-                                                                    finishAffinity();
+                                                            Intent intent = new Intent(Address2.this, MainActivity.class);
+                                                            startActivity(intent);
+                                                            finishAffinity();
 
-                                                                }
-                                                            });
-
-                                                            Toast.makeText(Address2.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                         }
-                                                        else
-                                                        {
-                                                            Toast.makeText(Address2.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                    });
+
+                                                    Toast.makeText(Address2.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(Address2.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
 
 
-                                                        progress.setVisibility(View.GONE);
+                                                progress.setVisibility(View.GONE);
 
-                                                    }
+                                            }
 
-                                                    @Override
-                                                    public void onFailure(Call<confirm_full_bean> call, Throwable t) {
-                                                        progress.setVisibility(View.GONE);
-                                                    }
-                                                });
+                                            @Override
+                                            public void onFailure(Call<confirm_full_bean> call, Throwable t) {
+                                                progress.setVisibility(View.GONE);
+                                            }
+                                        });
 
 
-                                        }
-                                        else
-                                        {
-                                            Toast.makeText(Address2.this, "Invalid drop PIN code", Toast.LENGTH_SHORT).show();
-                                        }
+                                    } else {
+                                        Toast.makeText(Address2.this, "Invalid drop PIN code", Toast.LENGTH_SHORT).show();
                                     }
-                                    else
-                                    {
-                                        Toast.makeText(Address2.this, "Invalid drop city", Toast.LENGTH_SHORT).show();
-                                    }
+                                } else {
+                                    Toast.makeText(Address2.this, "Invalid drop city", Toast.LENGTH_SHORT).show();
                                 }
-                                else
-                                {
-                                    Toast.makeText(Address2.this, "Invalid drop address", Toast.LENGTH_SHORT).show();
-                                }
+                            } else {
+                                Toast.makeText(Address2.this, "Invalid drop address", Toast.LENGTH_SHORT).show();
+                            }
 
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(Address2.this, "Invalid pickup PIN code", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(Address2.this, "Invalid pickup city", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else
-                {
+                } else {
                     Toast.makeText(Address2.this, "Invalid pickup address", Toast.LENGTH_SHORT).show();
                 }
 

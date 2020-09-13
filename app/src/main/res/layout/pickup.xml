@@ -38,7 +38,8 @@
         android:hint="tap to enter"
         android:background="@drawable/grey_back_round"
         android:padding="10dp"
-        android:inputType="textPostalAddress"
+        android:lines="3"
+        android:gravity="start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView44" />
@@ -89,6 +90,7 @@
         android:hint="tap to enter"
         android:background="@drawable/grey_back_round"
         android:padding="10dp"
+        android:maxLength="6"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

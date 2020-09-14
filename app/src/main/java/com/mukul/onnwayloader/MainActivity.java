@@ -1,6 +1,7 @@
 package com.mukul.onnwayloader;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -235,6 +236,12 @@ public class MainActivity extends AppCompatActivity
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).showImageForEmptyUri(R.drawable.ic_profile_image).build();
         ImageLoader loader = ImageLoader.getInstance();
         loader.displayImage(SharePreferenceUtils.getInstance().getString("image") , profileImageView , options);
+
+        Dialog dialog = new Dialog(MainActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.rating_dialog);
+        dialog.show();
 
     }
 

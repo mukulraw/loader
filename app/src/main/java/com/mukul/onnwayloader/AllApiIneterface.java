@@ -98,6 +98,19 @@ public interface AllApiIneterface {
     );
 
     @Multipart
+    @POST("android/submitLoaderRating.php")
+    Call<confirm_full_bean> submitLoaderRating(
+            @Part("id") String id,
+            @Part("loader_rating") String loader_rating
+    );
+
+    @Multipart
+    @POST("android/checkLoaderRating.php")
+    Call<confirm_full_bean> checkLoaderRating(
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
     @POST("android/quote_full_load.php")
     Call<confirm_full_bean> quote_full_load(
             @Part("user_id") String user_id,

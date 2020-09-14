@@ -37,6 +37,9 @@ public interface AllApiIneterface {
     @GET("android/getMaterial.php")
     Call<List<truckTypeBean>> getMaterial();
 
+    @GET("android/getSubject.php")
+    Call<List<truckTypeBean>> getSubject();
+
     @Multipart
     @POST("android/getFare.php")
     Call<fareBean> getFare(
@@ -84,6 +87,14 @@ public interface AllApiIneterface {
             @Part("sourceLNG") String sourceLNG,
             @Part("destinationLAT") String destinationLAT,
             @Part("destinationLNG") String destinationLNG
+    );
+
+    @Multipart
+    @POST("android/submitFeedback.php")
+    Call<confirm_full_bean> submitFeedback(
+            @Part("user_id") String user_id,
+            @Part("subject") String subject,
+            @Part("mesage") String mesage
     );
 
     @Multipart

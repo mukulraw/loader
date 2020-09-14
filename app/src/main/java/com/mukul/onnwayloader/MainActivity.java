@@ -300,6 +300,12 @@ public class MainActivity extends AppCompatActivity
             finishAffinity();
 
         }
+        else if (id == R.id.feedback)
+        {
+            Intent intent = new Intent(MainActivity.this, Feedback.class);
+            startActivity(intent);
+            drawer.closeDrawer(GravityCompat.START);
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

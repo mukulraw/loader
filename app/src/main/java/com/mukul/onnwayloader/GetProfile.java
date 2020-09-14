@@ -60,7 +60,7 @@ public class GetProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_profile);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
+        Toolbar mToolbar = findViewById(R.id.toolbar_activity_shipment);
         mToolbar.setTitle("Profile");
         mToolbar.setNavigationIcon(R.drawable.ic_next_back);
         mToolbar.setTitleTextAppearance(this, R.style.monteserrat_semi_bold);

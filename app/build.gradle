@@ -70,5 +70,7 @@ dependencies {
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
     implementation 'com.github.sujithkanna:smileyrating:2.0.0'
 
+    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.3'
+
 
 }

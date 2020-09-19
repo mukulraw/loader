@@ -27,11 +27,11 @@ public class Checkout extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String mid = "njBGDm82462402663939";
-                String amount = "1.00";
-                String txnToken = "588de344e0514b06ac4795e5bf61021a1600316946342";
-                String orderid = "ORDERID_98765";
-                String callbackurl = "https://merchant.com/callback";
+                String mid = "OQyoJy00054286990314";
+                String amount = "100.00";
+                String txnToken = "1d4aa9f00ce448818928a40d32b5d39a1600409710857";
+                String orderid = "ORDERID_001";
+                String callbackurl = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=" + orderid;
 
                 PaytmOrder paytmOrder = new PaytmOrder(orderid, mid, txnToken, amount, callbackurl);
                 TransactionManager transactionManager = new TransactionManager(paytmOrder, new PaytmPaymentTransactionCallback() {

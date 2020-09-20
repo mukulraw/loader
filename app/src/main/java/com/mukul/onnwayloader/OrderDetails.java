@@ -534,6 +534,14 @@ public class OrderDetails extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 ins = isChecked;
+                if (isChecked)
+                {
+                    insused = "yes";
+                }
+                else
+                {
+                    insused = "no";
+                }
                 updateSummary();
 
             }
@@ -609,6 +617,12 @@ public class OrderDetails extends AppCompatActivity {
                 if (item.getPer80().equals("pending")) {
                     pay80.setText("80%");
                     pay80.setEnabled(true);
+                } else if (item.getPer80().equals("processing")) {
+                    pay80.setText("PROCESSING...");
+                    pay80.setEnabled(false);
+                } else if (item.getPer80().equals("rejected")) {
+                    pay80.setText("REJECTED\nPAY NOW");
+                    pay80.setEnabled(true);
                 } else {
                     pay80.setText("Paid\n₹ " + item.getPaidAmount());
                     pay80.setEnabled(false);
@@ -617,6 +631,12 @@ public class OrderDetails extends AppCompatActivity {
 
                 if (item.getPer100().equals("pending")) {
                     pay100.setText("100%");
+                    pay100.setEnabled(true);
+                } else if (item.getPer100().equals("processing")) {
+                    pay100.setText("PROCESSING...");
+                    pay100.setEnabled(false);
+                } else if (item.getPer100().equals("rejected")) {
+                    pay100.setText("REJECTED\nPAY NOW");
                     pay100.setEnabled(true);
                 } else {
                     pay100.setText("100%\n" + item.getPer100());

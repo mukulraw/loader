@@ -100,6 +100,9 @@ public class Datum {
     @SerializedName("current")
     @Expose
     private String current;
+    @SerializedName("insurance_used")
+    @Expose
+    private String insurance_used;
 
 
     public String getId() {
@@ -356,5 +359,13 @@ public class Datum {
 
     public void setCurrent(String current) {
         this.current = current;
+    }
+
+    public String getInsurance_used() {
+        return insurance_used;
+    }
+
+    public void setInsurance_used(String insurance_used) {
+        this.insurance_used = insurance_used;
     }
 }

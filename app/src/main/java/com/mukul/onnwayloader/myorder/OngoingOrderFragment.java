@@ -165,7 +165,16 @@ public class OngoingOrderFragment extends Fragment {
                 float ot = Float.parseFloat(item.getOtherCharges());
                 float cg = Float.parseFloat(item.getCgst());
                 float sg = Float.parseFloat(item.getSgst());
-                float in = Float.parseFloat(item.getInsurance());
+                float in = 0;
+                if(item.getInsurance_used().equals("yes"))
+                {
+                    in = Float.parseFloat(item.getInsurance());
+                }
+                else
+                {
+                    in = 0;
+                }
+
 
                 float gr = fr + ot + cg + sg + in;
                 holder.freight.setText("\u20B9" + gr);

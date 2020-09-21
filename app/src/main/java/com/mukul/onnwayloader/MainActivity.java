@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    void refreshCount() {
+    public void refreshCount() {
         AppController b = (AppController) getApplicationContext();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -268,6 +268,12 @@ public class MainActivity extends AppCompatActivity
                     View notificationBadge = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_notification_badge, menuView, false);
 
                     itemView.addView(notificationBadge);
+                } else {
+                    BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+                    BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(2);
+                    View notificationBadge = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_notification_badge, menuView, false);
+
+                    itemView.removeView(notificationBadge);
                 }
 
                 if (response.body().getWaitingdata() > 0) {
@@ -277,6 +283,13 @@ public class MainActivity extends AppCompatActivity
                     View notificationBadge = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_notification_badge, menuView, false);
 
                     itemView.addView(notificationBadge);
+                } else {
+                    BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+                    BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(1);
+
+                    View notificationBadge = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_notification_badge, menuView, false);
+
+                    itemView.removeView(notificationBadge);
                 }
 
                 if (response.body().getQuotesdata() > 0) {
@@ -286,6 +299,13 @@ public class MainActivity extends AppCompatActivity
                     View notificationBadge = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_notification_badge, menuView, false);
 
                     itemView.addView(notificationBadge);
+                } else {
+                    BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+                    BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(3);
+
+                    View notificationBadge = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_notification_badge, menuView, false);
+
+                    itemView.removeView(notificationBadge);
                 }
 
 

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleService;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.mukul.onnwayloader.AllApiIneterface;
+import com.mukul.onnwayloader.MainActivity;
 import com.mukul.onnwayloader.OrderDetails;
 import com.mukul.onnwayloader.OrderDetails3;
 import com.mukul.onnwayloader.R;
@@ -61,19 +63,19 @@ public class OngoingOrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_ongoing_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_ongoing_order, container, false);
         recyclerView = view.findViewById(R.id.recycler_view_ongoing_order);
         progress = view.findViewById(R.id.progress);
         hide = view.findViewById(R.id.hide);
         list = new ArrayList<>();
 
         adapter = new OrderAdapter(getContext(), list);
-        manager = new GridLayoutManager(getContext() , 1);
+        manager = new GridLayoutManager(getContext(), 1);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
 
-        return  view;
+        return view;
     }
 
     @Override
@@ -98,16 +100,17 @@ public class OngoingOrderFragment extends Fragment {
             @Override
             public void onResponse(Call<orderHistoryBean> call, Response<orderHistoryBean> response) {
 
-                if (response.body().getData().size() > 0)
-                {
+                if (response.body().getData().size() > 0) {
                     hide.setVisibility(View.GONE);
-                }
-                else
-                {
+                } else {
                     hide.setVisibility(View.VISIBLE);
                 }
 
                 adapter.setData(response.body().getData());
+
+                Intent registrationComplete = new Intent("count");
+
+                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(registrationComplete);
 
                 progress.setVisibility(View.GONE);
             }
@@ -120,20 +123,17 @@ public class OngoingOrderFragment extends Fragment {
 
     }
 
-    static class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
-    {
+    static class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
         Context context;
         List<Datum> list = new ArrayList<>();
 
-        OrderAdapter(Context context, List<Datum> list)
-        {
+        OrderAdapter(Context context, List<Datum> list) {
             this.context = context;
             this.list = list;
         }
 
-        void setData(List<Datum> list)
-        {
+        void setData(List<Datum> list) {
             this.list = list;
             notifyDataSetChanged();
         }
@@ -141,8 +141,8 @@ public class OngoingOrderFragment extends Fragment {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.order_list_model , parent , false);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.order_list_model, parent, false);
             return new ViewHolder(view);
         }
 
@@ -166,20 +166,16 @@ public class OngoingOrderFragment extends Fragment {
                 float cg = Float.parseFloat(item.getCgst());
                 float sg = Float.parseFloat(item.getSgst());
                 float in = 0;
-                if(item.getInsurance_used().equals("yes"))
-                {
+                if (item.getInsurance_used().equals("yes")) {
                     in = Float.parseFloat(item.getInsurance());
-                }
-                else
-                {
+                } else {
                     in = 0;
                 }
 
 
                 float gr = fr + ot + cg + sg + in;
                 holder.freight.setText("\u20B9" + gr);
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
                 holder.freight.setText("\u20B9" + "0");
             }
@@ -189,16 +185,13 @@ public class OngoingOrderFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    if (item.getLaodType().equals("full"))
-                    {
-                        Intent intent = new Intent(context , OrderDetails.class);
-                        intent.putExtra("id" , item.getId());
+                    if (item.getLaodType().equals("full")) {
+                        Intent intent = new Intent(context, OrderDetails.class);
+                        intent.putExtra("id", item.getId());
                         context.startActivity(intent);
-                    }
-                    else
-                    {
-                        Intent intent = new Intent(context , OrderDetails3.class);
-                        intent.putExtra("id" , item.getId());
+                    } else {
+                        Intent intent = new Intent(context, OrderDetails3.class);
+                        intent.putExtra("id", item.getId());
                         context.startActivity(intent);
                     }
 
@@ -214,10 +207,9 @@ public class OngoingOrderFragment extends Fragment {
             return list.size();
         }
 
-        static class ViewHolder extends RecyclerView.ViewHolder
-        {
+        static class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView type , orderid , date , source , destination , material , weight , freight , truck , status;
+            TextView type, orderid, date, source, destination, material, weight, freight, truck, status;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);

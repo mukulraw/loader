@@ -35,10 +35,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String s) {
 
-        SharePreferenceUtils.getInstance().saveString("token" , s);
+        SharePreferenceUtils.getInstance().saveString("token", s);
 
-        Log.d("toekn" , s);
-
+        Log.d("toekn", s);
 
 
         super.onNewToken(s);
@@ -51,19 +50,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         c++;
 
-        SharePreferenceUtils.getInstance().saveInt("count" , c);
+        SharePreferenceUtils.getInstance().saveInt("count", c);
 
-        Log.d("asdasd" , remoteMessage.getData().toString());
+        Log.d("asdasd", remoteMessage.getData().toString());
 
         JSONObject object;
         object = new JSONObject(remoteMessage.getData());
 
         try {
-            handleNotification(object.getString("message") , object.getString("image"));
+            handleNotification(object.getString("message"), object.getString("image"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         Intent registrationComplete = new Intent("count");
 
@@ -73,7 +71,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
     }
 
-    private void handleNotification(final String message  , String image) {
+    private void handleNotification(final String message, String image) {
 
         Log.d("notificationData", message);
         Log.d("notificationData", image);
@@ -93,8 +91,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         final NotificationCompat.Builder[] builder = new NotificationCompat.Builder[1];
 
-        if (image.length() > 0)
-        {
+        if (image.length() > 0) {
             ImageLoader loader = ImageLoader.getInstance();
             loader.loadImage("https://mrtecks.com/grocery/admin/upload/nimage/" + image, new ImageLoadingListener() {
                 @Override
@@ -150,9 +147,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             });
 
 
-        }
-        else
-        {
+        } else {
             builder[0] = new NotificationCompat.Builder(AppController.getContext(), idChannel);
             builder[0].setContentTitle(AppController.getContext().getString(R.string.app_name))
                     .setSmallIcon(R.drawable.loggg)
@@ -187,13 +182,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
 
         }
-
-
-
-
-
-
-
 
 
     }

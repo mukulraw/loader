@@ -162,6 +162,8 @@ public class PayNow extends AppCompatActivity {
 
                 final String txn = String.valueOf(System.currentTimeMillis());
 
+                Log.d("adsasddamount" , String.valueOf(ammm));
+
                 Call<String> call = cr.test(oid + "_" + txn, String.valueOf(ammm));
 
                 call.enqueue(new Callback<String>() {

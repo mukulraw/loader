@@ -195,7 +195,8 @@ public interface AllApiIneterface {
     @POST("android/update_order.php")
     Call<updateProfileBean> update_order(
             @Part("id") String id,
-            @Part("status") String status
+            @Part("status") String status,
+            @Part("user_id") String user_id
     );
 
     @Multipart

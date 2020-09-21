@@ -345,7 +345,9 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                float ammm = (80 / 100) * gr;
+                float ammm = (80 * gr) / 100;
+
+                Log.d("amount80", String.valueOf(ammm));
 
                 Intent intent = new Intent(OrderDetails.this, PayNow.class);
                 intent.putExtra("percent", "80");
@@ -741,7 +743,12 @@ public class OrderDetails extends AppCompatActivity {
                 gr = gr - pvalue;
 
                 grand.setText("₹ " + gr);
-                pa = Float.parseFloat(item.getPaidAmount());
+                if (item.getPaidAmount().length() > 0) {
+                    pa = Float.parseFloat(item.getPaidAmount());
+                } else {
+                    pa = 0;
+                }
+
 
                 balance.setText("Balance - ₹ " + (gr - pa));
 

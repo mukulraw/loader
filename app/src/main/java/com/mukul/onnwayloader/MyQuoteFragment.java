@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -95,6 +96,11 @@ public class MyQuoteFragment extends Fragment {
                     hide.setVisibility(View.VISIBLE);
                 }
 
+
+                Intent registrationComplete = new Intent("count");
+
+                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(registrationComplete);
+
                 adapter.setData(response.body().getData());
 
                 progress.setVisibility(View.GONE);
@@ -150,7 +156,7 @@ public class MyQuoteFragment extends Fragment {
                 float sg = Float.parseFloat(item.getSgst());
                 float in = Float.parseFloat(item.getInsurance());
 
-                float gr = fr + ot + cg + sg + in;
+                float gr = fr + ot + cg + sg;
                 holder.freight.setText("\u20B9" + gr);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -186,7 +192,8 @@ public class MyQuoteFragment extends Fragment {
 
                     Call<updateProfileBean> call = cr.update_order(
                             item.getId(),
-                            "placed"
+                            "placed",
+                            SharePreferenceUtils.getInstance().getString("userId")
                     );
 
                     call.enqueue(new Callback<updateProfileBean>() {
@@ -196,7 +203,12 @@ public class MyQuoteFragment extends Fragment {
                             if (response.body().getStatus().equals("1")) {
                                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
+                                Intent registrationComplete = new Intent("count");
+
+                                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(registrationComplete);
+
                                 onResume();
+
                             } else {
                                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }

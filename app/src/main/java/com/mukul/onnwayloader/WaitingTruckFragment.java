@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -59,19 +60,19 @@ public class WaitingTruckFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_ongoing_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_ongoing_order, container, false);
         recyclerView = view.findViewById(R.id.recycler_view_ongoing_order);
         progress = view.findViewById(R.id.progress);
         hide = view.findViewById(R.id.hide);
         list = new ArrayList<>();
 
         adapter = new OrderAdapter(getActivity(), list);
-        manager = new GridLayoutManager(getActivity() , 1);
+        manager = new GridLayoutManager(getActivity(), 1);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
 
-        return  view;
+        return view;
     }
 
     @Override
@@ -96,14 +97,19 @@ public class WaitingTruckFragment extends Fragment {
             @Override
             public void onResponse(Call<orderHistoryBean> call, Response<orderHistoryBean> response) {
 
-                if (response.body().getData().size() > 0)
-                {
+                if (response.body().getData().size() > 0) {
                     hide.setVisibility(View.GONE);
-                }
-                else
-                {
+                } else {
                     hide.setVisibility(View.VISIBLE);
                 }
+
+
+                try {
+                    ((MainActivity) getActivity()).refreshCount();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
                 adapter.setData(response.body().getData());
 
@@ -118,20 +124,17 @@ public class WaitingTruckFragment extends Fragment {
 
     }
 
-    class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
-    {
+    class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
         Context context;
         List<Datum> list = new ArrayList<>();
 
-        OrderAdapter(Context context, List<Datum> list)
-        {
+        OrderAdapter(Context context, List<Datum> list) {
             this.context = context;
             this.list = list;
         }
 
-        void setData(List<Datum> list)
-        {
+        void setData(List<Datum> list) {
             this.list = list;
             notifyDataSetChanged();
         }
@@ -139,8 +142,8 @@ public class WaitingTruckFragment extends Fragment {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.order_list_model2 , parent , false);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.order_list_model2, parent, false);
             return new ViewHolder(view);
         }
 
@@ -185,16 +188,15 @@ public class WaitingTruckFragment extends Fragment {
                 long diffInMs = startDate.getTime() - currentTime.getTime();
 
 
-                if (diffInMs > 0)
-                {
+                if (diffInMs > 0) {
 
-                    Log.d("ms1" , String.valueOf(startDate.getTime()));
-                    Log.d("ms" , String.valueOf(currentTime.getTime()));
+                    Log.d("ms1", String.valueOf(startDate.getTime()));
+                    Log.d("ms", String.valueOf(currentTime.getTime()));
 
 
                     long diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInMs);
 
-                    CountDownTimer timer = new CountDownTimer(diffInMs , 1000) {
+                    CountDownTimer timer = new CountDownTimer(diffInMs, 1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
                             holder.freight.setText(convertSecondsToHMmSs(millisUntilFinished / 1000));
@@ -207,12 +209,9 @@ public class WaitingTruckFragment extends Fragment {
                     };
 
                     timer.start();
-                }
-                else
-                {
+                } else {
                     holder.freight.setText("---");
                 }
-
 
 
             } catch (ParseException e) {
@@ -254,14 +253,11 @@ public class WaitingTruckFragment extends Fragment {
                                         @Override
                                         public void onResponse(Call<updateProfileBean> call, Response<updateProfileBean> response) {
 
-                                            if (response.body().getStatus().equals("1"))
-                                            {
+                                            if (response.body().getStatus().equals("1")) {
                                                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                                 onResume();
-                                            }
-                                            else
-                                            {
+                                            } else {
                                                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             }
@@ -318,15 +314,15 @@ public class WaitingTruckFragment extends Fragment {
             long s = seconds % 60;
             long m = (seconds / 60) % 60;
             long h = (seconds / (60 * 60)) % 24;
-            return String.format("%d:%02d:%02d", h,m,s);
+            return String.format("%d:%02d:%02d", h, m, s);
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder
-        {
+        class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView type , orderid , date , source , destination , material , weight , freight , truck , status;
+            TextView type, orderid, date, source, destination, material, weight, freight, truck, status;
 
             Button cancel;
+
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
 

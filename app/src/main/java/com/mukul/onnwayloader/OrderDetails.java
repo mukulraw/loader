@@ -97,6 +97,7 @@ public class OrderDetails extends AppCompatActivity {
 
     float fr = 0, ot = 0, cg = 0, sg = 0, in = 0;
     float gr = 0;
+    float pa = 0;
 
     boolean ins = false;
 
@@ -118,7 +119,7 @@ public class OrderDetails extends AppCompatActivity {
 
     FloatingActionButton track;
 
-    TextView drivernote;
+    TextView drivernote, balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +140,7 @@ public class OrderDetails extends AppCompatActivity {
         });
 
         drivernote = findViewById(R.id.textView46);
+        balance = findViewById(R.id.textView110);
         tnc = findViewById(R.id.textView41);
         details = findViewById(R.id.textView14);
         orderid = findViewById(R.id.textView16);
@@ -343,9 +345,12 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                float ammm = (80 / 100) * gr;
+
                 Intent intent = new Intent(OrderDetails.this, PayNow.class);
                 intent.putExtra("percent", "80");
                 intent.putExtra("pid", pid);
+                intent.putExtra("amount", ammm);
                 intent.putExtra("pvalue", pvalue);
                 intent.putExtra("insused", insused);
                 intent.putExtra("insurance", in);
@@ -360,9 +365,12 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                float ammm = gr - pa;
+
                 Intent intent = new Intent(OrderDetails.this, PayNow.class);
                 intent.putExtra("percent", "100");
                 intent.putExtra("pid", pid);
+                intent.putExtra("amount", ammm);
                 intent.putExtra("pvalue", pvalue);
                 intent.putExtra("insused", insused);
                 intent.putExtra("insurance", in);
@@ -534,12 +542,9 @@ public class OrderDetails extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 ins = isChecked;
-                if (isChecked)
-                {
+                if (isChecked) {
                     insused = "yes";
-                }
-                else
-                {
+                } else {
                     insused = "no";
                 }
                 updateSummary();
@@ -736,6 +741,9 @@ public class OrderDetails extends AppCompatActivity {
                 gr = gr - pvalue;
 
                 grand.setText("₹ " + gr);
+                pa = Float.parseFloat(item.getPaidAmount());
+
+                balance.setText("Balance - ₹ " + (gr - pa));
 
                 if (pvalue > 0) {
                     apply.setEnabled(false);

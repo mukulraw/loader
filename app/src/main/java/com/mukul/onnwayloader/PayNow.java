@@ -24,6 +24,12 @@ import android.widget.Toolbar;
 
 import com.mukul.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.mukul.onnwayloader.networking.AppController;
+import com.paytm.pgsdk.PaytmOrder;
+import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+import com.paytm.pgsdk.TransactionManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,12 +48,12 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class PayNow extends AppCompatActivity {
 
-    String percent , pid , insused , oid;
-    float pvalue , in;
+    String percent, pid, insused, oid;
+    float pvalue, in, ammm;
     boolean ins;
 
     ImageView image;
-    Button upload;
+    Button upload, proceed;
     private Uri uri1;
     private File f1;
 
@@ -62,11 +68,13 @@ public class PayNow extends AppCompatActivity {
         pid = getIntent().getStringExtra("pid");
         insused = getIntent().getStringExtra("insused");
         oid = getIntent().getStringExtra("oid");
-        pvalue = getIntent().getFloatExtra("pvalue" , 0);
-        in = getIntent().getFloatExtra("in" , 0);
-        ins = getIntent().getBooleanExtra("isinsurance" , false);
+        pvalue = getIntent().getFloatExtra("pvalue", 0);
+        in = getIntent().getFloatExtra("insurance", 0);
+        ammm = getIntent().getFloatExtra("amount", 0);
+        ins = getIntent().getBooleanExtra("isinsurance", false);
 
         image = findViewById(R.id.imageView14);
+        proceed = findViewById(R.id.button14);
         upload = findViewById(R.id.button15);
         progress = findViewById(R.id.progressBar);
 
@@ -135,6 +143,111 @@ public class PayNow extends AppCompatActivity {
         });
 
 
+        proceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                progress.setVisibility(View.VISIBLE);
+
+                final AppController b = (AppController) getApplicationContext();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(b.baseurl)
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                final String txn = String.valueOf(System.currentTimeMillis());
+
+                Call<String> call = cr.test(oid + "_" + txn, String.valueOf(ammm));
+
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+
+                        try {
+
+                            Log.d("aasdda" , response.body());
+
+                            JSONObject object = new JSONObject(response.body());
+
+                            JSONObject body = object.getJSONObject("body");
+                            String txnToken = body.getString("txnToken");
+
+
+                            String mid = "OQyoJy00054286990314";
+                            String amount = String.valueOf(ammm);
+                            //String txnToken = txntoken;
+                            String orderid = oid + "_" + txn;
+                            String callbackurl = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=" + orderid;
+
+                            PaytmOrder paytmOrder = new PaytmOrder(orderid, mid, txnToken, amount, callbackurl);
+                            TransactionManager transactionManager = new TransactionManager(paytmOrder, new PaytmPaymentTransactionCallback() {
+                                @Override
+                                public void onTransactionResponse(Bundle bundle) {
+                                    Toast.makeText(getApplicationContext(), "Payment Transaction response " + bundle.toString(), Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void networkNotAvailable() {
+                                    Toast.makeText(getApplicationContext(), "networkNotAvailable ", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onErrorProceed(String s) {
+                                    Toast.makeText(getApplicationContext(), "onErrorProceed " + s, Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void clientAuthenticationFailed(String s) {
+                                    Toast.makeText(getApplicationContext(), "clientAuthenticationFailed " + s, Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void someUIErrorOccurred(String s) {
+                                    Toast.makeText(getApplicationContext(), "someUIErrorOccurred " + s, Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onErrorLoadingWebPage(int i, String s, String s1) {
+                                    Toast.makeText(getApplicationContext(), "onErrorLoadingWebPage " + s, Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onBackPressedCancelTransaction() {
+                                    Toast.makeText(getApplicationContext(), "onBackPressedCancelTransaction ", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onTransactionCancel(String s, Bundle bundle) {
+                                    Toast.makeText(getApplicationContext(), "onTransactionCancel " + bundle.toString(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                            transactionManager.startTransaction(PayNow.this, 123);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        progress.setVisibility(View.GONE);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        progress.setVisibility(View.GONE);
+                    }
+                });
+
+
+            }
+        });
+
 
     }
 
@@ -176,7 +289,7 @@ public class PayNow extends AppCompatActivity {
                 AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
                 Call<confirm_full_bean> call = cr.uploadReceipt(
-                    oid,
+                        oid,
                         SharePreferenceUtils.getInstance().getString("userId"),
                         percent,
                         pid,
@@ -208,7 +321,6 @@ public class PayNow extends AppCompatActivity {
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-
 
 
         } else if (requestCode == 1 && resultCode == RESULT_OK) {
@@ -268,12 +380,12 @@ public class PayNow extends AppCompatActivity {
             }
 
 
-
         }
 
 
-
-
+        if (requestCode == 123 && data != null) {
+            Toast.makeText(this, data.getStringExtra("nativeSdkForMerchantMessage") + data.getStringExtra("response"), Toast.LENGTH_SHORT).show();
+        }
 
 
     }

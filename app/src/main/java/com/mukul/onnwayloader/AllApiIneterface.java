@@ -111,6 +111,12 @@ public interface AllApiIneterface {
     );
 
     @Multipart
+    @POST("android/getLoaderCount.php")
+    Call<loaderCountBean> getLoaderCount(
+            @Part("user_id") String user_id
+    );
+
+    @Multipart
     @POST("android/quote_full_load.php")
     Call<confirm_full_bean> quote_full_load(
             @Part("user_id") String user_id,
@@ -176,6 +182,13 @@ public interface AllApiIneterface {
     @POST("android/getOngoingOrders.php")
     Call<orderHistoryBean> getOngoingOrders(
             @Part("user_id") String user_id
+    );
+
+    @Multipart
+    @POST("android/pay/test.php")
+    Call<String> test(
+            @Part("id") String id,
+            @Part("amount") String amount
     );
 
     @Multipart

@@ -2,15 +2,22 @@ package com.mukul.onnwayloader;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -40,6 +47,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.view.Menu;
 import android.view.Window;
@@ -86,6 +94,8 @@ public class MainActivity extends AppCompatActivity
 
     TextView phone, name;
     DrawerLayout drawer;
+
+    BroadcastReceiver commentReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +178,20 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+
+
+
+        /*BottomNavigationMenuView itemView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+
+        View notificationBadge = LayoutInflater.from(this).inflate(R.layout.view_notification_badge, bottomNavigationView, false);
+
+        itemView.addView(notificationBadge);*/
+
+/*
+        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_waiting_truck);
+        badge.setNumber(100);
+*/
+
         Cursor cursor = getSetUserData.getAllData();
         if (cursor.getCount() == 0) {
             new Handler().postDelayed(new Runnable() {
@@ -199,7 +223,79 @@ public class MainActivity extends AppCompatActivity
         name = view.findViewById(R.id.name);
 
 
+        commentReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
 
+                if (intent.getAction().equals("count")) {
+
+                    refreshCount();
+
+                }
+            }
+        };
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(commentReceiver,
+                new IntentFilter("count"));
+
+    }
+
+    void refreshCount() {
+        AppController b = (AppController) getApplicationContext();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+
+        Call<loaderCountBean> call = cr.getLoaderCount(
+                SharePreferenceUtils.getInstance().getString("userId")
+        );
+
+        call.enqueue(new Callback<loaderCountBean>() {
+            @Override
+            public void onResponse(Call<loaderCountBean> call, Response<loaderCountBean> response) {
+
+
+                if (response.body().getOrdersdata() > 0) {
+                    BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+                    BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(2);
+
+                    View notificationBadge = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_notification_badge, menuView, false);
+
+                    itemView.addView(notificationBadge);
+                }
+
+                if (response.body().getWaitingdata() > 0) {
+                    BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+                    BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(1);
+
+                    View notificationBadge = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_notification_badge, menuView, false);
+
+                    itemView.addView(notificationBadge);
+                }
+
+                if (response.body().getQuotesdata() > 0) {
+                    BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+                    BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(3);
+
+                    View notificationBadge = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_notification_badge, menuView, false);
+
+                    itemView.addView(notificationBadge);
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<loaderCountBean> call, Throwable t) {
+
+            }
+        });
 
 
     }
@@ -219,6 +315,14 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(commentReceiver);
+
     }
 
     @Override
@@ -245,7 +349,7 @@ public class MainActivity extends AppCompatActivity
 
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).showImageForEmptyUri(R.drawable.ic_profile_image).build();
         ImageLoader loader = ImageLoader.getInstance();
-        loader.displayImage(SharePreferenceUtils.getInstance().getString("image") , profileImageView , options);
+        loader.displayImage(SharePreferenceUtils.getInstance().getString("image"), profileImageView, options);
 
 
         AppController b = (AppController) getApplicationContext();
@@ -267,8 +371,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<confirm_full_bean> call, final Response<confirm_full_bean> response) {
 
-                if (response.body().getStatus().equals("1"))
-                {
+                if (response.body().getStatus().equals("1")) {
                     final Dialog dialog = new Dialog(MainActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setCancelable(false);
@@ -301,8 +404,7 @@ public class MainActivity extends AppCompatActivity
                                 @Override
                                 public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
 
-                                    if (response.body().getStatus().equals("1"))
-                                    {
+                                    if (response.body().getStatus().equals("1")) {
                                         dialog.dismiss();
                                     }
 
@@ -324,7 +426,6 @@ public class MainActivity extends AppCompatActivity
                 }
 
 
-
             }
 
             @Override
@@ -334,6 +435,7 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+        refreshCount();
 
 
     }
@@ -350,34 +452,34 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
 
         } else if (id == R.id.nav_about) {
-            Intent intent = new Intent(MainActivity.this , Web.class);
-            intent.putExtra("title" , "About Onnway");
-            intent.putExtra("url" , "https://www.onnway.com/aboutonway.php");
+            Intent intent = new Intent(MainActivity.this, Web.class);
+            intent.putExtra("title", "About Onnway");
+            intent.putExtra("url", "https://www.onnway.com/aboutonway.php");
             startActivity(intent);
         } else if (id == R.id.nav_faq) {
-            Intent intent = new Intent(MainActivity.this , Web.class);
-            intent.putExtra("title" , "FAQs");
-            intent.putExtra("url" , "https://www.onnway.com/faqonnway.php");
+            Intent intent = new Intent(MainActivity.this, Web.class);
+            intent.putExtra("title", "FAQs");
+            intent.putExtra("url", "https://www.onnway.com/faqonnway.php");
             startActivity(intent);
         } else if (id == R.id.nav_contact) {
-            Intent intent = new Intent(MainActivity.this , Web.class);
-            intent.putExtra("title" , "Contact Us");
-            intent.putExtra("url" , "https://www.onnway.com/contactonnway.php");
+            Intent intent = new Intent(MainActivity.this, Web.class);
+            intent.putExtra("title", "Contact Us");
+            intent.putExtra("url", "https://www.onnway.com/contactonnway.php");
             startActivity(intent);
         } else if (id == R.id.nav_payment_terms) {
-            Intent intent = new Intent(MainActivity.this , Web.class);
-            intent.putExtra("title" , "Payment Terms");
-            intent.putExtra("url" , "https://www.onnway.com/paymentonnway.php");
+            Intent intent = new Intent(MainActivity.this, Web.class);
+            intent.putExtra("title", "Payment Terms");
+            intent.putExtra("url", "https://www.onnway.com/paymentonnway.php");
             startActivity(intent);
         } else if (id == R.id.nav_security) {
-            Intent intent = new Intent(MainActivity.this , Web.class);
-            intent.putExtra("title" , "Privacy Policy");
-            intent.putExtra("url" , "https://www.onnway.com/privacyonnway.php");
+            Intent intent = new Intent(MainActivity.this, Web.class);
+            intent.putExtra("title", "Privacy Policy");
+            intent.putExtra("url", "https://www.onnway.com/privacyonnway.php");
             startActivity(intent);
         } else if (id == R.id.nav_terms_and_condition) {
-            Intent intent = new Intent(MainActivity.this , Web.class);
-            intent.putExtra("title" , "Terms and Conditions");
-            intent.putExtra("url" , "https://www.onnway.com/termsonnway.php");
+            Intent intent = new Intent(MainActivity.this, Web.class);
+            intent.putExtra("title", "Terms and Conditions");
+            intent.putExtra("url", "https://www.onnway.com/termsonnway.php");
             startActivity(intent);
         } else if (id == R.id.nav_share) {
 
@@ -399,9 +501,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             finishAffinity();
 
-        }
-        else if (id == R.id.feedback)
-        {
+        } else if (id == R.id.feedback) {
             Intent intent = new Intent(MainActivity.this, Feedback.class);
             startActivity(intent);
             drawer.closeDrawer(GravityCompat.START);

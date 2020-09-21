@@ -163,7 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Through IMPS/ NEFT/ RTGS"
+        android:text="Through IMPS/ NEFT/ RTGS\nPay on after loading"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView108" />
@@ -174,7 +174,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Pay on after loading"
+        android:text="Balance - ₹0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView109" />
 

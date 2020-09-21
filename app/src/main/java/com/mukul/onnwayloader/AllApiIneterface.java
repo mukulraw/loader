@@ -287,6 +287,20 @@ public interface AllApiIneterface {
     );
 
     @Multipart
+    @POST("android/pay.php")
+    Call<confirm_full_bean> pay(
+            @Part("order_id") String order_id,
+            @Part("user_id") String user_id,
+            @Part("type") String type,
+            @Part("pid") String pid,
+            @Part("pvalue") String pvalue,
+            @Part("insused") String insused,
+            @Part("inin") String inin,
+            @Part("isinsurance") String isinsurance,
+            @Part("amount") String amount
+    );
+
+    @Multipart
     @POST("android/getLogs.php")
     Call<trackBean> getLogs(
             @Part("order_id") String order_id

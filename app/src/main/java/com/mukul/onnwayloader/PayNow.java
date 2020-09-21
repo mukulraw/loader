@@ -162,7 +162,7 @@ public class PayNow extends AppCompatActivity {
 
                 final String txn = String.valueOf(System.currentTimeMillis());
 
-                Log.d("adsasddamount" , String.valueOf(ammm));
+                Log.d("adsasddamount", String.valueOf(ammm));
 
                 Call<String> call = cr.test(oid + "_" + txn, String.valueOf(ammm));
 
@@ -172,7 +172,7 @@ public class PayNow extends AppCompatActivity {
 
                         try {
 
-                            Log.d("aasdda" , response.body());
+                            Log.d("aasdda", response.body());
 
                             JSONObject object = new JSONObject(response.body());
 
@@ -190,7 +190,7 @@ public class PayNow extends AppCompatActivity {
                             TransactionManager transactionManager = new TransactionManager(paytmOrder, new PaytmPaymentTransactionCallback() {
                                 @Override
                                 public void onTransactionResponse(Bundle bundle) {
-                                    Toast.makeText(getApplicationContext(), "Payment Transaction response " + bundle.toString(), Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getApplicationContext(), "Payment Transaction response " + bundle.toString(), Toast.LENGTH_LONG).show();
                                 }
 
                                 @Override
@@ -386,7 +386,48 @@ public class PayNow extends AppCompatActivity {
 
 
         if (requestCode == 123 && data != null) {
-            Toast.makeText(this, data.getStringExtra("nativeSdkForMerchantMessage") + data.getStringExtra("response"), Toast.LENGTH_SHORT).show();
+
+            progress.setVisibility(View.VISIBLE);
+
+            AppController b = (AppController) getApplicationContext();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(b.baseurl)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+            Call<confirm_full_bean> call = cr.pay(
+                    oid,
+                    SharePreferenceUtils.getInstance().getString("userId"),
+                    percent,
+                    pid,
+                    String.valueOf(pvalue),
+                    insused,
+                    String.valueOf(in),
+                    String.valueOf(ins),
+                    String.valueOf(ammm)
+            );
+
+            call.enqueue(new Callback<confirm_full_bean>() {
+                @Override
+                public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
+
+                    Toast.makeText(PayNow.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    finish();
+
+                    progress.setVisibility(View.GONE);
+
+                }
+
+                @Override
+                public void onFailure(Call<confirm_full_bean> call, Throwable t) {
+                    progress.setVisibility(View.GONE);
+                }
+            });
+
         }
 
 

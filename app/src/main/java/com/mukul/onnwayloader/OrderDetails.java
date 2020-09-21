@@ -635,6 +635,11 @@ public class OrderDetails extends AppCompatActivity {
                     pay80.setEnabled(false);
                 }
 
+                if (item.getPaidPercent().equals("80")) {
+                    pay80.setText("Paid\n₹ " + item.getPaidAmount());
+                    pay80.setEnabled(false);
+                }
+
 
                 if (item.getPer100().equals("pending")) {
                     pay100.setText("100%");
@@ -646,10 +651,18 @@ public class OrderDetails extends AppCompatActivity {
                     pay100.setText("REJECTED\nPAY NOW");
                     pay100.setEnabled(true);
                 } else {
-                    pay100.setText("100%\n" + item.getPer100());
+                    pay100.setText("100%\n" + item.getPaidAmount());
                     pay100.setEnabled(false);
                 }
 
+                if (item.getPaidPercent().equals("100")) {
+                    pay80.setText("Paid");
+                    pay80.setEnabled(false);
+
+                    pay100.setText("100%\n" + item.getPaidAmount());
+                    pay100.setEnabled(false);
+
+                }
 
                 if (item.getAssign_id() != null) {
 

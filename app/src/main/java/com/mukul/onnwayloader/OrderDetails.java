@@ -551,6 +551,8 @@ public class OrderDetails extends AppCompatActivity {
                 }
                 updateSummary();
 
+                balance.setText("Balance - ₹ " + (gr - pa));
+
             }
         });
 

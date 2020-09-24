@@ -290,17 +290,20 @@ public class WaitingTruckFragment extends Fragment {
             });
 
 
-
-
-
-            /*holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context , OrderDetails.class);
-                    intent.putExtra("id" , item.getId());
-                    context.startActivity(intent);
+                    if (item.getLaodType().equals("full")) {
+                        Intent intent = new Intent(context, OrderDetails5.class);
+                        intent.putExtra("id", item.getId());
+                        context.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(context, OrderDetails4.class);
+                        intent.putExtra("id", item.getId());
+                        context.startActivity(intent);
+                    }
                 }
-            });*/
+            });
 
 
         }

@@ -62,7 +62,7 @@ public class MaterialActivity2 extends AppCompatActivity {
 
     List<String> mat , weis;
     List<String> mids;
-    String src , des , dat , loa;
+    String src , des , dat , loa, tid;
     String mid , wei;
     Button upload;
 
@@ -83,6 +83,7 @@ public class MaterialActivity2 extends AppCompatActivity {
         mids = new ArrayList<>();
 
         src = getIntent().getStringExtra("source");
+        tid = getIntent().getStringExtra("tid");
         des = getIntent().getStringExtra("destination");
         dat = getIntent().getStringExtra("date");
         loa = getIntent().getStringExtra("loadtype");
@@ -437,6 +438,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                             intent.putExtra("wei" , wei);
                             intent.putExtra("mid" , mid);
                             intent.putExtra("loa" , loa);
+                            intent.putExtra("tid" , tid);
                             intent.putExtra("image" , f1.toString());
                             intent.putExtra("len" , length.getText().toString());
                             intent.putExtra("desc" , remarks.getText().toString());
@@ -458,6 +460,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                             intent.putExtra("wei" , wei);
                             intent.putExtra("mid" , mid);
                             intent.putExtra("loa" , loa);
+                            intent.putExtra("tid" , tid);
                             intent.putExtra("image" , "");
                             intent.putExtra("len" , length.getText().toString());
                             intent.putExtra("desc" , remarks.getText().toString());

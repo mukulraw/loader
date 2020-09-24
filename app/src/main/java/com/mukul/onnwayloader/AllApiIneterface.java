@@ -224,6 +224,12 @@ public interface AllApiIneterface {
     );
 
     @Multipart
+    @POST("android/getOrderDetails2.php")
+    Call<confirm_full_bean> getOrderDetails2(
+            @Part("id") String id
+    );
+
+    @Multipart
     @POST("android/uploadInvoice.php")
     Call<confirm_full_bean> uploadDocuments(
             @Part("assign_id") String assign_id,

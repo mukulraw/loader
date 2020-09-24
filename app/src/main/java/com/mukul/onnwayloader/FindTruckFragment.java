@@ -221,7 +221,7 @@ public class FindTruckFragment extends Fragment
                 fullLoad.setTextColor(Color.parseColor("#000000"));
                 fullLoad.setBackgroundResource(R.drawable.white_back_round);
 
-                truck.setVisibility(View.INVISIBLE);
+                //truck.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -332,6 +332,7 @@ public class FindTruckFragment extends Fragment
                                 Intent intent = new Intent(getContext(), MaterialActivity2.class);
                                 intent.putExtra("source", srcAddress);
                                 intent.putExtra("destination", destAddress);
+                                intent.putExtra("tid", tid);
                                 intent.putExtra("loadtype", loadType);
                                 intent.putExtra("date", pickUpDate);
                                 intent.putExtra("sourceLAT", sourceLAT);

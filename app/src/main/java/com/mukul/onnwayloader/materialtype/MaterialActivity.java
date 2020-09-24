@@ -88,7 +88,7 @@ public class MaterialActivity extends AppCompatActivity {
         progress = findViewById(R.id.progressBar);
         weighttitle = findViewById(R.id.textView11);
 
-        weighttitle.setText("Enter Weight (Max. load capacity - " + max + ")");
+        weighttitle.setText("Enter Weight (Max. load capacity - " + max + " Kg)");
 
 
         progress.setVisibility(View.VISIBLE);

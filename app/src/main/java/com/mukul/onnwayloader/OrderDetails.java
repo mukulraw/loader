@@ -119,7 +119,7 @@ public class OrderDetails extends AppCompatActivity {
 
     FloatingActionButton track;
 
-    TextView drivernote, balance;
+    TextView drivernote, balance, insuranceheading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +140,7 @@ public class OrderDetails extends AppCompatActivity {
         });
 
         drivernote = findViewById(R.id.textView46);
+        insuranceheading = findViewById(R.id.textView33);
         balance = findViewById(R.id.textView110);
         tnc = findViewById(R.id.textView41);
         details = findViewById(R.id.textView14);
@@ -731,9 +732,13 @@ public class OrderDetails extends AppCompatActivity {
                         insurance.setChecked(false);
                     }
 
+                    insuranceheading.setVisibility(View.VISIBLE);
+                    insurance.setVisibility(View.VISIBLE);
 
                 } else {
                     insurance.setEnabled(false);
+                    insuranceheading.setVisibility(View.GONE);
+                    insurance.setVisibility(View.GONE);
                 }
 
 

@@ -80,7 +80,7 @@ public class OrderDetails4 extends AppCompatActivity {
 
     ProgressBar progress;
 
-    TextView pending, pending2;
+    TextView pending, pending2, request;
 
 
 
@@ -129,7 +129,7 @@ public class OrderDetails4 extends AppCompatActivity {
         });
 
         drivernote = findViewById(R.id.textView46);
-
+        request = findViewById(R.id.button4);
         dimension = findViewById(R.id.textView134);
         phototitle = findViewById(R.id.textView140);
         equal = findViewById(R.id.textView135);
@@ -202,6 +202,75 @@ public class OrderDetails4 extends AppCompatActivity {
                 Intent intent = new Intent(OrderDetails4.this, MapsActivity.class);
                 intent.putExtra("order", id);
                 startActivity(intent);
+
+            }
+        });
+
+        request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new AlertDialog.Builder(OrderDetails4.this)
+                        .setTitle("Cancel Booking")
+                        .setMessage("Are you sure you want to cancel this booking?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, int which) {
+
+
+                                progress.setVisibility(View.VISIBLE);
+
+                                AppController b = (AppController) getApplicationContext();
+
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(b.baseurl)
+                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+
+                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                                Call<updateProfileBean> call = cr.cancel_order_loader(
+                                        id
+                                );
+
+                                call.enqueue(new Callback<updateProfileBean>() {
+                                    @Override
+                                    public void onResponse(Call<updateProfileBean> call, Response<updateProfileBean> response) {
+
+                                        if (response.body().getStatus().equals("1")) {
+                                            Toast.makeText(OrderDetails4.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                            finish();
+                                        } else {
+                                            Toast.makeText(OrderDetails4.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        progress.setVisibility(View.GONE);
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<updateProfileBean> call, Throwable t) {
+                                        progress.setVisibility(View.GONE);
+                                    }
+                                });
+
+
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
 
             }
         });

@@ -82,7 +82,7 @@
         android:padding="10dp"
         android:text="CANCEL BOOKING"
         android:textColor="@color/colorAccent"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

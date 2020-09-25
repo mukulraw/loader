@@ -27,10 +27,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:text="confirm loading"
-        android:visibility="gone"
         android:background="@drawable/black_back_round"
+        android:text="confirm loading"
         android:textColor="#ffffff"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -65,29 +65,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                app:cardBackgroundColor="#fefefe"
-                app:cardUseCompatPadding="true">
-
-                <include layout="@layout/bill1" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/truckcard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                app:cardBackgroundColor="#fefefe"
-                app:cardUseCompatPadding="true">
-
-                <include layout="@layout/bill3" />
-
-            </androidx.cardview.widget.CardView>
-
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -99,11 +76,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="CANCEL BOOKING"
         android:gravity="center"
-        android:visibility="visible"
         android:padding="10dp"
+        android:text="CANCEL BOOKING"
         android:textColor="@color/colorAccent"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -115,8 +92,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
-        android:visibility="gone"
         android:src="@drawable/ic_road"
+        android:visibility="gone"
         app:backgroundTint="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent" />

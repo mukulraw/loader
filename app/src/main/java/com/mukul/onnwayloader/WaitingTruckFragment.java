@@ -162,7 +162,28 @@ public class WaitingTruckFragment extends Fragment {
             holder.material.setText(item.getMaterial());
             holder.weight.setText(item.getWeight());
             holder.truck.setText(item.getTruckType());
-            holder.status.setText(item.getStatus());
+            holder.schedule.setText(item.getSchedule());
+
+            if (item.getStatus().equals("accepted quote")) {
+
+                try {
+                    float fr = Float.parseFloat(item.getFreight());
+                    float ot = Float.parseFloat(item.getOtherCharges());
+                    float cg = Float.parseFloat(item.getCgst());
+                    float sg = Float.parseFloat(item.getSgst());
+                    float in = Float.parseFloat(item.getInsurance());
+
+                    float gr = fr + ot + cg + sg;
+                    holder.status.setText(item.getStatus() + " (₹ " + gr + ")");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    holder.status.setText(item.getStatus());
+                }
+
+
+            } else {
+                holder.status.setText(item.getStatus());
+            }
 
 
             String dateString = item.getCreated();
@@ -322,7 +343,7 @@ public class WaitingTruckFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView type, orderid, date, source, destination, material, weight, freight, truck, status;
+            TextView type, orderid, date, source, destination, material, weight, freight, truck, status, schedule;
 
             Button cancel;
 
@@ -330,6 +351,7 @@ public class WaitingTruckFragment extends Fragment {
                 super(itemView);
 
                 type = itemView.findViewById(R.id.textView65);
+                schedule = itemView.findViewById(R.id.textView145);
                 orderid = itemView.findViewById(R.id.textView66);
                 date = itemView.findViewById(R.id.textView67);
                 source = itemView.findViewById(R.id.textView69);

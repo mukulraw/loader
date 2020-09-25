@@ -149,6 +149,7 @@ public class MyQuoteFragment extends Fragment {
             holder.material.setText(item.getMaterial());
             holder.weight.setText(item.getWeight());
             holder.truck.setText(item.getTruckType());
+            holder.schedule.setText(item.getSchedule());
             try {
                 float fr = Float.parseFloat(item.getFreight());
                 float ot = Float.parseFloat(item.getOtherCharges());
@@ -249,13 +250,14 @@ public class MyQuoteFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView type, orderid, date, source, destination, material, weight, freight, truck;
+            TextView type, orderid, date, source, destination, material, weight, freight, truck, schedule;
             Button confirm, getcall;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 type = itemView.findViewById(R.id.textView65);
+                schedule = itemView.findViewById(R.id.textView145);
                 orderid = itemView.findViewById(R.id.textView66);
                 date = itemView.findViewById(R.id.textView67);
                 source = itemView.findViewById(R.id.textView69);

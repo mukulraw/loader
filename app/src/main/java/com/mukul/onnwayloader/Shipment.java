@@ -42,28 +42,28 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class Shipment extends AppCompatActivity {
 
 
-    TextView orderid , orderdate , truck , source , destination , material , weight , details , schedule , status, statustitle , loadtype;
-    TextView grand , tnc;
+    TextView orderid, orderdate, truck, source, destination, material, weight, details, schedule, status, statustitle, loadtype;
+    TextView grand, tnc, request;
     CheckBox insurance;
-    Button confirm , request , apply;
+    Button confirm, apply;
     ProgressBar progress;
 
-    Button pay80 , pay100;
+    Button pay80, pay100;
 
-    float fr = 0, ot = 0 , cg = 0 , sg = 0 , in = 0;
+    float fr = 0, ot = 0, cg = 0, sg = 0, in = 0;
     float gr = 0;
 
     boolean ins = false;
-EditText promo , decs;
+    EditText promo, decs;
 
-    String src , des , tid , dat , wei , mid , loa;
+    String src, des, tid, dat, wei, mid, loa;
 
     TextView discountterms;
 
     float pvalue = 0;
     String pid = "";
 
-    double sourceLAT , sourceLNG , destinationLAT , destinationLNG;
+    double sourceLAT, sourceLNG, destinationLAT, destinationLNG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +77,10 @@ EditText promo , decs;
         wei = getIntent().getStringExtra("wei");
         mid = getIntent().getStringExtra("mid");
         loa = getIntent().getStringExtra("loa");
-        sourceLAT = getIntent().getDoubleExtra("sourceLAT" , 0);
-        sourceLNG = getIntent().getDoubleExtra("sourceLNG" , 0);
-        destinationLAT = getIntent().getDoubleExtra("destinationLAT" , 0);
-        destinationLNG = getIntent().getDoubleExtra("destinationLNG" , 0);
+        sourceLAT = getIntent().getDoubleExtra("sourceLAT", 0);
+        sourceLNG = getIntent().getDoubleExtra("sourceLNG", 0);
+        destinationLAT = getIntent().getDoubleExtra("destinationLAT", 0);
+        destinationLNG = getIntent().getDoubleExtra("destinationLNG", 0);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
         mToolbar.setTitle("Shipment Details");
@@ -150,8 +150,8 @@ EditText promo , decs;
             }
         };
 
-        spannableString.setSpan(clickableSpan1, 5,8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(clickableSpan2, 13,32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan1, 5, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan2, 13, 32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tnc.setText(spannableString);
         tnc.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -211,15 +211,14 @@ EditText promo , decs;
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Call<fareBean> call = cr.getFare(src , des , tid , mid , wei);
+        Call<fareBean> call = cr.getFare(src, des, tid, mid, wei);
         //Call<fareBean> call = cr.getFare("Delhi" , "Mumbai" , "1" , "1" , "10000");
 
         call.enqueue(new Callback<fareBean>() {
             @Override
             public void onResponse(Call<fareBean> call, Response<fareBean> response) {
 
-                if (response.body().getStatus().equals("1"))
-                {
+                if (response.body().getStatus().equals("1")) {
                     final Data item = response.body().getData();
                     truck.setText(item.getTruckId());
                     source.setText(item.getSource());
@@ -233,7 +232,6 @@ EditText promo , decs;
                     sgst.setText("\u20B9" + item.getSgst());*/
 
 
-
                     insurance.setText("\u20B9" + item.getInsurance());
 
                     fr = Float.parseFloat(item.getFreight());
@@ -242,22 +240,16 @@ EditText promo , decs;
                     sg = Float.parseFloat(item.getSgst());
                     in = Float.parseFloat(item.getInsurance());
 
-                    if (in > 0)
-                    {
+                    if (in > 0) {
                         insurance.setEnabled(true);
-                    }
-                    else
-                    {
+                    } else {
                         insurance.setEnabled(false);
                     }
 
                     updateSummary();
 
 
-
-                }
-                else
-                {
+                } else {
 
                     Dialog dialog = new Dialog(Shipment.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -278,36 +270,32 @@ EditText promo , decs;
                         @Override
                         public void onClick(View v) {
 
-                            if (SharePreferenceUtils.getInstance().getString("name").length() > 0)
-                            {
-                                Intent intent = new Intent(Shipment.this , Address2.class);
-                                intent.putExtra("src" , src);
-                                intent.putExtra("des" , des);
-                                intent.putExtra("tid" , tid);
-                                intent.putExtra("dat" , dat);
-                                intent.putExtra("wei" , wei);
-                                intent.putExtra("mid" , mid);
-                                intent.putExtra("loa" , loa);
-                                intent.putExtra("desc" , decs.getText().toString());
-                                intent.putExtra("freight" , String.valueOf(fr));
-                                intent.putExtra("other_charges" , "" + ot);
-                                intent.putExtra("cgst" , "" + cg);
-                                intent.putExtra("sgst" , "" + sg);
-                                intent.putExtra("insurance" , "" + in);
+                            if (SharePreferenceUtils.getInstance().getString("name").length() > 0) {
+                                Intent intent = new Intent(Shipment.this, Address2.class);
+                                intent.putExtra("src", src);
+                                intent.putExtra("des", des);
+                                intent.putExtra("tid", tid);
+                                intent.putExtra("dat", dat);
+                                intent.putExtra("wei", wei);
+                                intent.putExtra("mid", mid);
+                                intent.putExtra("loa", loa);
+                                intent.putExtra("desc", decs.getText().toString());
+                                intent.putExtra("freight", String.valueOf(fr));
+                                intent.putExtra("other_charges", "" + ot);
+                                intent.putExtra("cgst", "" + cg);
+                                intent.putExtra("sgst", "" + sg);
+                                intent.putExtra("insurance", "" + in);
                                 intent.putExtra("sourceLAT", sourceLAT);
                                 intent.putExtra("sourceLNG", sourceLNG);
                                 intent.putExtra("destinationLAT", destinationLAT);
                                 intent.putExtra("destinationLNG", destinationLNG);
                                 startActivity(intent);
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(Shipment.this, "Please complete your profile to continue", Toast.LENGTH_SHORT).show();
 
-                                Intent intent = new Intent(Shipment.this , Profile.class);
+                                Intent intent = new Intent(Shipment.this, Profile.class);
                                 startActivity(intent);
                             }
-
 
 
                         }
@@ -331,8 +319,7 @@ EditText promo , decs;
 
                 String pc = promo.getText().toString();
 
-                if (pc.length() > 0)
-                {
+                if (pc.length() > 0) {
 
                     apply.setEnabled(false);
                     apply.setClickable(false);
@@ -352,14 +339,13 @@ EditText promo , decs;
 
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                    Call<checkPromoBean> call = cr.checkPromo(pc , SharePreferenceUtils.getInstance().getString("userId"));
+                    Call<checkPromoBean> call = cr.checkPromo(pc, SharePreferenceUtils.getInstance().getString("userId"));
 
                     call.enqueue(new Callback<checkPromoBean>() {
                         @Override
                         public void onResponse(Call<checkPromoBean> call, Response<checkPromoBean> response) {
 
-                            if (response.body().getStatus().equals("1"))
-                            {
+                            if (response.body().getStatus().equals("1")) {
 
                                 pvalue = Float.parseFloat(response.body().getData().getDiscount());
 
@@ -371,9 +357,7 @@ EditText promo , decs;
 
                                 Toast.makeText(Shipment.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(Shipment.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 apply.setEnabled(true);
                                 apply.setClickable(true);
@@ -397,9 +381,7 @@ EditText promo , decs;
                         }
                     });
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(Shipment.this, "Invalid PROMO code", Toast.LENGTH_SHORT).show();
                 }
 
@@ -432,38 +414,34 @@ EditText promo , decs;
             @Override
             public void onClick(View v) {
 
-                if (SharePreferenceUtils.getInstance().getString("name").length() > 0)
-                {
-                    Intent intent = new Intent(Shipment.this , Address1.class);
-                    intent.putExtra("src" , src);
-                    intent.putExtra("des" , des);
-                    intent.putExtra("tid" , tid);
-                    intent.putExtra("dat" , dat);
-                    intent.putExtra("wei" , wei);
-                    intent.putExtra("mid" , mid);
-                    intent.putExtra("loa" , loa);
-                    intent.putExtra("desc" , decs.getText().toString());
-                    intent.putExtra("pvalue" , pvalue);
-                    intent.putExtra("pid" , pid);
-                    intent.putExtra("freight" , String.valueOf(fr));
-                    intent.putExtra("other_charges" , "" + ot);
-                    intent.putExtra("cgst" , "" + cg);
-                    intent.putExtra("sgst" , "" + sg);
-                    intent.putExtra("insurance" , "" + in);
+                if (SharePreferenceUtils.getInstance().getString("name").length() > 0) {
+                    Intent intent = new Intent(Shipment.this, Address1.class);
+                    intent.putExtra("src", src);
+                    intent.putExtra("des", des);
+                    intent.putExtra("tid", tid);
+                    intent.putExtra("dat", dat);
+                    intent.putExtra("wei", wei);
+                    intent.putExtra("mid", mid);
+                    intent.putExtra("loa", loa);
+                    intent.putExtra("desc", decs.getText().toString());
+                    intent.putExtra("pvalue", pvalue);
+                    intent.putExtra("pid", pid);
+                    intent.putExtra("freight", String.valueOf(fr));
+                    intent.putExtra("other_charges", "" + ot);
+                    intent.putExtra("cgst", "" + cg);
+                    intent.putExtra("sgst", "" + sg);
+                    intent.putExtra("insurance", "" + in);
                     intent.putExtra("sourceLAT", sourceLAT);
                     intent.putExtra("sourceLNG", sourceLNG);
                     intent.putExtra("destinationLAT", destinationLAT);
                     intent.putExtra("destinationLNG", destinationLNG);
                     startActivity(intent);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(Shipment.this, "Please complete your profile to continue", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(Shipment.this , Profile.class);
+                    Intent intent = new Intent(Shipment.this, Profile.class);
                     startActivity(intent);
                 }
-
 
 
             }
@@ -473,33 +451,30 @@ EditText promo , decs;
             @Override
             public void onClick(View v) {
 
-                if (SharePreferenceUtils.getInstance().getString("name").length() > 0)
-                {
-                    Intent intent = new Intent(Shipment.this , Address2.class);
-                    intent.putExtra("src" , src);
-                    intent.putExtra("des" , des);
-                    intent.putExtra("tid" , tid);
-                    intent.putExtra("dat" , dat);
-                    intent.putExtra("wei" , wei);
-                    intent.putExtra("mid" , mid);
-                    intent.putExtra("desc" , decs.getText().toString());
-                    intent.putExtra("loa" , loa);
-                    intent.putExtra("freight" , String.valueOf(fr));
-                    intent.putExtra("other_charges" , "" + ot);
-                    intent.putExtra("cgst" , "" + cg);
-                    intent.putExtra("sgst" , "" + sg);
-                    intent.putExtra("insurance" , "" + in);
+                if (SharePreferenceUtils.getInstance().getString("name").length() > 0) {
+                    Intent intent = new Intent(Shipment.this, Address2.class);
+                    intent.putExtra("src", src);
+                    intent.putExtra("des", des);
+                    intent.putExtra("tid", tid);
+                    intent.putExtra("dat", dat);
+                    intent.putExtra("wei", wei);
+                    intent.putExtra("mid", mid);
+                    intent.putExtra("desc", decs.getText().toString());
+                    intent.putExtra("loa", loa);
+                    intent.putExtra("freight", String.valueOf(fr));
+                    intent.putExtra("other_charges", "" + ot);
+                    intent.putExtra("cgst", "" + cg);
+                    intent.putExtra("sgst", "" + sg);
+                    intent.putExtra("insurance", "" + in);
                     intent.putExtra("sourceLAT", sourceLAT);
                     intent.putExtra("sourceLNG", sourceLNG);
                     intent.putExtra("destinationLAT", destinationLAT);
                     intent.putExtra("destinationLNG", destinationLNG);
                     startActivity(intent);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(Shipment.this, "Please complete your profile to continue", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(Shipment.this , Profile.class);
+                    Intent intent = new Intent(Shipment.this, Profile.class);
                     startActivity(intent);
                 }
 
@@ -510,16 +485,12 @@ EditText promo , decs;
 
     }
 
-    void updateSummary()
-    {
+    void updateSummary() {
 
-        if (ins)
-        {
+        if (ins) {
             gr = fr + ot + cg + sg + in;
             grand.setText("\u20B9" + gr);
-        }
-        else
-        {
+        } else {
             gr = fr + ot + cg + sg;
             grand.setText("\u20B9" + gr);
         }

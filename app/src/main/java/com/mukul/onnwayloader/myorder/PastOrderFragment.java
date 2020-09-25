@@ -161,6 +161,7 @@ public class PastOrderFragment extends Fragment {
             holder.weight.setText(item.getWeight());
             holder.truck.setText(item.getTruckType());
             holder.status.setText(item.getStatus());
+            holder.schedule.setText(item.getSchedule());
 
             try {
                 float fr = Float.parseFloat(item.getFreight());
@@ -198,12 +199,13 @@ public class PastOrderFragment extends Fragment {
         static class ViewHolder extends RecyclerView.ViewHolder
         {
 
-            TextView type , orderid , date , source , destination , material , weight , freight , truck , status;
+            TextView type , orderid , date , source , destination , material , weight , freight , truck , status, schedule;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 type = itemView.findViewById(R.id.textView65);
+                schedule = itemView.findViewById(R.id.textView145);
                 orderid = itemView.findViewById(R.id.textView66);
                 date = itemView.findViewById(R.id.textView67);
                 source = itemView.findViewById(R.id.textView69);

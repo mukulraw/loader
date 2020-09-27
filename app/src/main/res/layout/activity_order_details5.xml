@@ -61,7 +61,7 @@
                 app:cardBackgroundColor="#fefefe"
                 app:cardUseCompatPadding="true">
 
-                <include layout="@layout/summary" />
+                <include layout="@layout/summary4" />
 
             </androidx.cardview.widget.CardView>
 

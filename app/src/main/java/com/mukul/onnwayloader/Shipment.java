@@ -211,7 +211,19 @@ public class Shipment extends AppCompatActivity {
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Call<fareBean> call = cr.getFare(src, des, tid, mid, wei);
+        Call<fareBean> call = cr.getFare(
+                SharePreferenceUtils.getInstance().getString("userId"),
+                src,
+                des,
+                tid,
+                mid,
+                wei,
+                dat,
+                String.valueOf(sourceLAT),
+                String.valueOf(sourceLNG),
+                String.valueOf(destinationLAT),
+                String.valueOf(destinationLNG)
+        );
         //Call<fareBean> call = cr.getFare("Delhi" , "Mumbai" , "1" , "1" , "10000");
 
         call.enqueue(new Callback<fareBean>() {

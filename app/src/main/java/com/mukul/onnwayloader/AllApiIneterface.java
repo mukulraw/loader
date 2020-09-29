@@ -43,11 +43,17 @@ public interface AllApiIneterface {
     @Multipart
     @POST("android/getFare.php")
     Call<fareBean> getFare(
+            @Part("user_id") String user_id,
             @Part("source") String source,
             @Part("destination") String destination,
             @Part("truck_id") String truck_id,
             @Part("mid") String mid,
-            @Part("weight") String weight
+            @Part("weight") String weight,
+            @Part("schedule") String schedule,
+            @Part("sourceLAT") String sourceLAT,
+            @Part("sourceLNG") String sourceLNG,
+            @Part("destinationLAT") String destinationLAT,
+            @Part("destinationLNG") String destinationLNG
     );
 
     @Multipart

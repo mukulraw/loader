@@ -38,9 +38,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OrderDetails5"></activity>
-        <activity android:name=".OrderDetails4" />
-        <activity android:name=".Checkout">
+        <activity
+            android:name=".OrderDetails5"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OrderDetails4"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Checkout"
+            android:screenOrientation="portrait">
 
             <!--
             <intent-filter>
@@ -50,40 +56,90 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".Feedback" />
-        <activity android:name=".OrderDetails3" />
-        <activity android:name=".MapsActivity" />
-        <activity android:name=".Web" />
-        <activity android:name=".EditProfile" />
-        <activity android:name=".PayNow" />
-        <activity android:name=".KYC" />
-        <activity android:name=".GetProfile" />
-        <activity android:name=".OrderDetails2" />
-        <activity android:name=".OrderDetails" />
-        <activity android:name=".Profile" />
-        <activity android:name=".Address3" />
-        <activity android:name=".MaterialActivity2" />
-        <activity android:name=".Address2" />
-        <activity android:name=".Address1" />
-        <activity android:name=".Shipment" />
+        <activity
+            android:name=".Feedback"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OrderDetails3"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MapsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Web"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PayNow"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".KYC"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GetProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OrderDetails2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OrderDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Profile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Address3"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MaterialActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Address2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Address1"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Shipment"
+            android:screenOrientation="portrait" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".userprofile.ProfileActivity" />
-        <activity android:name=".partload.PartLoadSpaceSelect" />
-        <activity android:name=".materialtype.MaterialActivity" />
-        <activity android:name=".userprofile.UserProfileActivity" />
-        <activity android:name=".shippingaddress.ShippingAddress" />
-        <activity android:name=".shipmentdetails.ShipmentActivity" />
-        <activity android:name=".GettingStarted" />
+        <activity
+            android:name=".userprofile.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".partload.PartLoadSpaceSelect"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".materialtype.MaterialActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".userprofile.UserProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shippingaddress.ShippingAddress"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shipmentdetails.ShipmentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GettingStarted"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".otp.EnterNumberActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".trucklist.GetMoreTruckDetails" />
-        <activity android:name=".trucklist.AvailableTruckList" />
+        <activity
+            android:name=".trucklist.GetMoreTruckDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".trucklist.AvailableTruckList"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".addprofiledetails.FirstTimeProfileActivity"
             android:screenOrientation="portrait" />
@@ -112,7 +168,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name="swarajsaaj.smscodereader.receivers.OtpReader"

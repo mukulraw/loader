@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/bottom_nav_find_truck"
-        android:icon="@drawable/ic_find_truck"
+        android:icon="@drawable/progress"
+        app:showAsAction="always"
         android:title="@string/find_truck" />
     <item
         android:id="@+id/bottom_nav_waiting_truck"
         android:icon="@drawable/ic_waiting_truck"
+        app:showAsAction="always"
         android:title="@string/waiting_truck" />
     <item
         android:id="@+id/bottom_nav_my_orders"
         android:icon="@drawable/ic_my_order"
+        app:showAsAction="always"
         android:title="@string/my_order" />
     <item
         android:id="@+id/bottom_nav_my_quotes"
         android:icon="@drawable/my_order_ic"
+        app:showAsAction="always"
         android:title="@string/my_quotes" />
 </menu>

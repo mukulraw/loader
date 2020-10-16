@@ -466,7 +466,7 @@ public class FindTruckFragment extends Fragment
 
     private void getOpenTruckType() {
 
-        final Dialog dialog = new Dialog(getActivity());
+        final Dialog dialog = new Dialog(getActivity(), R.style.MyDialogTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.truck_type_dialog);
@@ -515,7 +515,7 @@ public class FindTruckFragment extends Fragment
     }
 
     private void getContainerType() {
-        final Dialog dialog = new Dialog(getActivity());
+        final Dialog dialog = new Dialog(getActivity(), R.style.MyDialogTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.truck_type_dialog);
@@ -563,7 +563,7 @@ public class FindTruckFragment extends Fragment
     }
 
     private void getTrailerType() {
-        final Dialog dialog = new Dialog(getActivity());
+        final Dialog dialog = new Dialog(getActivity(), R.style.MyDialogTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.truck_type_dialog);
@@ -679,11 +679,11 @@ public class FindTruckFragment extends Fragment
             }
 
             if (type.equals("open truck")) {
-                holder.image.setImageResource(R.drawable.ic_truck);
+                holder.image.setImageResource(R.drawable.open);
             } else if (type.equals("container")) {
-                holder.image.setImageResource(R.drawable.ic_container);
+                holder.image.setImageResource(R.drawable.container);
             } else {
-                holder.image.setImageResource(R.drawable.ic_trailer);
+                holder.image.setImageResource(R.drawable.trailer);
             }
 
             holder.text.setText(item.getTitle());

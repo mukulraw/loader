@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/toolbar_background2"
         android:elevation="32dp"
         android:theme="@style/Widget.BottomNavigationView"
         app:itemIconTint="@color/bottom_nav_item_color"

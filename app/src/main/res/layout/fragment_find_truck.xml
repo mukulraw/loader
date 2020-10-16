@@ -25,6 +25,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:id="@+id/bottom"
+            android:elevation="4dp"
             android:layout_marginBottom="12dp"
             android:clickable="true"
             android:background="@drawable/bottomsheet_background"
@@ -43,29 +44,29 @@
                     android:id="@+id/full_load_card"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="6dp"
                     android:layout_marginBottom="12dp"
-                    android:text="Full-Load"
-                    android:textColor="#ffffff"
+                    android:layout_weight="1"
+                    android:background="@drawable/black_back_round"
                     android:elevation="2dp"
-                    android:background="@drawable/black_back_round"/>
+                    android:text="Full-Load"
+                    android:textColor="#ffffff" />
 
                 <Button
                     android:id="@+id/part_load_card"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_weight="1"
                     android:layout_marginStart="6dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="12dp"
                     android:layout_marginBottom="12dp"
-                    android:text="Part-Load"
-                    android:elevation="2dp"
+                    android:layout_weight="1"
                     android:background="@drawable/white_back_round"
-                    />
+                    android:baselineAligned="false"
+                    android:elevation="2dp"
+                    android:text="Part-Load" />
 
             </LinearLayout>
 
@@ -76,7 +77,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="12dp"
                 android:elevation="2dp"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="15dp"
                 app:cardElevation="2dp">
 
 
@@ -103,7 +104,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="12dp"
                 android:elevation="2dp"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="15dp"
                 app:cardElevation="2dp">
 
 
@@ -146,7 +147,7 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:src="@drawable/ic_truck"
+                        android:src="@drawable/open"
                         android:layout_width="56dp"
                         android:scaleType="fitXY"
                         android:background="@drawable/circle"
@@ -177,7 +178,7 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:src="@drawable/ic_container"
+                        android:src="@drawable/container"
                         android:layout_width="56dp"
                         android:scaleType="fitXY"
                         android:background="@drawable/circle"
@@ -207,7 +208,7 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:src="@drawable/ic_trailer"
+                        android:src="@drawable/trailer"
                         android:layout_width="56dp"
                         android:scaleType="fitXY"
                         android:background="@drawable/circle"
@@ -247,7 +248,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="12dp"
                 android:elevation="2dp"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="15dp"
                 app:cardElevation="2dp">
 
                 <LinearLayout

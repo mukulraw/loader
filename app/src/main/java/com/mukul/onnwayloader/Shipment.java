@@ -44,7 +44,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class Shipment extends AppCompatActivity {
 
 
-    TextView orderid, orderdate, truck, source, destination, material, weight, details, schedule, status, statustitle, loadtype;
+    TextView orderid, orderdate, truck, source, destination, material, weight, details, schedule, status, statustitle, loadtype, read;
     TextView grand, tnc, request;
     CheckBox insurance;
     Button confirm, apply;
@@ -99,6 +99,7 @@ public class Shipment extends AppCompatActivity {
 
 
         orderid = findViewById(R.id.textView16);
+        read = findViewById(R.id.textView112);
         truckType = findViewById(R.id.imageView5);
         confirm = findViewById(R.id.button);
         request = findViewById(R.id.button4);
@@ -135,15 +136,6 @@ public class Shipment extends AppCompatActivity {
 
         String text = "Cancellation Policy";
         SpannableString spannableString = new SpannableString(text);
-        ClickableSpan clickableSpan1 = new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                String url = "https://www.onnway.com/terms-n-condition.php";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
-            }
-        };
 
         ClickableSpan clickableSpan2 = new ClickableSpan() {
             @Override
@@ -155,16 +147,34 @@ public class Shipment extends AppCompatActivity {
             }
         };
 
-        spannableString.setSpan(clickableSpan1, 5, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(clickableSpan2, 13, 32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //spannableString.setSpan(clickableSpan1, 5, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan2, 0, 19, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tnc.setText(spannableString);
         tnc.setMovementMethod(LinkMovementMethod.getInstance());
+
+        String text2 = "PLEASE READ";
+        SpannableString spannableString2 = new SpannableString(text2);
+        ClickableSpan clickableSpan1 = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Dialog dialog = new Dialog(Shipment.this, R.style.MyDialogTheme);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.read);
+                dialog.show();
+
+            }
+        };
+
+        spannableString2.setSpan(clickableSpan1, 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        read.setText(spannableString2);
+        read.setMovementMethod(LinkMovementMethod.getInstance());
 
         details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Dialog dialog = new Dialog(Shipment.this);
+                Dialog dialog = new Dialog(Shipment.this, R.style.MyDialogTheme);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.fare_breakdown_dialog);
@@ -277,7 +287,7 @@ public class Shipment extends AppCompatActivity {
 
                 } else {
 
-                    Dialog dialog = new Dialog(Shipment.this);
+                    Dialog dialog = new Dialog(Shipment.this, R.style.MyDialogTheme);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setCancelable(true);
                     dialog.setContentView(R.layout.no_fare_dialog);

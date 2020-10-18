@@ -25,6 +25,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Address"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
@@ -35,7 +36,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:hint="tap to enter"
+        android:hint="Address"
         android:background="@drawable/grey_back_round"
         android:padding="10dp"
         android:lines="3"
@@ -51,6 +52,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="City"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
@@ -62,7 +64,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:focusable="false"
-        android:hint="tap to enter"
+        android:hint="City"
         android:background="@drawable/grey_back_round"
         android:padding="10dp"
         android:inputType="textPersonName"
@@ -77,6 +79,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="PIN Code"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
@@ -87,7 +90,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:hint="tap to enter"
+        android:hint="PIN Code"
         android:background="@drawable/grey_back_round"
         android:padding="10dp"
         android:maxLength="6"
@@ -103,6 +106,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Mobile Number"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
@@ -115,7 +119,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:maxLength="10"
-        android:hint="tap to enter"
+        android:hint="Mobile Number"
         android:background="@drawable/grey_back_round"
         android:padding="10dp"
         android:inputType="phone"

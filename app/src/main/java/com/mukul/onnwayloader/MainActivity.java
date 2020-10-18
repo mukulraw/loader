@@ -392,7 +392,7 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<confirm_full_bean> call, final Response<confirm_full_bean> response) {
 
                 if (response.body().getStatus().equals("1")) {
-                    final Dialog dialog = new Dialog(MainActivity.this);
+                    final Dialog dialog = new Dialog(MainActivity.this, R.style.MyDialogTheme);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setCancelable(false);
                     dialog.setContentView(R.layout.rating_dialog);

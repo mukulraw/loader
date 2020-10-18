@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_user"
+            android:icon="@drawable/ic_user_profile"
             android:title="Profile" />
         <item
             android:id="@+id/nav_about"
@@ -18,12 +18,12 @@
             android:title="FAQ" />
         <item
             android:id="@+id/nav_contact"
-            android:icon="@drawable/ic_contact"
+            android:icon="@drawable/ic_phone_contact"
             android:title="Contact Us" />
 
         <item
             android:id="@+id/feedback"
-            android:icon="@drawable/ic_review"
+            android:icon="@drawable/ic_good_feedback"
             android:title="Give Feedback" />
 
 
@@ -33,11 +33,11 @@
             android:title="Payment Terms" />
         <item
             android:id="@+id/nav_security"
-            android:icon="@drawable/ic_security"
+            android:icon="@drawable/ic_secured"
             android:title="Security"/>
         <item
             android:id="@+id/nav_terms_and_condition"
-            android:icon="@drawable/ic_tnc"
+            android:icon="@drawable/ic_insurance"
             android:title="Terms and Conditions" />
         <item
             android:id="@+id/nav_share"

@@ -233,7 +233,7 @@ public class Address3 extends AppCompatActivity {
 
                                                 if (response.body().getStatus().equals("1")) {
 
-                                                    Dialog dialog = new Dialog(Address3.this);
+                                                    Dialog dialog = new Dialog(Address3.this, R.style.MyDialogTheme);
                                                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                                     dialog.setCancelable(true);
                                                     dialog.setContentView(R.layout.booking_qoute_dialog1);

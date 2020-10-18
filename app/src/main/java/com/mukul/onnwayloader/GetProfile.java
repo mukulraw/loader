@@ -92,7 +92,7 @@ public class GetProfile extends AppCompatActivity {
                 final CharSequence[] items = {"Take Photo from Camera",
                         "Choose from Gallery",
                         "Cancel"};
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(GetProfile.this);
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(GetProfile.this, R.style.MyDialogTheme);
                 builder.setTitle("Add Photo!");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override

@@ -98,7 +98,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:text="submit"
-        android:background="@drawable/black_back_round"
+        android:background="@drawable/green_back_round"
         android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

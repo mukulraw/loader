@@ -90,7 +90,7 @@ public class KYC extends AppCompatActivity {
                 final CharSequence[] items = {"Take Photo from Camera",
                         "Choose from Gallery",
                         "Cancel"};
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(KYC.this);
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(KYC.this, R.style.MyDialogTheme);
                 builder.setTitle("Add Photo!");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
@@ -144,7 +144,7 @@ public class KYC extends AppCompatActivity {
                 final CharSequence[] items = {"Take Photo from Camera",
                         "Choose from Gallery",
                         "Cancel"};
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(KYC.this);
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(KYC.this, R.style.MyDialogTheme);
                 builder.setTitle("Add Photo!");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
@@ -198,7 +198,7 @@ public class KYC extends AppCompatActivity {
                 final CharSequence[] items = {"Take Photo from Camera",
                         "Choose from Gallery",
                         "Cancel"};
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(KYC.this);
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(KYC.this, R.style.MyDialogTheme);
                 builder.setTitle("Add Photo!");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override

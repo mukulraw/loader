@@ -92,7 +92,7 @@ public class MaterialActivity2 extends AppCompatActivity {
         destinationLAT = getIntent().getDoubleExtra("destinationLAT" , 0);
         destinationLNG = getIntent().getDoubleExtra("destinationLNG" , 0);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
+        Toolbar mToolbar = findViewById(R.id.toolbar_activity_shipment);
         mToolbar.setTitle("Booking Details");
         mToolbar.setNavigationIcon(R.drawable.ic_next_back);
         mToolbar.setTitleTextAppearance(this, R.style.monteserrat_semi_bold);
@@ -223,7 +223,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                         float qq = Float.parseFloat(quantity.getText().toString());
 
                         grand.setText(String.valueOf((ll * ww * hh) * qq));
-                        total.setText(String.valueOf(ll * ww * hh));
+                        total.setText(ll * ww * hh + " cu. ft.");
 
                     }
                 }
@@ -236,7 +236,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                         float ww = Float.parseFloat(width.getText().toString());
                         float hh = Float.parseFloat(height.getText().toString());
 
-                        total.setText(String.valueOf(ll * ww * hh));
+                        total.setText(ll * ww * hh + " cu. ft.");
 
                     }
                 }
@@ -255,7 +255,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                 final CharSequence[] items = {"Take Photo from Camera",
                         "Choose from Gallery",
                         "Cancel"};
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MaterialActivity2.this);
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MaterialActivity2.this, R.style.MyDialogTheme);
                 builder.setTitle("Add Photo!");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
@@ -319,7 +319,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                         float qq = Float.parseFloat(quantity.getText().toString());
 
                         grand.setText(String.valueOf((ll * ww * hh) * qq));
-                        total.setText(String.valueOf(ll * ww * hh));
+                        total.setText(ll * ww * hh + " cu. ft.");
 
                     }
                 }
@@ -332,7 +332,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                         float ww = Float.parseFloat(width.getText().toString());
                         float hh = Float.parseFloat(height.getText().toString());
 
-                        total.setText(String.valueOf(ll * ww * hh));
+                        total.setText(ll * ww * hh + " cu. ft.");
 
                     }
                 }
@@ -363,7 +363,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                         float qq = Float.parseFloat(quantity.getText().toString());
 
                         grand.setText(String.valueOf((ll * ww * hh) * qq));
-                        total.setText(String.valueOf(ll * ww * hh));
+                        total.setText(ll * ww * hh + " cu. ft.");
 
                     }
                 }
@@ -376,7 +376,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                         float ww = Float.parseFloat(width.getText().toString());
                         float hh = Float.parseFloat(height.getText().toString());
 
-                        total.setText(String.valueOf(ll * ww * hh));
+                        total.setText(ll * ww * hh + " cu. ft.");
 
                     }
                 }
@@ -408,7 +408,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                     float qq = Float.parseFloat(quantity.getText().toString());
 
                     grand.setText(String.valueOf((ll * ww * hh) * qq));
-                    total.setText(String.valueOf(ll * ww * hh));
+                    total.setText(ll * ww * hh + " cu. ft.");
 
                 }
 

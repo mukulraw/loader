@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +68,8 @@ public class OrderDetails5 extends AppCompatActivity {
 
     TextView drivernote;
 
+    ImageView truckType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +88,7 @@ public class OrderDetails5 extends AppCompatActivity {
             }
         });
 
+        truckType = findViewById(R.id.imageView5);
         drivernote = findViewById(R.id.textView46);
         details = findViewById(R.id.textView14);
         orderid = findViewById(R.id.textView16);
@@ -106,7 +110,7 @@ public class OrderDetails5 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                new AlertDialog.Builder(OrderDetails5.this)
+                new AlertDialog.Builder(OrderDetails5.this, R.style.MyDialogTheme)
                         .setTitle("Cancel Booking")
                         .setMessage("Are you sure you want to cancel this booking?")
 
@@ -219,7 +223,13 @@ public class OrderDetails5 extends AppCompatActivity {
                 drivernote.setText(item.getRemarks());
                 insused = item.getInsurance_used();
 
-
+                if (item.getTruckType().equals("open truck")) {
+                    truckType.setImageDrawable(getDrawable(R.drawable.open));
+                } else if (item.getTruckType().equals("trailer")) {
+                    truckType.setImageDrawable(getDrawable(R.drawable.trailer));
+                } else {
+                    truckType.setImageDrawable(getDrawable(R.drawable.container));
+                }
 
                 if (item.getStatus().equals("started")) {
                     track.setVisibility(View.VISIBLE);
@@ -233,7 +243,6 @@ public class OrderDetails5 extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
 
 
                 progress.setVisibility(View.GONE);

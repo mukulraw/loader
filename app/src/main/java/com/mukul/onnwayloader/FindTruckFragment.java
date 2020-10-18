@@ -277,7 +277,7 @@ public class FindTruckFragment extends Fragment
                 int year = cldr.get(Calendar.YEAR);
                 // date picker dialog
                 DatePickerDialog picker;
-                picker = new DatePickerDialog(getActivity(),
+                picker = new DatePickerDialog(getActivity(), R.style.MyDialogTheme,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

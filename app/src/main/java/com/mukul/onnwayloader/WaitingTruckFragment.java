@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -244,7 +245,7 @@ public class WaitingTruckFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    new AlertDialog.Builder(context)
+                    new AlertDialog.Builder(context, R.style.MyDialogTheme)
                             .setTitle("Cancel Booking")
                             .setMessage("Are you sure you want to cancel this booking?")
 
@@ -310,6 +311,13 @@ public class WaitingTruckFragment extends Fragment {
                 }
             });
 
+            if (item.getTruckType().equals("open truck")) {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.open));
+            } else if (item.getTruckType().equals("trailer")) {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.trailer));
+            } else {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.container));
+            }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -345,12 +353,14 @@ public class WaitingTruckFragment extends Fragment {
 
             TextView type, orderid, date, source, destination, material, weight, freight, truck, status, schedule;
 
+            ImageView truckType;
             Button cancel;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 type = itemView.findViewById(R.id.textView65);
+                truckType = itemView.findViewById(R.id.imageView8);
                 schedule = itemView.findViewById(R.id.textView145);
                 orderid = itemView.findViewById(R.id.textView66);
                 date = itemView.findViewById(R.id.textView67);

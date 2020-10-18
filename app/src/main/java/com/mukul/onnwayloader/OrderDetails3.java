@@ -76,7 +76,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class OrderDetails3 extends AppCompatActivity {
 
-    TextView orderid, orderdate, truck, source, destination, material, weight, date, status, loadtype, details;
+    TextView orderid, orderdate, truck, source, destination, material, weight, date, status, loadtype, details, read;
     TextView grand, tnc, request;
     CheckBox insurance;
     Button confirm;
@@ -202,7 +202,7 @@ public class OrderDetails3 extends AppCompatActivity {
         upload1 = findViewById(R.id.button5);
         upload2 = findViewById(R.id.button6);
         track = findViewById(R.id.floatingActionButton);
-
+        read = findViewById(R.id.textView112);
         pod = findViewById(R.id.pod);
         documents = findViewById(R.id.recyclerView);
 
@@ -229,7 +229,7 @@ public class OrderDetails3 extends AppCompatActivity {
                 final CharSequence[] items = {"Take Photo from Camera",
                         "Choose from Gallery",
                         "Cancel"};
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(OrderDetails3.this);
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(OrderDetails3.this, R.style.MyDialogTheme);
                 builder.setTitle("Add Photo!");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
@@ -272,17 +272,8 @@ public class OrderDetails3 extends AppCompatActivity {
 
             }
         });
-        String text = "Read T&C and Cancellation Policy";
+        String text = "Cancellation Policy";
         SpannableString spannableString = new SpannableString(text);
-        ClickableSpan clickableSpan1 = new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                String url = "https://www.onnway.com/terms-n-condition.php";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
-            }
-        };
 
         ClickableSpan clickableSpan2 = new ClickableSpan() {
             @Override
@@ -294,16 +285,34 @@ public class OrderDetails3 extends AppCompatActivity {
             }
         };
 
-        spannableString.setSpan(clickableSpan1, 5, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(clickableSpan2, 13, 32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //spannableString.setSpan(clickableSpan1, 5, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan2, 0, 19, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tnc.setText(spannableString);
         tnc.setMovementMethod(LinkMovementMethod.getInstance());
+
+        String text2 = "PLEASE READ";
+        SpannableString spannableString2 = new SpannableString(text2);
+        ClickableSpan clickableSpan1 = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Dialog dialog = new Dialog(OrderDetails3.this, R.style.MyDialogTheme);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.read);
+                dialog.show();
+
+            }
+        };
+
+        spannableString2.setSpan(clickableSpan1, 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        read.setText(spannableString2);
+        read.setMovementMethod(LinkMovementMethod.getInstance());
 
         details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Dialog dialog = new Dialog(OrderDetails3.this);
+                Dialog dialog = new Dialog(OrderDetails3.this, R.style.MyDialogTheme);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setContentView(R.layout.fare_breakdown_dialog);
@@ -408,7 +417,7 @@ public class OrderDetails3 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                new AlertDialog.Builder(OrderDetails3.this)
+                new AlertDialog.Builder(OrderDetails3.this, R.style.MyDialogTheme)
                         .setTitle("Cancel Booking")
                         .setMessage("Are you sure you want to cancel this booking?")
 
@@ -760,10 +769,30 @@ public class OrderDetails3 extends AppCompatActivity {
                 insurance.setText("\u20B9" + item.getInsurance());
 
                 fr = Float.parseFloat(item.getFreight());
-                ot = Float.parseFloat(item.getOtherCharges());
-                cg = Float.parseFloat(item.getCgst());
-                sg = Float.parseFloat(item.getSgst());
-                in = Float.parseFloat(item.getInsurance());
+                try {
+                    ot = Float.parseFloat(item.getOtherCharges());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    cg = Float.parseFloat(item.getCgst());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    sg = Float.parseFloat(item.getSgst());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    in = Float.parseFloat(item.getInsurance());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
                 if (in > 0) {
 
@@ -1330,7 +1359,6 @@ public class OrderDetails3 extends AppCompatActivity {
         }
         return null;
     }
-
 
 
 }

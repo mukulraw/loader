@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -55,19 +57,19 @@ public class PastOrderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_ongoing_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_ongoing_order, container, false);
         recyclerView = view.findViewById(R.id.recycler_view_ongoing_order);
         progress = view.findViewById(R.id.progress);
         hide = view.findViewById(R.id.hide);
         list = new ArrayList<>();
 
         adapter = new OrderAdapter(getContext(), list);
-        manager = new GridLayoutManager(getContext() , 1);
+        manager = new GridLayoutManager(getContext(), 1);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
 
-        return  view;
+        return view;
     }
 
     public void setRecyclerBid() {
@@ -101,12 +103,9 @@ public class PastOrderFragment extends Fragment {
             public void onResponse(Call<orderHistoryBean> call, Response<orderHistoryBean> response) {
 
 
-                if (response.body().getData().size() > 0)
-                {
+                if (response.body().getData().size() > 0) {
                     hide.setVisibility(View.GONE);
-                }
-                else
-                {
+                } else {
                     hide.setVisibility(View.VISIBLE);
                 }
                 adapter.setData(response.body().getData());
@@ -122,20 +121,17 @@ public class PastOrderFragment extends Fragment {
 
     }
 
-    static class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
-    {
+    static class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
         Context context;
         List<Datum> list = new ArrayList<>();
 
-        OrderAdapter(Context context, List<Datum> list)
-        {
+        OrderAdapter(Context context, List<Datum> list) {
             this.context = context;
             this.list = list;
         }
 
-        void setData(List<Datum> list)
-        {
+        void setData(List<Datum> list) {
             this.list = list;
             notifyDataSetChanged();
         }
@@ -143,8 +139,8 @@ public class PastOrderFragment extends Fragment {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.order_list_model , parent , false);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.order_list_model, parent, false);
             return new ViewHolder(view);
         }
 
@@ -172,18 +168,26 @@ public class PastOrderFragment extends Fragment {
 
                 float gr = fr + ot + cg + sg + in;
                 holder.freight.setText("\u20B9" + gr);
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
                 holder.freight.setText("\u20B9" + "0");
+            }
+
+
+            if (item.getTruckType().equals("open truck")) {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.open));
+            } else if (item.getTruckType().equals("trailer")) {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.trailer));
+            } else {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.container));
             }
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context , OrderDetails2.class);
-                    intent.putExtra("id" , item.getId());
+                    Intent intent = new Intent(context, OrderDetails2.class);
+                    intent.putExtra("id", item.getId());
                     context.startActivity(intent);
                 }
             });
@@ -196,14 +200,15 @@ public class PastOrderFragment extends Fragment {
             return list.size();
         }
 
-        static class ViewHolder extends RecyclerView.ViewHolder
-        {
+        static class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView type , orderid , date , source , destination , material , weight , freight , truck , status, schedule;
+            TextView type, orderid, date, source, destination, material, weight, freight, truck, status, schedule;
+            ImageView truckType;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
+                truckType = itemView.findViewById(R.id.imageView8);
                 type = itemView.findViewById(R.id.textView65);
                 schedule = itemView.findViewById(R.id.textView145);
                 orderid = itemView.findViewById(R.id.textView66);

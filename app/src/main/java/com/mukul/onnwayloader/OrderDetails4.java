@@ -109,6 +109,7 @@ public class OrderDetails4 extends AppCompatActivity {
 
     String trucktitle, srcAddress, destAddress, pickUpDate, mid, loadType;
     TextView drivernote;
+    ImageView truckType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +129,7 @@ public class OrderDetails4 extends AppCompatActivity {
             }
         });
 
+        truckType = findViewById(R.id.imageView5);
         drivernote = findViewById(R.id.textView46);
         request = findViewById(R.id.button4);
         dimension = findViewById(R.id.textView134);
@@ -210,7 +212,7 @@ public class OrderDetails4 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                new AlertDialog.Builder(OrderDetails4.this)
+                new AlertDialog.Builder(OrderDetails4.this, R.style.MyDialogTheme)
                         .setTitle("Cancel Booking")
                         .setMessage("Are you sure you want to cancel this booking?")
 
@@ -328,7 +330,13 @@ public class OrderDetails4 extends AppCompatActivity {
                 loadtype.setText(item.getLaodType());
                 drivernote.setText(item.getRemarks());
 
-
+                if (item.getTruckType().equals("open truck")) {
+                    truckType.setImageDrawable(getDrawable(R.drawable.open));
+                } else if (item.getTruckType().equals("trailer")) {
+                    truckType.setImageDrawable(getDrawable(R.drawable.trailer));
+                } else {
+                    truckType.setImageDrawable(getDrawable(R.drawable.container));
+                }
 
                 dimension.setText(item.getLength() + " X " + item.getWidth() + " X " + item.getHeight());
 

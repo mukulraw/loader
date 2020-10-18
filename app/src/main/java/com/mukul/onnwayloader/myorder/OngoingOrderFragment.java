@@ -18,6 +18,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -181,6 +182,13 @@ public class OngoingOrderFragment extends Fragment {
                 holder.freight.setText("\u20B9" + "0");
             }
 
+            if (item.getTruckType().equals("open truck")) {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.open));
+            } else if (item.getTruckType().equals("trailer")) {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.trailer));
+            } else {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.container));
+            }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -211,10 +219,12 @@ public class OngoingOrderFragment extends Fragment {
         static class ViewHolder extends RecyclerView.ViewHolder {
 
             TextView type, orderid, date, source, destination, material, weight, freight, truck, status, schedule;
+            ImageView truckType;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
+                truckType = itemView.findViewById(R.id.imageView8);
                 type = itemView.findViewById(R.id.textView65);
                 schedule = itemView.findViewById(R.id.textView145);
                 orderid = itemView.findViewById(R.id.textView66);

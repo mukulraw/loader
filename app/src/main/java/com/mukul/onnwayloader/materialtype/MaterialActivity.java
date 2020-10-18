@@ -192,7 +192,7 @@ public class MaterialActivity extends AppCompatActivity {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.truck_list_model, parent, false);
+            View view = inflater.inflate(R.layout.truck_list_model2, parent, false);
             return new ViewHolder(view);
         }
 

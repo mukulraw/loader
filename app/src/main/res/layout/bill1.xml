@@ -162,8 +162,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Through IMPS/ NEFT/ RTGS\nPay on after loading"
+        android:text="Through IMPS/ NEFT/ RTGS"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView108" />
@@ -176,7 +175,7 @@
         android:layout_marginTop="16dp"
         android:text="Balance - ₹0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView109" />
+        app:layout_constraintTop_toBottomOf="@+id/textView146" />
 
     <TextView
         android:id="@+id/textView111"
@@ -197,6 +196,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Add description"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
@@ -205,17 +205,28 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:lines="3"
-        android:hint="tap to enter"
-        android:padding="10dp"
-        android:gravity="start"
         android:background="@drawable/white_back_round1"
+        android:gravity="start"
+        android:hint="+ Add Description..."
+        android:lines="3"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView112"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView146"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Pay on after loading"
+        app:layout_constraintStart_toStartOf="@+id/textView109"
+        app:layout_constraintTop_toBottomOf="@+id/textView109" />
 </androidx.constraintlayout.widget.ConstraintLayout>

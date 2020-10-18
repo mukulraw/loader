@@ -14,6 +14,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.Window;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +65,8 @@ public class Shipment extends AppCompatActivity {
     float pvalue = 0;
     String pid = "";
 
+    ImageView truckType;
+
     double sourceLAT, sourceLNG, destinationLAT, destinationLNG;
 
     @Override
@@ -95,6 +99,7 @@ public class Shipment extends AppCompatActivity {
 
 
         orderid = findViewById(R.id.textView16);
+        truckType = findViewById(R.id.imageView5);
         confirm = findViewById(R.id.button);
         request = findViewById(R.id.button4);
         orderdate = findViewById(R.id.textView17);
@@ -121,14 +126,14 @@ public class Shipment extends AppCompatActivity {
         statustitle.setVisibility(View.GONE);
 
         schedule.setText(dat);
-        loadtype.setText("FULL");
+        loadtype.setText("FULL LOAD TRUCK");
 
         grand = findViewById(R.id.textView38);
         insurance = findViewById(R.id.checkBox);
         progress = findViewById(R.id.progressBar);
 
 
-        String text = "Read T&C and Cancellation Policy";
+        String text = "Cancellation Policy";
         SpannableString spannableString = new SpannableString(text);
         ClickableSpan clickableSpan1 = new ClickableSpan() {
             @Override
@@ -237,6 +242,15 @@ public class Shipment extends AppCompatActivity {
                     destination.setText(item.getDestination());
                     material.setText(item.getMaterial());
                     weight.setText(item.getWeight());
+                    Log.d("trucktyope", item.getTruckType());
+                    if (item.getTruckType().equals("open truck")) {
+                        truckType.setImageDrawable(getDrawable(R.drawable.open));
+                    } else if (item.getTruckType().equals("trailer")) {
+                        truckType.setImageDrawable(getDrawable(R.drawable.trailer));
+                    } else {
+                        truckType.setImageDrawable(getDrawable(R.drawable.container));
+                    }
+
 /*
                     freight.setText("\u20B9" + item.getFreight());
                     other.setText("\u20B9" + item.getOtherCharges());

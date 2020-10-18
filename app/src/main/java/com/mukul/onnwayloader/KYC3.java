@@ -17,8 +17,8 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -34,7 +34,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -45,26 +44,26 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class GetProfile extends AppCompatActivity {
+public class KYC3 extends AppCompatActivity {
 
-    CircleImageView image;
-    TextView change;
-    TextView name , company , contact , email , address , gst , kyc  ,companytitle;
+    ImageView pan, af, ab;
+    Button upload1, upload2, upload3;
     ProgressBar progress;
     private Uri uri1;
     private File f1;
-    Button edit;
+    String ty = "";
+
+    ImageView pan_verify, af_verify, ab_verify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_profile);
+        setContentView(R.layout.activity_k_y_c3);
 
-        Toolbar mToolbar = findViewById(R.id.toolbar_activity_shipment);
-        mToolbar.setTitle("Profile");
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_shipment);
+        mToolbar.setTitle("KYC");
         mToolbar.setNavigationIcon(R.drawable.ic_next_back);
         mToolbar.setTitleTextAppearance(this, R.style.monteserrat_semi_bold);
-
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,27 +71,26 @@ public class GetProfile extends AppCompatActivity {
             }
         });
 
-        image = findViewById(R.id.imageView9);
-        change = findViewById(R.id.textView90);
-        name = findViewById(R.id.textView104);
-        company = findViewById(R.id.textView98);
-        contact = findViewById(R.id.textView99);
-        email = findViewById(R.id.textView100);
-        address = findViewById(R.id.textView101);
-        gst = findViewById(R.id.textView102);
-        kyc = findViewById(R.id.textView97);
+        pan = findViewById(R.id.imageView10);
+        af = findViewById(R.id.imageView11);
+        ab = findViewById(R.id.imageView12);
+        upload1 = findViewById(R.id.button8);
+        upload2 = findViewById(R.id.button9);
+        upload3 = findViewById(R.id.button10);
         progress = findViewById(R.id.progressBar);
-        companytitle = findViewById(R.id.textView91);
-        edit = findViewById(R.id.button);
+        pan_verify = findViewById(R.id.imageView15);
+        af_verify = findViewById(R.id.imageView16);
+        ab_verify = findViewById(R.id.imageView17);
 
-        change.setOnClickListener(new View.OnClickListener() {
+
+        upload1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 final CharSequence[] items = {"Take Photo from Camera",
                         "Choose from Gallery",
                         "Cancel"};
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(GetProfile.this, R.style.MyDialogTheme);
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(KYC3.this, R.style.MyDialogTheme);
                 builder.setTitle("Add Photo!");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
@@ -117,13 +115,16 @@ public class GetProfile extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            uri1 = FileProvider.getUriForFile(Objects.requireNonNull(GetProfile.this), BuildConfig.APPLICATION_ID + ".provider", f1);
+                            uri1 = FileProvider.getUriForFile(Objects.requireNonNull(KYC3.this), BuildConfig.APPLICATION_ID + ".provider", f1);
+
+                            ty = "pan";
 
                             Intent getpic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             getpic.putExtra(MediaStore.EXTRA_OUTPUT, uri1);
                             getpic.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             startActivityForResult(getpic, 1);
                         } else if (items[item].equals("Choose from Gallery")) {
+                            ty = "pan";
                             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             startActivityForResult(intent, 2);
                         } else if (items[item].equals("Cancel")) {
@@ -136,24 +137,113 @@ public class GetProfile extends AppCompatActivity {
             }
         });
 
-        edit.setOnClickListener(new View.OnClickListener() {
+        upload2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(GetProfile.this , EditProfile.class);
-                startActivity(intent);
+                final CharSequence[] items = {"Take Photo from Camera",
+                        "Choose from Gallery",
+                        "Cancel"};
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(KYC3.this, R.style.MyDialogTheme);
+                builder.setTitle("Add Photo!");
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item) {
+                        if (items[item].equals("Take Photo from Camera")) {
+                            final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Folder/";
+                            File newdir = new File(dir);
+                            try {
+                                newdir.mkdirs();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+                            String file = dir + DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString() + ".jpg";
+
+
+                            f1 = new File(file);
+                            try {
+                                f1.createNewFile();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            uri1 = FileProvider.getUriForFile(Objects.requireNonNull(KYC3.this), BuildConfig.APPLICATION_ID + ".provider", f1);
+
+                            ty = "af";
+
+                            Intent getpic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            getpic.putExtra(MediaStore.EXTRA_OUTPUT, uri1);
+                            getpic.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            startActivityForResult(getpic, 1);
+                        } else if (items[item].equals("Choose from Gallery")) {
+                            ty = "af";
+                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, 2);
+                        } else if (items[item].equals("Cancel")) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                builder.show();
 
             }
         });
 
-        kyc.setOnClickListener(new View.OnClickListener() {
+        upload3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GetProfile.this , KYC2.class);
-                startActivity(intent);
+
+                final CharSequence[] items = {"Take Photo from Camera",
+                        "Choose from Gallery",
+                        "Cancel"};
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(KYC3.this, R.style.MyDialogTheme);
+                builder.setTitle("Add Photo!");
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item) {
+                        if (items[item].equals("Take Photo from Camera")) {
+                            final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Folder/";
+                            File newdir = new File(dir);
+                            try {
+                                newdir.mkdirs();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+                            String file = dir + DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString() + ".jpg";
+
+
+                            f1 = new File(file);
+                            try {
+                                f1.createNewFile();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            uri1 = FileProvider.getUriForFile(Objects.requireNonNull(KYC3.this), BuildConfig.APPLICATION_ID + ".provider", f1);
+
+                            ty = "ab";
+
+                            Intent getpic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            getpic.putExtra(MediaStore.EXTRA_OUTPUT, uri1);
+                            getpic.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            startActivityForResult(getpic, 1);
+                        } else if (items[item].equals("Choose from Gallery")) {
+                            ty = "ab";
+                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, 2);
+                        } else if (items[item].equals("Cancel")) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                builder.show();
+
             }
         });
-
 
     }
 
@@ -173,7 +263,7 @@ public class GetProfile extends AppCompatActivity {
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Log.d("progie" , SharePreferenceUtils.getInstance().getString("userId"));
+        Log.d("progie", SharePreferenceUtils.getInstance().getString("userId"));
 
         Call<profileBean> call = cr.getLoaderProfile(SharePreferenceUtils.getInstance().getString("userId"));
 
@@ -183,32 +273,35 @@ public class GetProfile extends AppCompatActivity {
 
                 Data item = response.body().getData();
 
-                name.setText(item.getName());
-                if (item.getType().equals("Individual"))
-                {
-                    //company.setVisibility(View.GONE);
-                    //companytitle.setVisibility(View.GONE);
-                    company.setText("---");
-                }
-                else
-                {
-                    //company.setVisibility(View.VISIBLE);
-                    //companytitle.setVisibility(View.VISIBLE);
-                    company.setText(item.getCompany());
-                }
-
-                SharePreferenceUtils.getInstance().saveString("image" , item.getImage());
-
-                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).showImageForEmptyUri(R.drawable.ic_profile_image).build();
+                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).showImageForEmptyUri(R.drawable.ic_customer).build();
                 ImageLoader loader = ImageLoader.getInstance();
-                loader.displayImage(item.getImage() , image , options);
+                loader.displayImage(item.getPan(), pan, options);
+                loader.displayImage(item.getAb(), ab, options);
+                loader.displayImage(item.getAf(), af, options);
 
+                if (item.getPan_verify().equals("verified")) {
+                    //pan_verify.setVisibility(View.VISIBLE);
+                    upload1.setEnabled(false);
+                } else {
+                    pan_verify.setVisibility(View.GONE);
+                    upload1.setEnabled(true);
+                }
 
+                if (item.getAf_verify().equals("verified")) {
+                    af_verify.setVisibility(View.VISIBLE);
+                    upload2.setEnabled(false);
+                } else {
+                    af_verify.setVisibility(View.GONE);
+                    upload2.setEnabled(true);
+                }
 
-                contact.setText(SharePreferenceUtils.getInstance().getString("phone"));
-                email.setText(item.getEmail());
-                address.setText(item.getCity());
-                gst.setText(item.getGst());
+                if (item.getAb_verify().equals("verified")) {
+                    ab_verify.setVisibility(View.VISIBLE);
+                    upload3.setEnabled(false);
+                } else {
+                    ab_verify.setVisibility(View.GONE);
+                    upload3.setEnabled(true);
+                }
 
                 progress.setVisibility(View.GONE);
 
@@ -232,7 +325,7 @@ public class GetProfile extends AppCompatActivity {
 
             Log.d("uri", String.valueOf(uri1));
 
-            String ypath = getPath(GetProfile.this, uri1);
+            String ypath = getPath(KYC3.this, uri1);
             assert ypath != null;
             f1 = new File(ypath);
 
@@ -262,13 +355,13 @@ public class GetProfile extends AppCompatActivity {
 
             AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-            Call<confirm_full_bean> call = cr.updateImage(SharePreferenceUtils.getInstance().getString("userId") , body);
+            Call<confirm_full_bean> call = cr.updateLoaderKyc(SharePreferenceUtils.getInstance().getString("userId"), ty, body);
 
             call.enqueue(new Callback<confirm_full_bean>() {
                 @Override
                 public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
 
-                    Toast.makeText(GetProfile.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(KYC3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     onResume();
 
                     progress.setVisibility(View.GONE);
@@ -305,13 +398,13 @@ public class GetProfile extends AppCompatActivity {
 
             AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-            Call<confirm_full_bean> call = cr.updateImage(SharePreferenceUtils.getInstance().getString("userId") , body);
+            Call<confirm_full_bean> call = cr.updateLoaderKyc(SharePreferenceUtils.getInstance().getString("userId"), ty, body);
 
             call.enqueue(new Callback<confirm_full_bean>() {
                 @Override
                 public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
 
-                    Toast.makeText(GetProfile.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(KYC3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     onResume();
 
                     progress.setVisibility(View.GONE);
@@ -324,10 +417,6 @@ public class GetProfile extends AppCompatActivity {
             });
 
         }
-
-
-
-
 
 
     }

@@ -292,7 +292,7 @@ public class KYC extends AppCompatActivity {
 
                 if (item.getAf_verify().equals("verified"))
                 {
-                    af_verify.setVisibility(View.VISIBLE);
+                    //af_verify.setVisibility(View.VISIBLE);
                     upload2.setEnabled(false);
                 }
                 else
@@ -303,7 +303,7 @@ public class KYC extends AppCompatActivity {
 
                 if (item.getAb_verify().equals("verified"))
                 {
-                    ab_verify.setVisibility(View.VISIBLE);
+                    //ab_verify.setVisibility(View.VISIBLE);
                     upload3.setEnabled(false);
                 }
                 else

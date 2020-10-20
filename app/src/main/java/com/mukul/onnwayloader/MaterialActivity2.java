@@ -54,16 +54,16 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MaterialActivity2 extends AppCompatActivity {
 
-    Spinner material , weight;
-    EditText length , width , height , quantity , remarks;
-    TextView total , grand;
+    Spinner material, weight;
+    EditText length, width, height, quantity, remarks;
+    TextView total, grand;
     ProgressBar progress;
     Button next;
 
-    List<String> mat , weis;
+    List<String> mat, weis;
     List<String> mids;
-    String src , des , dat , loa, tid;
-    String mid , wei;
+    String src, des, dat, loa, tid;
+    String mid, wei;
     Button upload;
 
     private Uri uri1;
@@ -71,7 +71,7 @@ public class MaterialActivity2 extends AppCompatActivity {
 
     ImageView image;
 
-    double sourceLAT , sourceLNG , destinationLAT , destinationLNG;
+    double sourceLAT, sourceLNG, destinationLAT, destinationLNG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +87,10 @@ public class MaterialActivity2 extends AppCompatActivity {
         des = getIntent().getStringExtra("destination");
         dat = getIntent().getStringExtra("date");
         loa = getIntent().getStringExtra("loadtype");
-        sourceLAT = getIntent().getDoubleExtra("sourceLAT" , 0);
-        sourceLNG = getIntent().getDoubleExtra("sourceLNG" , 0);
-        destinationLAT = getIntent().getDoubleExtra("destinationLAT" , 0);
-        destinationLNG = getIntent().getDoubleExtra("destinationLNG" , 0);
+        sourceLAT = getIntent().getDoubleExtra("sourceLAT", 0);
+        sourceLNG = getIntent().getDoubleExtra("sourceLNG", 0);
+        destinationLAT = getIntent().getDoubleExtra("destinationLAT", 0);
+        destinationLNG = getIntent().getDoubleExtra("destinationLNG", 0);
 
         Toolbar mToolbar = findViewById(R.id.toolbar_activity_shipment);
         mToolbar.setTitle("Booking Details");
@@ -110,11 +110,11 @@ public class MaterialActivity2 extends AppCompatActivity {
         length = findViewById(R.id.editText5);
         width = findViewById(R.id.editText6);
         height = findViewById(R.id.editText7);
-        quantity= findViewById(R.id.editText8);
-        total= findViewById(R.id.textView54);
-        grand= findViewById(R.id.textView57);
-        next= findViewById(R.id.button);
-        remarks= findViewById(R.id.editText15);
+        quantity = findViewById(R.id.editText8);
+        total = findViewById(R.id.textView54);
+        grand = findViewById(R.id.textView57);
+        next = findViewById(R.id.button);
+        remarks = findViewById(R.id.editText15);
         image = findViewById(R.id.imageView13);
         upload = findViewById(R.id.button12);
 
@@ -145,7 +145,7 @@ public class MaterialActivity2 extends AppCompatActivity {
                 }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MaterialActivity2.this,
-                        android.R.layout.simple_list_item_1,mat);
+                        android.R.layout.simple_list_item_1, mat);
 
                 material.setAdapter(adapter);
 
@@ -158,21 +158,31 @@ public class MaterialActivity2 extends AppCompatActivity {
             }
         });
 
+        Call<List<truckTypeBean>> call2 = cr.getWeight();
 
-        weis.add("50 - 100 Kg");
-        weis.add("101 - 200 Kg");
-        weis.add("201 - 300 Kg");
-        weis.add("301 - 400 Kg");
-        weis.add("401 - 500 Kg");
-        weis.add("501 - 600 Kg");
-        weis.add("601 - 700 Kg");
-        weis.add("701 - 800 Kg");
-        weis.add("801 - 900 Kg");
+        call2.enqueue(new Callback<List<truckTypeBean>>() {
+            @Override
+            public void onResponse(Call<List<truckTypeBean>> call, Response<List<truckTypeBean>> response) {
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,weis);
+                weis.clear();
 
-        weight.setAdapter(adapter2);
+                for (int i = 0; i < response.body().size(); i++) {
+                    weis.add(response.body().get(i).getTitle());
+                }
+
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MaterialActivity2.this,
+                        android.R.layout.simple_list_item_1, weis);
+
+                weight.setAdapter(adapter2);
+
+                progress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<List<truckTypeBean>> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+            }
+        });
 
 
         material.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -212,10 +222,8 @@ public class MaterialActivity2 extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (quantity.getText().toString().length() > 0)
-                {
-                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0)
-                    {
+                if (quantity.getText().toString().length() > 0) {
+                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0) {
 
                         float ll = Float.parseFloat(length.getText().toString());
                         float ww = Float.parseFloat(width.getText().toString());
@@ -226,11 +234,8 @@ public class MaterialActivity2 extends AppCompatActivity {
                         total.setText(ll * ww * hh + " cu. ft.");
 
                     }
-                }
-                else
-                {
-                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0)
-                    {
+                } else {
+                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0) {
 
                         float ll = Float.parseFloat(length.getText().toString());
                         float ww = Float.parseFloat(width.getText().toString());
@@ -308,10 +313,8 @@ public class MaterialActivity2 extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (quantity.getText().toString().length() > 0)
-                {
-                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0)
-                    {
+                if (quantity.getText().toString().length() > 0) {
+                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0) {
 
                         float ll = Float.parseFloat(length.getText().toString());
                         float ww = Float.parseFloat(width.getText().toString());
@@ -322,11 +325,8 @@ public class MaterialActivity2 extends AppCompatActivity {
                         total.setText(ll * ww * hh + " cu. ft.");
 
                     }
-                }
-                else
-                {
-                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0)
-                    {
+                } else {
+                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0) {
 
                         float ll = Float.parseFloat(length.getText().toString());
                         float ww = Float.parseFloat(width.getText().toString());
@@ -352,10 +352,8 @@ public class MaterialActivity2 extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (quantity.getText().toString().length() > 0)
-                {
-                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0)
-                    {
+                if (quantity.getText().toString().length() > 0) {
+                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0) {
 
                         float ll = Float.parseFloat(length.getText().toString());
                         float ww = Float.parseFloat(width.getText().toString());
@@ -366,11 +364,8 @@ public class MaterialActivity2 extends AppCompatActivity {
                         total.setText(ll * ww * hh + " cu. ft.");
 
                     }
-                }
-                else
-                {
-                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0)
-                    {
+                } else {
+                    if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0) {
 
                         float ll = Float.parseFloat(length.getText().toString());
                         float ww = Float.parseFloat(width.getText().toString());
@@ -380,7 +375,6 @@ public class MaterialActivity2 extends AppCompatActivity {
 
                     }
                 }
-
 
 
             }
@@ -399,8 +393,7 @@ public class MaterialActivity2 extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0)
-                {
+                if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0) {
 
                     float ll = Float.parseFloat(length.getText().toString());
                     float ww = Float.parseFloat(width.getText().toString());
@@ -424,71 +417,61 @@ public class MaterialActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0)
-                {
+                if (length.getText().toString().length() > 0 && width.getText().toString().length() > 0 && height.getText().toString().length() > 0 && quantity.getText().toString().length() > 0) {
 
-                    if (SharePreferenceUtils.getInstance().getString("name").length() > 0)
-                    {
-                        if (f1 != null)
-                        {
-                            Intent intent = new Intent(MaterialActivity2.this , Address3.class);
-                            intent.putExtra("src" , src);
-                            intent.putExtra("des" , des);
-                            intent.putExtra("dat" , dat);
-                            intent.putExtra("wei" , wei);
-                            intent.putExtra("mid" , mid);
-                            intent.putExtra("loa" , loa);
-                            intent.putExtra("tid" , tid);
-                            intent.putExtra("image" , f1.toString());
-                            intent.putExtra("len" , length.getText().toString());
-                            intent.putExtra("desc" , remarks.getText().toString());
-                            intent.putExtra("wid" , width.getText().toString());
-                            intent.putExtra("hei" , height.getText().toString());
-                            intent.putExtra("qua" , quantity.getText().toString());
+                    if (SharePreferenceUtils.getInstance().getString("name").length() > 0) {
+                        if (f1 != null) {
+                            Intent intent = new Intent(MaterialActivity2.this, Address3.class);
+                            intent.putExtra("src", src);
+                            intent.putExtra("des", des);
+                            intent.putExtra("dat", dat);
+                            intent.putExtra("wei", wei);
+                            intent.putExtra("mid", mid);
+                            intent.putExtra("loa", loa);
+                            intent.putExtra("tid", tid);
+                            intent.putExtra("image", f1.toString());
+                            intent.putExtra("len", length.getText().toString());
+                            intent.putExtra("desc", remarks.getText().toString());
+                            intent.putExtra("wid", width.getText().toString());
+                            intent.putExtra("hei", height.getText().toString());
+                            intent.putExtra("qua", quantity.getText().toString());
+                            intent.putExtra("sourceLAT", sourceLAT);
+                            intent.putExtra("sourceLNG", sourceLNG);
+                            intent.putExtra("destinationLAT", destinationLAT);
+                            intent.putExtra("destinationLNG", destinationLNG);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(MaterialActivity2.this, Address3.class);
+                            intent.putExtra("src", src);
+                            intent.putExtra("des", des);
+                            intent.putExtra("dat", dat);
+                            intent.putExtra("wei", wei);
+                            intent.putExtra("mid", mid);
+                            intent.putExtra("loa", loa);
+                            intent.putExtra("tid", tid);
+                            intent.putExtra("image", "");
+                            intent.putExtra("len", length.getText().toString());
+                            intent.putExtra("desc", remarks.getText().toString());
+                            intent.putExtra("wid", width.getText().toString());
+                            intent.putExtra("hei", height.getText().toString());
+                            intent.putExtra("qua", quantity.getText().toString());
                             intent.putExtra("sourceLAT", sourceLAT);
                             intent.putExtra("sourceLNG", sourceLNG);
                             intent.putExtra("destinationLAT", destinationLAT);
                             intent.putExtra("destinationLNG", destinationLNG);
                             startActivity(intent);
                         }
-                        else
-                        {
-                            Intent intent = new Intent(MaterialActivity2.this , Address3.class);
-                            intent.putExtra("src" , src);
-                            intent.putExtra("des" , des);
-                            intent.putExtra("dat" , dat);
-                            intent.putExtra("wei" , wei);
-                            intent.putExtra("mid" , mid);
-                            intent.putExtra("loa" , loa);
-                            intent.putExtra("tid" , tid);
-                            intent.putExtra("image" , "");
-                            intent.putExtra("len" , length.getText().toString());
-                            intent.putExtra("desc" , remarks.getText().toString());
-                            intent.putExtra("wid" , width.getText().toString());
-                            intent.putExtra("hei" , height.getText().toString());
-                            intent.putExtra("qua" , quantity.getText().toString());
-                            intent.putExtra("sourceLAT", sourceLAT);
-                            intent.putExtra("sourceLNG", sourceLNG);
-                            intent.putExtra("destinationLAT", destinationLAT);
-                            intent.putExtra("destinationLNG", destinationLNG);
-                            startActivity(intent);
-                        }
 
 
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(MaterialActivity2.this, "Please complete your profile to continue", Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent(MaterialActivity2.this , Profile.class);
+                        Intent intent = new Intent(MaterialActivity2.this, Profile.class);
                         startActivity(intent);
                     }
 
 
-
-                }
-                else
-                {
+                } else {
                     Toast.makeText(MaterialActivity2.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 }
 
@@ -528,7 +511,6 @@ public class MaterialActivity2 extends AppCompatActivity {
             }
 
 
-
         } else if (requestCode == 1 && resultCode == RESULT_OK) {
             MultipartBody.Part body = null;
 
@@ -545,12 +527,7 @@ public class MaterialActivity2 extends AppCompatActivity {
             }
 
 
-
         }
-
-
-
-
 
 
     }

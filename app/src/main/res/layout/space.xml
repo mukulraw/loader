@@ -387,7 +387,7 @@
                 android:layout_width="140dp"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Selected Area: "
+                android:text="Free Space: "
                 android:textColor="#2A2A2A"
                 android:textSize="12sp" />
 
@@ -414,7 +414,7 @@
                 android:layout_width="140dp"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Remaining Area: "
+                android:text="Loaded Space: "
                 android:textColor="#2A2A2A"
                 android:textSize="12sp" />
 

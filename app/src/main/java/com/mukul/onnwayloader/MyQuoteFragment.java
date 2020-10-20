@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mukul.onnwayloader.confirm_full_POJO.confirm_full_bean;
 import com.mukul.onnwayloader.myorder.OngoingOrderFragment;
 import com.mukul.onnwayloader.myquotes.MyQuoteList;
 import com.mukul.onnwayloader.myquotes.RecyclerAdapter;
@@ -232,10 +233,42 @@ public class MyQuoteFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(context, Web.class);
+                    progress.setVisibility(View.VISIBLE);
+
+                    AppController b = (AppController) context.getApplicationContext();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(b.baseurl)
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                    Call<confirm_full_bean> call = cr.getCall(
+                            item.getId(),
+                            SharePreferenceUtils.getInstance().getString("userId")
+                    );
+
+                    call.enqueue(new Callback<confirm_full_bean>() {
+                        @Override
+                        public void onResponse(Call<confirm_full_bean> call, Response<confirm_full_bean> response) {
+
+                            Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            progress.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<confirm_full_bean> call, Throwable t) {
+                            progress.setVisibility(View.GONE);
+                        }
+                    });
+
+                    /*Intent intent = new Intent(context, Web.class);
                     intent.putExtra("title", "Contact Us");
                     intent.putExtra("url", "https://www.onnway.com/contactonnway.php");
-                    startActivity(intent);
+                    startActivity(intent);*/
 
                 }
             });

@@ -321,4 +321,11 @@ public interface AllApiIneterface {
             @Part("order_id") String order_id
     );
 
+    @Multipart
+    @POST("android/getCall.php")
+    Call<confirm_full_bean> getCall(
+            @Part("order_id") String order_id,
+            @Part("user_id") String user_id
+    );
+
 }

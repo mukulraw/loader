@@ -8,8 +8,8 @@
     <color name="red_inactive_button">#C55A5A</color>
 
     <color name="colorWhite">#FFFFFF</color>
-    <color name="darkGrey">#696969</color>
+    <color name="darkGrey">#4D4A4C</color>
 
-    <color name="black">#2E2E2E</color>
+    <color name="black">#4D4A4C</color>
     <color name="transparent">#00000000</color>
 </resources>

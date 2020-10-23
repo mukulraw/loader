@@ -33,15 +33,24 @@
             android:adjustViewBounds="true"
             />
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textSize="18sp"
-            android:visibility="gone"
-            android:layout_marginTop="16dp"
+            android:id="@+id/order"
+            android:layout_margin="10dp"
+            android:background="@drawable/green_back_round"
+            android:paddingStart="20dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/white"
+            android:visibility="visible"
             android:gravity="center"
-            android:text="No Data Found"/>
+            android:text="Find Truck"/>
 
     </LinearLayout>
 

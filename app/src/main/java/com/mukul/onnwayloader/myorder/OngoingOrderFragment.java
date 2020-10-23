@@ -18,6 +18,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -59,6 +60,7 @@ public class OngoingOrderFragment extends Fragment {
     OrderAdapter adapter;
     GridLayoutManager manager;
     LinearLayout hide;
+    Button order;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +70,7 @@ public class OngoingOrderFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_ongoing_order);
         progress = view.findViewById(R.id.progress);
         hide = view.findViewById(R.id.hide);
+        order = view.findViewById(R.id.order);
         list = new ArrayList<>();
 
         adapter = new OrderAdapter(getContext(), list);
@@ -75,6 +78,15 @@ public class OngoingOrderFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
+
+        order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ((MainActivity) getActivity()).bottomNavigationView.setSelectedItemId(R.id.bottom_nav_find_truck);
+
+            }
+        });
 
         return view;
     }

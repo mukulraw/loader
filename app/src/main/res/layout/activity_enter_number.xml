@@ -25,7 +25,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/montserrat_regular"
         android:text="We will send OTP on this number \nso, enter correct number"
-        android:textColor="#696969"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_enter_number"
         app:layout_constraintStart_toStartOf="@+id/toolbar_enter_number"

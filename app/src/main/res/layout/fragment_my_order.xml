@@ -14,7 +14,7 @@
         android:background="#ffffff"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="#000000"
+        app:tabSelectedTextColor="@color/black"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
 
     </com.google.android.material.tabs.TabLayout>

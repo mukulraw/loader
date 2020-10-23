@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //BottomNavigation and FrameLayout
-    private BottomNavigationView bottomNavigationView;
+    public BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
 
     //Fragments

@@ -42,7 +42,7 @@
                 android:text="Thank You for your enquiry, you will receive quote shortly"
                 android:textAlignment="center"
                 android:fontFamily="@font/montserrat_bold"
-                android:textColor="#000000"
+                android:textColor="#4CAF50"
                 android:textSize="24sp"/>
             <TextView
                 android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                 android:layout_marginBottom="8dp"
                 android:textAlignment="center"
                 android:fontFamily="@font/montserrat_bold"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="14sp"/>
 
         </LinearLayout>

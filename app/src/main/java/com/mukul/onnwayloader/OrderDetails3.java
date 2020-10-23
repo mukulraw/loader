@@ -127,7 +127,7 @@ public class OrderDetails3 extends AppCompatActivity {
     List<String> selected;
 
     TextView drivernote;
-
+    ImageView truckType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +146,7 @@ public class OrderDetails3 extends AppCompatActivity {
             }
         });
 
+        truckType = findViewById(R.id.imageView5);
         drivernote = findViewById(R.id.textView46);
         partLoad1 = findViewById(R.id.part_load_card_1);
         partLoad2 = findViewById(R.id.part_load_card_2);
@@ -643,6 +644,14 @@ public class OrderDetails3 extends AppCompatActivity {
                 drivernote.setText(item.getRemarks2());
 
                 decs.setText(item.getRemarks());
+
+                if (item.getTruckType2().equals("open truck")) {
+                    truckType.setImageDrawable(getDrawable(R.drawable.open));
+                } else if (item.getTruckType2().equals("trailer")) {
+                    truckType.setImageDrawable(getDrawable(R.drawable.trailer));
+                } else {
+                    truckType.setImageDrawable(getDrawable(R.drawable.container));
+                }
 
                 if (item.getSelected().contains("1")) {
                     partLoad1.setCardBackgroundColor(Color.parseColor("#A0A0A0"));

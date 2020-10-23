@@ -10,6 +10,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="darkGrey">#4D4A4C</color>
 
+    <color name="line">#C3C2C3</color>
     <color name="black">#4D4A4C</color>
     <color name="transparent">#00000000</color>
 </resources>

@@ -182,9 +182,9 @@ public class OngoingOrderFragment extends Fragment {
                 holder.freight.setText("\u20B9" + "0");
             }
 
-            if (item.getTruckType().equals("open truck")) {
+            if (item.getTruckType2().equals("open truck")) {
                 holder.truckType.setImageDrawable(context.getDrawable(R.drawable.open));
-            } else if (item.getTruckType().equals("trailer")) {
+            } else if (item.getTruckType2().equals("trailer")) {
                 holder.truckType.setImageDrawable(context.getDrawable(R.drawable.trailer));
             } else {
                 holder.truckType.setImageDrawable(context.getDrawable(R.drawable.container));

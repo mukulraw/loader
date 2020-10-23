@@ -22,6 +22,9 @@ public class Datum {
     @SerializedName("truck_type")
     @Expose
     private String truckType;
+    @SerializedName("truck_type2")
+    @Expose
+    private String truckType2;
     @SerializedName("schedule")
     @Expose
     private String schedule;
@@ -367,5 +370,13 @@ public class Datum {
 
     public void setInsurance_used(String insurance_used) {
         this.insurance_used = insurance_used;
+    }
+
+    public String getTruckType2() {
+        return truckType2;
+    }
+
+    public void setTruckType2(String truckType2) {
+        this.truckType2 = truckType2;
     }
 }

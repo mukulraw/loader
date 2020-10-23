@@ -83,6 +83,8 @@ public class OrderDetails2 extends AppCompatActivity {
 
     CardView truckcard;
 
+    ImageView truckType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +103,7 @@ public class OrderDetails2 extends AppCompatActivity {
             }
         });
 
-
+        truckType = findViewById(R.id.imageView5);
         orderid = findViewById(R.id.textView16);
         confirm = findViewById(R.id.button);
         request = findViewById(R.id.button4);
@@ -188,6 +190,14 @@ public class OrderDetails2 extends AppCompatActivity {
                 date.setText(item.getSchedule());
                 status.setText(item.getStatus());
                 loadtype.setText(item.getLaodType());
+
+                if (item.getTruckType2().equals("open truck")) {
+                    truckType.setImageDrawable(getDrawable(R.drawable.open));
+                } else if (item.getTruckType2().equals("trailer")) {
+                    truckType.setImageDrawable(getDrawable(R.drawable.trailer));
+                } else {
+                    truckType.setImageDrawable(getDrawable(R.drawable.container));
+                }
 
                 if (item.getAssign_id() != null)
                 {

@@ -223,9 +223,9 @@ public class OrderDetails5 extends AppCompatActivity {
                 drivernote.setText(item.getRemarks());
                 insused = item.getInsurance_used();
 
-                if (item.getTruckType().equals("open truck")) {
+                if (item.getTruckType2().equals("open truck")) {
                     truckType.setImageDrawable(getDrawable(R.drawable.open));
-                } else if (item.getTruckType().equals("trailer")) {
+                } else if (item.getTruckType2().equals("trailer")) {
                     truckType.setImageDrawable(getDrawable(R.drawable.trailer));
                 } else {
                     truckType.setImageDrawable(getDrawable(R.drawable.container));

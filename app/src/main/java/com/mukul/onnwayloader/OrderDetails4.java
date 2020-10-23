@@ -330,9 +330,9 @@ public class OrderDetails4 extends AppCompatActivity {
                 loadtype.setText(item.getLaodType());
                 drivernote.setText(item.getRemarks());
 
-                if (item.getTruckType().equals("open truck")) {
+                if (item.getTruckType2().equals("open truck")) {
                     truckType.setImageDrawable(getDrawable(R.drawable.open));
-                } else if (item.getTruckType().equals("trailer")) {
+                } else if (item.getTruckType2().equals("trailer")) {
                     truckType.setImageDrawable(getDrawable(R.drawable.trailer));
                 } else {
                     truckType.setImageDrawable(getDrawable(R.drawable.container));

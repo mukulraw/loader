@@ -12,10 +12,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_name"
@@ -23,87 +23,99 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp">
+
             <EditText
                 android:id="@+id/input_name_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:hint="Enter Name"/>
+                android:hint="Enter Name"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp">
+
             <EditText
                 android:id="@+id/input_email_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:hint="Email" />
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp">
+
             <EditText
                 android:id="@+id/input_address_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:hint="Enter Address" />
+                android:hint="Enter Address"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp">
+
             <EditText
                 android:id="@+id/input_city_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:hint="Enter City"
-                android:text="Onnway.com"/>
+                android:text="Onnway.com"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:paddingTop="20dp">
+
             <TextView
                 android:id="@+id/user_type_tv"
-                android:paddingRight="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingRight="15dp"
                 android:text="I am a "
-                android:textSize="18dp"/>
+                android:textSize="18dp" />
+
             <RadioGroup
                 android:id="@+id/user_type_radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/user_type_tv"
                 android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/individual_radio_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Individual"
+                    android:layout_marginRight="8dp"
                     android:checked="true"
-                    android:textSize="18sp"
-                    android:layout_marginRight="8dp"/>
+                    android:text="Individual"
+                    android:textSize="18sp" />
+
                 <RadioButton
                     android:id="@+id/company_radio_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "Company"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="8dp"/>
+                    android:layout_marginLeft="8dp"
+                    android:text="Company"
+                    android:textSize="18sp" />
             </RadioGroup>
         </RelativeLayout>
     </LinearLayout>

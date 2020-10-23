@@ -173,14 +173,20 @@ public class PastOrderFragment extends Fragment {
                 holder.freight.setText("\u20B9" + "0");
             }
 
-
-            if (item.getTruckType().equals("open truck")) {
-                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.open));
-            } else if (item.getTruckType().equals("trailer")) {
-                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.trailer));
-            } else {
-                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.container));
+            try {
+                if (item.getTruckType2().equals("open truck")) {
+                    holder.truckType.setImageDrawable(context.getDrawable(R.drawable.open));
+                } else if (item.getTruckType2().equals("trailer")) {
+                    holder.truckType.setImageDrawable(context.getDrawable(R.drawable.trailer));
+                } else {
+                    holder.truckType.setImageDrawable(context.getDrawable(R.drawable.container));
+                }
+            }catch (Exception e)
+            {
+                e.printStackTrace();
             }
+
+
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -175,6 +176,13 @@ public class MyQuoteFragment extends Fragment {
                 }
             });
 
+            if (item.getTruckType2().equals("open truck")) {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.open));
+            } else if (item.getTruckType2().equals("trailer")) {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.trailer));
+            } else {
+                holder.truckType.setImageDrawable(context.getDrawable(R.drawable.container));
+            }
 
             holder.confirm.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -285,10 +293,12 @@ public class MyQuoteFragment extends Fragment {
 
             TextView type, orderid, date, source, destination, material, weight, freight, truck, schedule;
             Button confirm, getcall;
+            ImageView truckType;
 
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
+                truckType = itemView.findViewById(R.id.imageView8);
                 type = itemView.findViewById(R.id.textView65);
                 schedule = itemView.findViewById(R.id.textView145);
                 orderid = itemView.findViewById(R.id.textView66);

@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Booking Confirmed"
+                android:text="Thank you for your loading confirmation"
                 android:textAlignment="center"
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="#4CAF50"
@@ -47,12 +47,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="- Onnway -"
+                android:text="Booking will be confirmed shortly according to truck availability at your location"
                 android:visibility="visible"
                 android:layout_marginBottom="8dp"
                 android:textAlignment="center"
                 android:fontFamily="@font/montserrat_bold"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="14sp"/>
 
         </LinearLayout>

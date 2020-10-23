@@ -120,6 +120,7 @@ public class OrderDetails extends AppCompatActivity {
     FloatingActionButton track;
 
     TextView drivernote, balance, insuranceheading;
+    ImageView truckType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +140,7 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
+        truckType = findViewById(R.id.imageView5);
         drivernote = findViewById(R.id.textView46);
         insuranceheading = findViewById(R.id.textView33);
         balance = findViewById(R.id.textView110);
@@ -633,6 +635,14 @@ public class OrderDetails extends AppCompatActivity {
                 decs.setText(item.getRemarks());
 
                 insused = item.getInsurance_used();
+
+                if (item.getTruckType2().equals("open truck")) {
+                    truckType.setImageDrawable(getDrawable(R.drawable.open));
+                } else if (item.getTruckType2().equals("trailer")) {
+                    truckType.setImageDrawable(getDrawable(R.drawable.trailer));
+                } else {
+                    truckType.setImageDrawable(getDrawable(R.drawable.container));
+                }
 
                 if (item.getPer80().equals("pending")) {
                     pay80.setText("80%");

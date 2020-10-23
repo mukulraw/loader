@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity
 
     BroadcastReceiver commentReceiver;
 
+    ImageView home;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity
 
         //Bottom Navigation and FrameLayout
         bottomNavigationView = findViewById(R.id.bottom_nav);
+        home = findViewById(R.id.home);
 
         frameLayout = findViewById(R.id.main_frame);
 
@@ -178,6 +181,14 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                bottomNavigationView.setSelectedItemId(R.id.bottom_nav_find_truck);
+
+            }
+        });
 
 
 

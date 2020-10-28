@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mukul.onnwayloader">
+    package="com.onnway.kedsons">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -30,7 +30,7 @@
         android:value="@integer/google_play_services_version" />
 
     <application
-        android:name=".networking.AppController"
+        android:name="com.onnway.kedsons.networking.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -38,18 +38,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".KYC3"
+        <activity android:name="com.onnway.kedsons.KYC3"
             android:screenOrientation="portrait"/>
-        <activity android:name=".KYC2"
+        <activity android:name="com.onnway.kedsons.KYC2"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".OrderDetails5"
+            android:name="com.onnway.kedsons.OrderDetails5"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrderDetails4"
+            android:name="com.onnway.kedsons.OrderDetails4"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Checkout"
+            android:name="com.onnway.kedsons.Checkout"
             android:screenOrientation="portrait">
 
             <!--
@@ -61,52 +61,52 @@
             -->
         </activity>
         <activity
-            android:name=".Feedback"
+            android:name="com.onnway.kedsons.Feedback"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrderDetails3"
+            android:name="com.onnway.kedsons.OrderDetails3"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MapsActivity"
+            android:name="com.onnway.kedsons.MapsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Web"
+            android:name="com.onnway.kedsons.Web"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".EditProfile"
+            android:name="com.onnway.kedsons.EditProfile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PayNow"
+            android:name="com.onnway.kedsons.PayNow"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".KYC"
+            android:name="com.onnway.kedsons.KYC"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GetProfile"
+            android:name="com.onnway.kedsons.GetProfile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrderDetails2"
+            android:name="com.onnway.kedsons.OrderDetails2"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrderDetails"
+            android:name="com.onnway.kedsons.OrderDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Profile"
+            android:name="com.onnway.kedsons.Profile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Address3"
+            android:name="com.onnway.kedsons.Address3"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MaterialActivity2"
+            android:name="com.onnway.kedsons.MaterialActivity2"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Address2"
+            android:name="com.onnway.kedsons.Address2"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Address1"
+            android:name="com.onnway.kedsons.Address1"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Shipment"
+            android:name="com.onnway.kedsons.Shipment"
             android:screenOrientation="portrait" />
 
         <uses-library
@@ -114,53 +114,53 @@
             android:required="false" />
 
         <activity
-            android:name=".userprofile.ProfileActivity"
+            android:name="com.onnway.kedsons.userprofile.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".partload.PartLoadSpaceSelect"
+            android:name="com.onnway.kedsons.partload.PartLoadSpaceSelect"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".materialtype.MaterialActivity"
+            android:name="com.onnway.kedsons.materialtype.MaterialActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".userprofile.UserProfileActivity"
+            android:name="com.onnway.kedsons.userprofile.UserProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".shippingaddress.ShippingAddress"
+            android:name="com.onnway.kedsons.shippingaddress.ShippingAddress"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".shipmentdetails.ShipmentActivity"
+            android:name="com.onnway.kedsons.shipmentdetails.ShipmentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GettingStarted"
+            android:name="com.onnway.kedsons.GettingStarted"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".otp.EnterNumberActivity"
+            android:name="com.onnway.kedsons.otp.EnterNumberActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".trucklist.GetMoreTruckDetails"
+            android:name="com.onnway.kedsons.trucklist.GetMoreTruckDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".trucklist.AvailableTruckList"
+            android:name="com.onnway.kedsons.trucklist.AvailableTruckList"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".addprofiledetails.FirstTimeProfileActivity"
+            android:name="com.onnway.kedsons.addprofiledetails.FirstTimeProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".otp.OtpActivity"
+            android:name="com.onnway.kedsons.otp.OtpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".otp.NumberActivity"
+            android:name="com.onnway.kedsons.otp.NumberActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".splash.SplashActivity"
+            android:name="com.onnway.kedsons.splash.SplashActivity"
             android:screenOrientation="portrait" />
 
         <activity-alias
             android:name=".LauncherActivity"
             android:label="@string/app_name"
-            android:targetActivity=".splash.SplashActivity">
+            android:targetActivity="com.onnway.kedsons.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -173,7 +173,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.onnway.kedsons.MainActivity"
             android:screenOrientation="portrait" />
 
         <receiver
@@ -185,7 +185,7 @@
         </receiver>
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name="com.onnway.kedsons.MyFirebaseMessagingService"
             android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

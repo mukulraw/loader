@@ -147,19 +147,43 @@ public class MyQuoteFragment extends Fragment {
             holder.weight.setText(item.getWeight());
             holder.truck.setText(item.getTruckType());
             holder.schedule.setText(item.getSchedule());
-            try {
-                float fr = Float.parseFloat(item.getFreight());
-                float ot = Float.parseFloat(item.getOtherCharges());
-                float cg = Float.parseFloat(item.getCgst());
-                float sg = Float.parseFloat(item.getSgst());
-                float in = Float.parseFloat(item.getInsurance());
 
-                float gr = fr + ot + cg + sg;
-                holder.freight.setText("\u20B9" + gr);
+            float fr = 0;
+            try {
+                fr = Float.parseFloat(item.getFreight());
             } catch (Exception e) {
                 e.printStackTrace();
-                holder.freight.setText("\u20B9" + "0");
             }
+
+            float ot = 0;
+            try {
+                ot = Float.parseFloat(item.getOtherCharges());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            float cg = 0;
+            try {
+                cg = Float.parseFloat(item.getCgst());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            float sg = 0;
+            try {
+                sg = Float.parseFloat(item.getSgst());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                float in = Float.parseFloat(item.getInsurance());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            float gr = fr + ot + cg + sg;
+            holder.freight.setText("\u20B9" + gr);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

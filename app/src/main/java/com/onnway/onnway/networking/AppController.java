@@ -9,6 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.downloader.PRDownloader;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class AppController extends Application {
@@ -22,6 +23,7 @@ public class AppController extends Application {
 
     public String baseurl = "https://www.onnway.com/";
 
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public static Context getContext() {
         return context;
@@ -35,6 +37,8 @@ public class AppController extends Application {
         PRDownloader.initialize(getApplicationContext());
 
         context = getApplicationContext();
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
 

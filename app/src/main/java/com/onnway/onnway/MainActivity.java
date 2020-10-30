@@ -47,6 +47,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -120,7 +121,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         //drawerLayout
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity
         setFragment(findTruckFragment);
 
         View view = navigationView.getHeaderView(0);
+
 
 
         //changing the fragment on bottom nav click

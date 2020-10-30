@@ -34,6 +34,12 @@ public interface AllApiIneterface {
             @Part("token") String token
     );
 
+    @Multipart
+    @POST("android/resend.php")
+    Call<loginBean> resend(
+            @Part("phone") String phone
+    );
+
     @GET("android/getMaterial.php")
     Call<List<truckTypeBean>> getMaterial();
 

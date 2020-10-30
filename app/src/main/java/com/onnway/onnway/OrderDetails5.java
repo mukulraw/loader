@@ -3,10 +3,19 @@ package com.onnway.onnway;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
+import android.view.Window;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,7 +41,8 @@ public class OrderDetails5 extends AppCompatActivity {
     TextView request;
     ProgressBar progress;
 
-
+    TextView grand, read, tnc, insuranceheading, text;
+    CheckBox insurance;
     String id;
 
     float pvalue = 0;
@@ -44,6 +54,12 @@ public class OrderDetails5 extends AppCompatActivity {
     TextView drivernote;
 
     ImageView truckType;
+
+    float fr = 0, ot = 0, cg = 0, sg = 0, in = 0;
+    float gr = 0;
+    float pa = 0;
+
+    boolean ins = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +79,13 @@ public class OrderDetails5 extends AppCompatActivity {
             }
         });
 
+
+        insurance = findViewById(R.id.checkBox);
+        insuranceheading = findViewById(R.id.textView33);
+        text = findViewById(R.id.textView40);
+        grand = findViewById(R.id.textView38);
+        read = findViewById(R.id.textView112);
+        tnc = findViewById(R.id.textView41);
         truckType = findViewById(R.id.imageView5);
         drivernote = findViewById(R.id.textView46);
         details = findViewById(R.id.textView14);
@@ -80,6 +103,112 @@ public class OrderDetails5 extends AppCompatActivity {
         progress = findViewById(R.id.progressBar);
         track = findViewById(R.id.floatingActionButton);
 
+        String text = "Cancellation Policy";
+        SpannableString spannableString = new SpannableString(text);
+
+        ClickableSpan clickableSpan2 = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                String url = "https://www.onnway.com/privacy_policy.php";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        };
+
+        //spannableString.setSpan(clickableSpan1, 5, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan2, 0, 19, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tnc.setText(spannableString);
+        tnc.setMovementMethod(LinkMovementMethod.getInstance());
+
+        String text2 = "PLEASE READ";
+        SpannableString spannableString2 = new SpannableString(text2);
+        ClickableSpan clickableSpan1 = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Dialog dialog = new Dialog(OrderDetails5.this, R.style.MyDialogTheme);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.read);
+                dialog.show();
+
+            }
+        };
+
+        spannableString2.setSpan(clickableSpan1, 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        read.setText(spannableString2);
+        read.setMovementMethod(LinkMovementMethod.getInstance());
+
+        details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Dialog dialog = new Dialog(OrderDetails5.this, R.style.MyDialogTheme);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.fare_breakdown_dialog);
+                dialog.show();
+
+                TextView frr = dialog.findViewById(R.id.textView117);
+                TextView frrtitle = dialog.findViewById(R.id.textView113);
+                TextView oth = dialog.findViewById(R.id.textView118);
+                TextView othtitle = dialog.findViewById(R.id.textView114);
+                TextView cgs = dialog.findViewById(R.id.textView119);
+                TextView cgstitle = dialog.findViewById(R.id.textView115);
+                TextView sgs = dialog.findViewById(R.id.textView120);
+                TextView sgstitle = dialog.findViewById(R.id.textView116);
+                TextView pdis = dialog.findViewById(R.id.textView122);
+                TextView pdistitle = dialog.findViewById(R.id.textView121);
+
+                if (fr > 0) {
+                    frr.setText("\u20B9" + fr);
+                    frr.setVisibility(View.VISIBLE);
+                    frrtitle.setVisibility(View.VISIBLE);
+                } else {
+                    frr.setVisibility(View.GONE);
+                    frrtitle.setVisibility(View.GONE);
+                }
+
+                if (ot > 0) {
+                    oth.setText("\u20B9" + ot);
+                    oth.setVisibility(View.VISIBLE);
+                    othtitle.setVisibility(View.VISIBLE);
+                } else {
+                    oth.setVisibility(View.GONE);
+                    othtitle.setVisibility(View.GONE);
+                }
+
+
+                if (cg > 0) {
+                    cgs.setText("\u20B9" + cg);
+                    cgs.setVisibility(View.VISIBLE);
+                    cgstitle.setVisibility(View.VISIBLE);
+                } else {
+                    cgs.setVisibility(View.GONE);
+                    cgstitle.setVisibility(View.GONE);
+                }
+
+                if (sg > 0) {
+                    sgs.setText("\u20B9" + sg);
+                    sgs.setVisibility(View.VISIBLE);
+                    sgstitle.setVisibility(View.VISIBLE);
+                } else {
+                    sgs.setVisibility(View.GONE);
+                    sgstitle.setVisibility(View.GONE);
+                }
+
+                if (pvalue > 0) {
+                    pdis.setText("\u20B9" + pvalue);
+                    pdis.setVisibility(View.VISIBLE);
+                    pdistitle.setVisibility(View.VISIBLE);
+                } else {
+                    pdis.setVisibility(View.GONE);
+                    pdistitle.setVisibility(View.GONE);
+                }
+
+
+            }
+        });
 
         request.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +291,23 @@ public class OrderDetails5 extends AppCompatActivity {
             }
         });
 
+        insurance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                ins = isChecked;
+                if (isChecked) {
+                    insused = "yes";
+                } else {
+                    insused = "no";
+                }
+                updateSummary();
+
+
+            }
+        });
+
+
     }
 
     @Override
@@ -219,6 +365,58 @@ public class OrderDetails5 extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                try {
+                    fr = Float.parseFloat(item.getFreight());
+                    ot = Float.parseFloat(item.getOtherCharges());
+                    cg = Float.parseFloat(item.getCgst());
+                    sg = Float.parseFloat(item.getSgst());
+                    in = Float.parseFloat(item.getInsurance());
+
+                    if (in > 0) {
+
+                        if (item.getInsurance_used().equals("yes")) {
+                            insurance.setChecked(true);
+                            insurance.setEnabled(false);
+                        } else {
+                            insurance.setEnabled(true);
+                            insurance.setChecked(false);
+                        }
+
+                        insuranceheading.setVisibility(View.VISIBLE);
+                        insurance.setVisibility(View.VISIBLE);
+
+                    } else {
+                        insurance.setEnabled(false);
+                        insuranceheading.setVisibility(View.GONE);
+                        insurance.setVisibility(View.GONE);
+                    }
+
+                    updateSummary();
+
+                    try {
+                        pvalue = Float.parseFloat(response.body().getData().getPvalue());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    gr = gr - pvalue;
+
+                    grand.setText("₹ " + gr);
+                    if (item.getPaidAmount().length() > 0) {
+                        pa = Float.parseFloat(item.getPaidAmount());
+                    } else {
+                        pa = 0;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    insurance.setEnabled(false);
+                    insuranceheading.setVisibility(View.GONE);
+                    insurance.setVisibility(View.GONE);
+                    details.setVisibility(View.GONE);
+                    text.setVisibility(View.GONE);
+                    grand.setText("NOT ASSIGNED");
+                }
+
 
                 progress.setVisibility(View.GONE);
 
@@ -229,6 +427,22 @@ public class OrderDetails5 extends AppCompatActivity {
                 progress.setVisibility(View.GONE);
             }
         });
+    }
+
+    void updateSummary() {
+
+        if (ins) {
+            gr = fr + ot + cg + sg + in;
+            grand.setText("\u20B9" + gr);
+        } else {
+            gr = fr + ot + cg + sg;
+            grand.setText("\u20B9" + gr);
+        }
+
+            /*gr = fr + ot + cg + sg + in;
+            grand.setText("\u20B9" + gr);*/
+
+
     }
 
 }

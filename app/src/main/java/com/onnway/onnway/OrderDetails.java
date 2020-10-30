@@ -117,6 +117,8 @@ public class OrderDetails extends AppCompatActivity {
     TextView drivernote, balance, insuranceheading;
     ImageView truckType;
 
+    Button downloadlr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +137,7 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
+        downloadlr = findViewById(R.id.button20);
         truckType = findViewById(R.id.imageView5);
         drivernote = findViewById(R.id.textView46);
         insuranceheading = findViewById(R.id.textView33);
@@ -575,6 +578,17 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
+        downloadlr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String url = "https://www.onnway.com/newadmin/print/lr.php?id=" + id;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+
+            }
+        });
 
     }
 

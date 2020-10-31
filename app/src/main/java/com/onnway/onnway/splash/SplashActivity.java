@@ -69,10 +69,12 @@ public class SplashActivity extends AppCompatActivity {
             //window.setStatusBarColor(Color.rgb(105, 105, 105));
         }
 
+/*
         AppSignatureHashHelper appSignatureHashHelper = new AppSignatureHashHelper(this);
 
         // This code requires one time to get Hash keys do comment and share key
         Log.i("SMShash", "HashKey: " + appSignatureHashHelper.getAppSignatures().get(0));
+*/
 
         progressBar = findViewById(R.id.progressBar_cyclic);
         progressBar.setVisibility(View.VISIBLE);

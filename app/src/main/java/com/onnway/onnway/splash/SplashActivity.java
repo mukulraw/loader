@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.onnway.onnway.AppSignatureHashHelper;
 import com.onnway.onnway.SharePreferenceUtils;
 import com.nabinbhandari.android.permissions.PermissionHandler;
 import com.nabinbhandari.android.permissions.Permissions.Options;
@@ -50,8 +52,6 @@ public class SplashActivity extends AppCompatActivity {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE,
             Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.READ_SMS,
-            Manifest.permission.RECEIVE_SMS,
             Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -68,6 +68,11 @@ public class SplashActivity extends AppCompatActivity {
             //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             //window.setStatusBarColor(Color.rgb(105, 105, 105));
         }
+
+        AppSignatureHashHelper appSignatureHashHelper = new AppSignatureHashHelper(this);
+
+        // This code requires one time to get Hash keys do comment and share key
+        Log.i("SMShash", "HashKey: " + appSignatureHashHelper.getAppSignatures().get(0));
 
         progressBar = findViewById(R.id.progressBar_cyclic);
         progressBar.setVisibility(View.VISIBLE);

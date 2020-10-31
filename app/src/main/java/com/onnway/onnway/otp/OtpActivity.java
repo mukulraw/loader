@@ -1,8 +1,10 @@
 package com.onnway.onnway.otp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,10 +16,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.mukesh.OnOtpCompletionListener;
 import com.mukesh.OtpView;
 import com.onnway.onnway.AllApiIneterface;
 import com.onnway.onnway.MainActivity;
+import com.onnway.onnway.MySMSBroadcastReceiver;
 import com.onnway.onnway.R;
 import com.onnway.onnway.SharePreferenceUtils;
 import com.onnway.onnway.loginBean;
@@ -33,10 +41,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import swarajsaaj.smscodereader.interfaces.OTPListener;
-import swarajsaaj.smscodereader.receivers.OtpReader;
 
-public class OtpActivity extends AppCompatActivity implements OTPListener {
+public class OtpActivity extends AppCompatActivity implements MySMSBroadcastReceiver.OTPReceiveListener {
 
     /*
      * This activity is designed for getting the OTP from the mesaage provider
@@ -50,6 +56,8 @@ public class OtpActivity extends AppCompatActivity implements OTPListener {
 
     private OtpView otpview;
     ProgressBar progress;
+
+    private MySMSBroadcastReceiver smsReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +82,6 @@ public class OtpActivity extends AppCompatActivity implements OTPListener {
 
         mobileTv.setText(phone);
         //automatic OTP reader, library used: "swarajsaaj:otpreader:1.1"
-        OtpReader.bind(OtpActivity.this, "SNDOTP");
 
 
         otpview.setOtpCompletionListener(new OnOtpCompletionListener() {
@@ -96,6 +103,41 @@ public class OtpActivity extends AppCompatActivity implements OTPListener {
             }
         });
 
+        smsReceiver = new MySMSBroadcastReceiver();
+        smsReceiver.setOTPListener(this);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
+        this.registerReceiver(smsReceiver, intentFilter);
+
+        // Get an instance of SmsRetrieverClient, used to start listening for a matching
+// SMS message.
+        SmsRetrieverClient client = SmsRetriever.getClient(this /* context */);
+
+// Starts SmsRetriever, which waits for ONE matching SMS message until timeout
+// (5 minutes). The matching SMS message will be sent via a Broadcast Intent with
+// action SmsRetriever#SMS_RETRIEVED_ACTION.
+        Task<Void> task = client.startSmsRetriever();
+
+// Listen for success/failure of the start Task. If in a background thread, this
+// can be made blocking using Tasks.await(task, [timeout]);
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // Successfully started retriever, expect broadcast intent
+                // ...
+                MySMSBroadcastReceiver receiver = new MySMSBroadcastReceiver();
+
+            }
+        });
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Failed to start retriever, inspect Exception for more details
+                // ...
+            }
+        });
 
         resend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,15 +201,36 @@ public class OtpActivity extends AppCompatActivity implements OTPListener {
     }
 
     @Override
-    public void otpReceived(String messageText) {
-
-        //when otp received then this method called
+    public void onOTPReceived(String messageText) {
         Log.i("otp", messageText);
         int length = messageText.length();
         Log.i("otp", "Length:" + length);
-        String substr = messageText.substring(length - 4, length);
+        String substr = messageText.substring(length - 16, length);
 
         otpview.setText(substr);
+        if (smsReceiver != null) {
+            unregisterReceiver(smsReceiver);
+            smsReceiver = null;
+        }
 
     }
+
+    @Override
+    public void onOTPTimeOut() {
+
+    }
+
+    @Override
+    public void onOTPReceivedError(String error) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (smsReceiver != null) {
+            unregisterReceiver(smsReceiver);
+        }
+    }
+
 }

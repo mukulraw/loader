@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.onnway.onnway">
+    package="com.onnway.app">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -25,7 +25,7 @@
         android:value="@integer/google_play_services_version" />
 
     <application
-        android:name="com.onnway.onnway.networking.AppController"
+        android:name="com.onnway.app.networking.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -33,18 +33,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.onnway.onnway.KYC3"
+        <activity android:name="com.onnway.app.KYC3"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.onnway.onnway.KYC2"
+        <activity android:name="com.onnway.app.KYC2"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.onnway.onnway.OrderDetails5"
+            android:name="com.onnway.app.OrderDetails5"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.OrderDetails4"
+            android:name="com.onnway.app.OrderDetails4"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.Checkout"
+            android:name="com.onnway.app.Checkout"
             android:screenOrientation="portrait">
 
             <!--
@@ -56,52 +56,52 @@
             -->
         </activity>
         <activity
-            android:name="com.onnway.onnway.Feedback"
+            android:name="com.onnway.app.Feedback"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.OrderDetails3"
+            android:name="com.onnway.app.OrderDetails3"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.MapsActivity"
+            android:name="com.onnway.app.MapsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.Web"
+            android:name="com.onnway.app.Web"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.EditProfile"
+            android:name="com.onnway.app.EditProfile"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.PayNow"
+            android:name="com.onnway.app.PayNow"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.KYC"
+            android:name="com.onnway.app.KYC"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.GetProfile"
+            android:name="com.onnway.app.GetProfile"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.OrderDetails2"
+            android:name="com.onnway.app.OrderDetails2"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.OrderDetails"
+            android:name="com.onnway.app.OrderDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.Profile"
+            android:name="com.onnway.app.Profile"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.Address3"
+            android:name="com.onnway.app.Address3"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.MaterialActivity2"
+            android:name="com.onnway.app.MaterialActivity2"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.Address2"
+            android:name="com.onnway.app.Address2"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.Address1"
+            android:name="com.onnway.app.Address1"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.Shipment"
+            android:name="com.onnway.app.Shipment"
             android:screenOrientation="portrait" />
 
         <uses-library
@@ -109,50 +109,50 @@
             android:required="false" />
 
         <activity
-            android:name="com.onnway.onnway.userprofile.ProfileActivity"
+            android:name="com.onnway.app.userprofile.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.partload.PartLoadSpaceSelect"
+            android:name="com.onnway.app.partload.PartLoadSpaceSelect"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.materialtype.MaterialActivity"
+            android:name="com.onnway.app.materialtype.MaterialActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.userprofile.UserProfileActivity"
+            android:name="com.onnway.app.userprofile.UserProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.shippingaddress.ShippingAddress"
+            android:name="com.onnway.app.shippingaddress.ShippingAddress"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.shipmentdetails.ShipmentActivity"
+            android:name="com.onnway.app.shipmentdetails.ShipmentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.GettingStarted"
+            android:name="com.onnway.app.GettingStarted"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.otp.EnterNumberActivity"
+            android:name="com.onnway.app.otp.EnterNumberActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.onnway.onnway.trucklist.GetMoreTruckDetails"
+            android:name="com.onnway.app.trucklist.GetMoreTruckDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.trucklist.AvailableTruckList"
+            android:name="com.onnway.app.trucklist.AvailableTruckList"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.addprofiledetails.FirstTimeProfileActivity"
+            android:name="com.onnway.app.addprofiledetails.FirstTimeProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.otp.OtpActivity"
+            android:name="com.onnway.app.otp.OtpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.otp.NumberActivity"
+            android:name="com.onnway.app.otp.NumberActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.onnway.onnway.splash.SplashActivity"
+            android:name="com.onnway.app.splash.SplashActivity"
             android:screenOrientation="portrait" />
 
-        <receiver android:name=".MySMSBroadcastReceiver" android:exported="true"
+        <receiver android:name="com.onnway.app.MySMSBroadcastReceiver" android:exported="true"
             android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED"/>
@@ -162,7 +162,7 @@
         <activity-alias
             android:name=".LauncherActivity"
             android:label="@string/app_name"
-            android:targetActivity="com.onnway.onnway.splash.SplashActivity">
+            android:targetActivity="com.onnway.app.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -175,11 +175,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.onnway.onnway.MainActivity"
+            android:name="com.onnway.app.MainActivity"
             android:screenOrientation="portrait" />
 
         <service
-            android:name="com.onnway.onnway.MyFirebaseMessagingService"
+            android:name="com.onnway.app.MyFirebaseMessagingService"
             android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

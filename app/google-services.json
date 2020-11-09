@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:133359784289:android:e359fa5099116dd7dfb520",
+        "android_client_info": {
+          "package_name": "com.onnway.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133359784289-q61t2m0454j7jm37dafmrp7nnsv1v6m3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Kg6xqtxOP_0R-9lccLktbKWn3G2344o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "133359784289-q61t2m0454j7jm37dafmrp7nnsv1v6m3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:133359784289:android:3e12b401cb21f529dfb520",
         "android_client_info": {
           "package_name": "com.onnway.onnway"

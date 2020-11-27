@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -86,7 +87,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class FindTruckFragment extends Fragment
         implements OnMapReadyCallback,
-        OpenTruckType.DialogListener {
+        OpenTruckType.DialogListener, DatePickerDialog.OnDateSetListener {
     private static final String TAG = "FindTruckFragment";
 
     private ImageButton nextCard;
@@ -259,7 +260,31 @@ public class FindTruckFragment extends Fragment
         schedulePickupDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Calendar cldr = Calendar.getInstance();
+
+
+/*
+                Dialog dialog = new Dialog(getActivity(), R.style.MyDialogTheme);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.date_dialog);
+                dialog.show();
+*/
+
+
+                int mYear, mMonth, mDay;
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.MyDialogTheme, FindTruckFragment.this, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                //Toast.makeText(getContext(), ""+System.currentTimeMillis(), Toast.LENGTH_SHORT).show();
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000 + (1000 * 60 * 60 * 24 * 4));
+                datePickerDialog.show();
+
+
+                /*final Calendar cldr = Calendar.getInstance();
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
                 int month = cldr.get(Calendar.MONTH);
                 int year = cldr.get(Calendar.YEAR);
@@ -277,7 +302,7 @@ public class FindTruckFragment extends Fragment
                 picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 //Toast.makeText(getContext(), ""+System.currentTimeMillis(), Toast.LENGTH_SHORT).show();
                 picker.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000 + (1000 * 60 * 60 * 24 * 4));
-                picker.show();
+                picker.show();*/
             }
         });
 
@@ -632,6 +657,13 @@ public class FindTruckFragment extends Fragment
             finalDate = day + " December " + year;
         }
         return finalDate;
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        String dateFormat = setDateFormat(dayOfMonth, (month + 1), year);
+        schedulePickupDate.setText(dateFormat);
+        pickUpDate = schedulePickupDate.getText().toString();
     }
 
     class TruckAdapter extends RecyclerView.Adapter<TruckAdapter.ViewHolder> {

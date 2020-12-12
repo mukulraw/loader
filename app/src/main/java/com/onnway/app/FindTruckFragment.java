@@ -120,6 +120,8 @@ public class FindTruckFragment extends Fragment
 
     private int addressTyp = 0;
 
+    TextView preferred;
+
     private GetPrice getPrice;
 
     public FindTruckFragment() {
@@ -156,6 +158,7 @@ public class FindTruckFragment extends Fragment
         view.performClick();
 
         //cardView
+        preferred = view.findViewById(R.id.preferred);
         partLoad = view.findViewById(R.id.part_load_card);
         fullLoad = view.findViewById(R.id.full_load_card);
         nextCard = view.findViewById(R.id.next_card);
@@ -210,7 +213,7 @@ public class FindTruckFragment extends Fragment
                 fullLoad.setTextColor(Color.parseColor("#000000"));
                 fullLoad.setBackgroundResource(R.drawable.white_back_round);
 
-                //truck.setVisibility(View.INVISIBLE);
+                preferred.setVisibility(View.VISIBLE);
 
             }
         });
@@ -223,7 +226,7 @@ public class FindTruckFragment extends Fragment
                 fullLoad.setBackgroundResource(R.drawable.black_back_round);
                 partLoad.setTextColor(Color.parseColor("#000000"));
                 partLoad.setBackgroundResource(R.drawable.white_back_round);
-                truck.setVisibility(View.VISIBLE);
+                preferred.setVisibility(View.GONE);
             }
         });
 

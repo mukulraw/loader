@@ -176,16 +176,62 @@ public class Shipment extends AppCompatActivity {
                 dialog.show();
 
                 TextView frr = dialog.findViewById(R.id.textView117);
+                TextView frrtitle = dialog.findViewById(R.id.textView113);
                 TextView oth = dialog.findViewById(R.id.textView118);
+                TextView othtitle = dialog.findViewById(R.id.textView114);
                 TextView cgs = dialog.findViewById(R.id.textView119);
+                TextView cgstitle = dialog.findViewById(R.id.textView115);
                 TextView sgs = dialog.findViewById(R.id.textView120);
+                TextView sgstitle = dialog.findViewById(R.id.textView116);
                 TextView pdis = dialog.findViewById(R.id.textView122);
+                TextView pdistitle = dialog.findViewById(R.id.textView121);
 
-                frr.setText("\u20B9" + fr);
-                oth.setText("\u20B9" + ot);
-                cgs.setText("\u20B9" + cg);
-                sgs.setText("\u20B9" + sg);
-                pdis.setText("\u20B9" + pvalue);
+                if (fr > 0) {
+                    frr.setText("\u20B9" + fr);
+                    frr.setVisibility(View.VISIBLE);
+                    frrtitle.setVisibility(View.VISIBLE);
+                } else {
+                    frr.setVisibility(View.GONE);
+                    frrtitle.setVisibility(View.GONE);
+                }
+
+                if (ot > 0) {
+                    oth.setText("\u20B9" + ot);
+                    oth.setVisibility(View.VISIBLE);
+                    othtitle.setVisibility(View.VISIBLE);
+                } else {
+                    oth.setVisibility(View.GONE);
+                    othtitle.setVisibility(View.GONE);
+                }
+
+
+                if (cg > 0) {
+                    cgs.setText("\u20B9" + cg);
+                    cgs.setVisibility(View.VISIBLE);
+                    cgstitle.setVisibility(View.VISIBLE);
+                } else {
+                    cgs.setVisibility(View.GONE);
+                    cgstitle.setVisibility(View.GONE);
+                }
+
+                if (sg > 0) {
+                    sgs.setText("\u20B9" + sg);
+                    sgs.setVisibility(View.VISIBLE);
+                    sgstitle.setVisibility(View.VISIBLE);
+                } else {
+                    sgs.setVisibility(View.GONE);
+                    sgstitle.setVisibility(View.GONE);
+                }
+
+                if (pvalue > 0) {
+                    pdis.setText("\u20B9" + pvalue);
+                    pdis.setVisibility(View.VISIBLE);
+                    pdistitle.setVisibility(View.VISIBLE);
+                } else {
+                    pdis.setVisibility(View.GONE);
+                    pdistitle.setVisibility(View.GONE);
+                }
+
 
             }
         });

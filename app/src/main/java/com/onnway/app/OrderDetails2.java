@@ -38,7 +38,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,20 +51,20 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class OrderDetails2 extends AppCompatActivity {
 
-    TextView orderid , orderdate , truck , source , destination , material , weight , date , status , loadtype;
-    TextView freight , other , cgst , sgst , grand;
+    TextView orderid, orderdate, truck, source, destination, material, weight, date, status, loadtype;
+    TextView freight, other, cgst, sgst, grand;
     CheckBox insurance;
-    Button confirm , request;
+    Button confirm, request;
     ProgressBar progress;
 
-    TextView vehiclenumber , drivernumber , pending , pending2;
+    TextView vehiclenumber, drivernumber, pending, pending2;
 
-    Button add , upload1 , upload2;
+    Button add, upload1, upload2;
 
-    RecyclerView pod , documents , lrdownload;
+    RecyclerView pod, documents, lrdownload;
 
 
-    float fr = 0, ot = 0 , cg = 0 , sg = 0 , in = 0;
+    float fr = 0, ot = 0, cg = 0, sg = 0, in = 0;
     float gr = 0;
 
     boolean ins = false;
@@ -69,7 +72,7 @@ public class OrderDetails2 extends AppCompatActivity {
     private Uri uri1;
     private File f1;
 
-    String id , assign_id;
+    String id, assign_id;
 
     CardView truckcard;
 
@@ -130,16 +133,9 @@ public class OrderDetails2 extends AppCompatActivity {
         documents = findViewById(R.id.recyclerView);
 
 
-
-
-
-
-
-
     }
 
-    void updateSummary()
-    {
+    void updateSummary() {
 
         gr = fr + ot + cg + sg + in;
         grand.setText("\u20B9" + gr);
@@ -157,8 +153,15 @@ public class OrderDetails2 extends AppCompatActivity {
 
         AppController b = (AppController) getApplicationContext();
 
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.level(HttpLoggingInterceptor.Level.HEADERS);
+        logging.level(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(b.baseurl)
+                .client(client)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -189,64 +192,51 @@ public class OrderDetails2 extends AppCompatActivity {
                     truckType.setImageDrawable(getDrawable(R.drawable.container));
                 }
 
-                if (item.getAssign_id() != null)
-                {
+                if (item.getAssign_id() != null) {
 
                     assign_id = item.getAssign_id();
 
-                    if (item.getVehicleNumber() != null)
-                    {
+                    if (item.getVehicleNumber() != null) {
                         vehiclenumber.setText(item.getVehicleNumber());
                         drivernumber.setText(item.getDriverNumber());
-                    }
-                    else
-                    {
+                    } else {
                         vehiclenumber.setText("Not Available");
                         drivernumber.setText("Not Available");
                     }
 
-                    if (response.body().getData().getPod().size() > 0)
-                    {
+                    if (response.body().getData().getPod().size() > 0) {
                         pending.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         pending.setVisibility(View.VISIBLE);
                     }
 
-                    PODAdapter adapter = new PODAdapter(OrderDetails2.this , item.getPod());
-                    GridLayoutManager manager = new GridLayoutManager(OrderDetails2.this , 2);
+                    PODAdapter adapter = new PODAdapter(OrderDetails2.this, item.getPod());
+                    GridLayoutManager manager = new GridLayoutManager(OrderDetails2.this, 2);
                     pod.setAdapter(adapter);
                     pod.setLayoutManager(manager);
 
-                    DocAdapter adapter2 = new DocAdapter(OrderDetails2.this , item.getInvoice());
-                    GridLayoutManager manager2 = new GridLayoutManager(OrderDetails2.this , 2);
+                    DocAdapter adapter2 = new DocAdapter(OrderDetails2.this, item.getInvoice());
+                    GridLayoutManager manager2 = new GridLayoutManager(OrderDetails2.this, 2);
                     documents.setAdapter(adapter2);
                     documents.setLayoutManager(manager2);
                     truckcard.setVisibility(View.VISIBLE);
 
-                    LRAdapter adapter3 = new LRAdapter(OrderDetails2.this , item.getLr());
-                    GridLayoutManager manager3 = new GridLayoutManager(OrderDetails2.this , 1);
+                    LRAdapter adapter3 = new LRAdapter(OrderDetails2.this, item.getLr());
+                    GridLayoutManager manager3 = new GridLayoutManager(OrderDetails2.this, 1);
                     lrdownload.setAdapter(adapter3);
                     lrdownload.setLayoutManager(manager3);
 
 
-                    if (response.body().getData().getLr().size() > 0)
-                    {
+                    if (response.body().getData().getLr().size() > 0) {
                         pending2.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         pending2.setVisibility(View.VISIBLE);
                     }
 
 
-                }
-                else
-                {
+                } else {
                     truckcard.setVisibility(View.GONE);
                 }
-
 
 
                 freight.setText("\u20B9" + item.getFreight());
@@ -256,7 +246,6 @@ public class OrderDetails2 extends AppCompatActivity {
                 insurance.setText("\u20B9" + item.getInsurance());
 
 
-
                 try {
                     fr = Float.parseFloat(item.getFreight());
                     ot = Float.parseFloat(item.getOtherCharges());
@@ -264,27 +253,18 @@ public class OrderDetails2 extends AppCompatActivity {
                     sg = Float.parseFloat(item.getSgst());
                     in = Float.parseFloat(item.getInsurance());
 
-                    if (in > 0)
-                    {
+                    if (in > 0) {
                         insurance.setChecked(true);
-                    }
-                    else
-                    {
+                    } else {
                         insurance.setChecked(false);
                     }
 
 
-
                     updateSummary();
 
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-
-
 
 
                 progress.setVisibility(View.GONE);
@@ -298,14 +278,12 @@ public class OrderDetails2 extends AppCompatActivity {
         });
     }
 
-    class PODAdapter extends RecyclerView.Adapter<PODAdapter.ViewHolder>
-    {
+    class PODAdapter extends RecyclerView.Adapter<PODAdapter.ViewHolder> {
 
         List<Pod> list = new ArrayList<>();
         Context context;
 
-        public PODAdapter(Context context , List<Pod> list)
-        {
+        public PODAdapter(Context context, List<Pod> list) {
             this.context = context;
             this.list = list;
         }
@@ -325,13 +303,13 @@ public class OrderDetails2 extends AppCompatActivity {
 
             final DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).resetViewBeforeLoading(false).build();
             final ImageLoader loader = ImageLoader.getInstance();
-            loader.displayImage(item.getName() , holder.image , options);
+            loader.displayImage(item.getName(), holder.image, options);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Dialog dialog = new Dialog(context , android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+                    Dialog dialog = new Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
                     //dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
                     //      WindowManager.LayoutParams.MATCH_PARENT);
                     dialog.setContentView(R.layout.zoom_dialog);
@@ -339,12 +317,10 @@ public class OrderDetails2 extends AppCompatActivity {
                     dialog.show();
 
                     ImageView img = dialog.findViewById(R.id.image);
-                    loader.displayImage(item.getName() , img , options);
+                    loader.displayImage(item.getName(), img, options);
 
                 }
             });
-
-
 
 
         }
@@ -354,9 +330,9 @@ public class OrderDetails2 extends AppCompatActivity {
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder
-        {
+        class ViewHolder extends RecyclerView.ViewHolder {
             ImageView image;
+
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 image = itemView.findViewById(R.id.image);
@@ -364,14 +340,12 @@ public class OrderDetails2 extends AppCompatActivity {
         }
     }
 
-    class DocAdapter extends RecyclerView.Adapter<DocAdapter.ViewHolder>
-    {
+    class DocAdapter extends RecyclerView.Adapter<DocAdapter.ViewHolder> {
 
         List<Invoice> list = new ArrayList<>();
         Context context;
 
-        public DocAdapter(Context context , List<Invoice> list)
-        {
+        public DocAdapter(Context context, List<Invoice> list) {
             this.context = context;
             this.list = list;
         }
@@ -391,13 +365,13 @@ public class OrderDetails2 extends AppCompatActivity {
 
             final DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).resetViewBeforeLoading(false).build();
             final ImageLoader loader = ImageLoader.getInstance();
-            loader.displayImage(item.getName() , holder.image , options);
+            loader.displayImage(item.getName(), holder.image, options);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Dialog dialog = new Dialog(context , android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+                    Dialog dialog = new Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
                     //dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
                     //      WindowManager.LayoutParams.MATCH_PARENT);
                     dialog.setContentView(R.layout.zoom_dialog);
@@ -405,7 +379,7 @@ public class OrderDetails2 extends AppCompatActivity {
                     dialog.show();
 
                     ImageView img = dialog.findViewById(R.id.image);
-                    loader.displayImage(item.getName() , img , options);
+                    loader.displayImage(item.getName(), img, options);
 
                 }
             });
@@ -417,9 +391,9 @@ public class OrderDetails2 extends AppCompatActivity {
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder
-        {
+        class ViewHolder extends RecyclerView.ViewHolder {
             ImageView image;
+
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 image = itemView.findViewById(R.id.image);
@@ -427,14 +401,12 @@ public class OrderDetails2 extends AppCompatActivity {
         }
     }
 
-    class LRAdapter extends RecyclerView.Adapter<LRAdapter.ViewHolder>
-    {
+    class LRAdapter extends RecyclerView.Adapter<LRAdapter.ViewHolder> {
 
         List<Lr> list = new ArrayList<>();
         Context context;
 
-        public LRAdapter(Context context , List<Lr> list)
-        {
+        public LRAdapter(Context context, List<Lr> list) {
             this.context = context;
             this.list = list;
         }
@@ -465,7 +437,7 @@ public class OrderDetails2 extends AppCompatActivity {
                             .build();
                     PRDownloader.initialize(getApplicationContext(), config);
 
-                    int downloadId = PRDownloader.download(item.getName(), Utils.getRootDirPath(getApplicationContext()) , item.getName2())
+                    int downloadId = PRDownloader.download(item.getName(), Utils.getRootDirPath(getApplicationContext()), item.getName2())
                             .build()
                             .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                                 @Override
@@ -499,9 +471,9 @@ public class OrderDetails2 extends AppCompatActivity {
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder
-        {
+        class ViewHolder extends RecyclerView.ViewHolder {
             TextView image;
+
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 image = itemView.findViewById(R.id.image);

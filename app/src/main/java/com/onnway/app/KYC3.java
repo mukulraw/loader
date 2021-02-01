@@ -273,7 +273,7 @@ public class KYC3 extends AppCompatActivity {
 
                 Data item = response.body().getData();
 
-                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).showImageForEmptyUri(R.drawable.ic_customer).build();
+                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).showImageForEmptyUri(R.drawable.loggg).build();
                 ImageLoader loader = ImageLoader.getInstance();
                 loader.displayImage(item.getPan(), pan, options);
                 loader.displayImage(item.getAb(), ab, options);

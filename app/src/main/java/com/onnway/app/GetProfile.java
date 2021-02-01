@@ -33,11 +33,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -203,7 +206,8 @@ public class GetProfile extends AppCompatActivity {
                 ImageLoader loader = ImageLoader.getInstance();
                 loader.displayImage(item.getImage() , image , options);
 
-
+                SharePreferenceUtils.getInstance().saveString("name" , item.getName());
+                SharePreferenceUtils.getInstance().saveString("email" , item.getEmail());
 
                 contact.setText(SharePreferenceUtils.getInstance().getString("phone"));
                 email.setText(item.getEmail());
@@ -254,8 +258,15 @@ public class GetProfile extends AppCompatActivity {
 
             AppController b = (AppController) getApplicationContext();
 
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.level(HttpLoggingInterceptor.Level.HEADERS);
+            logging.level(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(b.baseurl)
+                    .client(client)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -297,8 +308,15 @@ public class GetProfile extends AppCompatActivity {
 
             AppController b = (AppController) getApplicationContext();
 
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.level(HttpLoggingInterceptor.Level.HEADERS);
+            logging.level(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(b.baseurl)
+                    .client(client)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

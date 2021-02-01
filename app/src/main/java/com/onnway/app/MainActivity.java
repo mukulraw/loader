@@ -33,6 +33,8 @@ import com.onnway.app.networking.AppController;
 import com.onnway.app.networking.Post;
 import com.onnway.app.otp.CheckingPreRegistered;
 import com.onnway.app.otp.EnterNumberActivity;
+import com.onnway.app.profilePOJO.Data;
+import com.onnway.app.profilePOJO.profileBean;
 import com.onnway.app.splash.SplashActivity;
 import com.onnway.app.sqlite.GetSetUserData;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -145,7 +147,6 @@ public class MainActivity extends AppCompatActivity
         setFragment(findTruckFragment);
 
         View view = navigationView.getHeaderView(0);
-
 
 
         //changing the fragment on bottom nav click
@@ -461,6 +462,27 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        Call<profileBean> call2 = cr.getLoaderProfile(SharePreferenceUtils.getInstance().getString("userId"));
+
+        call2.enqueue(new Callback<profileBean>() {
+            @Override
+            public void onResponse(Call<profileBean> call, Response<profileBean> response) {
+
+                Data item = response.body().getData();
+
+                name.setText(item.getName());
+
+
+                SharePreferenceUtils.getInstance().saveString("name", item.getName());
+
+
+            }
+
+            @Override
+            public void onFailure(Call<profileBean> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
         refreshCount();
 

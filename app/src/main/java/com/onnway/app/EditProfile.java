@@ -28,7 +28,10 @@ import com.onnway.app.updateProfilePOJO.updateProfileBean;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -248,8 +251,15 @@ public class EditProfile extends AppCompatActivity {
 
         AppController b = (AppController) getApplicationContext();
 
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.level(HttpLoggingInterceptor.Level.HEADERS);
+        logging.level(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder().writeTimeout(1000, TimeUnit.SECONDS).readTimeout(1000, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.SECONDS).addInterceptor(logging).build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(b.baseurl)
+                .client(client)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -273,11 +283,11 @@ public class EditProfile extends AppCompatActivity {
                 if (response.body().getStatus().equals("1"))
                 {
 
-                    SharePreferenceUtils.getInstance().saveString("name" , response.body().getData().getName());
+                    /*SharePreferenceUtils.getInstance().saveString("name" , response.body().getData().getName());
                     SharePreferenceUtils.getInstance().saveString("email" , response.body().getData().getEmail());
                     SharePreferenceUtils.getInstance().saveString("city" , response.body().getData().getCity());
                     SharePreferenceUtils.getInstance().saveString("type" , response.body().getData().getType());
-                    SharePreferenceUtils.getInstance().saveString("company" , response.body().getData().getCompany());
+                    SharePreferenceUtils.getInstance().saveString("company" , response.body().getData().getCompany());*/
 
                     Toast.makeText(EditProfile.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     finish();

@@ -206,7 +206,7 @@
             android:layout_marginLeft="8dp"
             android:fontFamily="@font/montserrat_semibold"
             android:gravity="center"
-            android:text="Unselected"
+            android:text="Free Space"
             android:textColor="#2A2A2A"
             android:textSize="12sp" />
 
@@ -225,7 +225,7 @@
             android:layout_marginLeft="8dp"
             android:fontFamily="@font/montserrat_semibold"
             android:gravity="center"
-            android:text="Selected"
+            android:text="Loaded Space"
             android:textColor="#2A2A2A"
             android:textSize="12sp" />
     </LinearLayout>

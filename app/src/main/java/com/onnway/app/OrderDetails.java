@@ -356,12 +356,12 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                float ammm = (80 * gr) / 100;
+                float ammm = (90 * gr) / 100;
 
-                Log.d("amount80", String.valueOf(ammm));
+                Log.d("amount90", String.valueOf(ammm));
 
                 Intent intent = new Intent(OrderDetails.this, PayNow.class);
-                intent.putExtra("percent", "80");
+                intent.putExtra("percent", "90");
                 intent.putExtra("pid", pid);
                 intent.putExtra("amount", ammm);
                 intent.putExtra("pvalue", pvalue);
@@ -654,13 +654,13 @@ public class OrderDetails extends AppCompatActivity {
                 }
 
                 if (item.getPer80().equals("pending")) {
-                    pay80.setText("80%");
+                    pay80.setText("Pay 90%\n(After Loading)");
                     pay80.setEnabled(true);
                 } else if (item.getPer80().equals("processing")) {
                     pay80.setText("PROCESSING...");
                     pay80.setEnabled(false);
                 } else if (item.getPer80().equals("rejected")) {
-                    pay80.setText("REJECTED\nPAY NOW");
+                    pay80.setText("Rejected\nPAY NOW");
                     pay80.setEnabled(true);
                 } else {
                     pay80.setText("Paid\n₹ " + item.getPaidAmount());
@@ -674,7 +674,7 @@ public class OrderDetails extends AppCompatActivity {
 
 
                 if (item.getPer100().equals("pending")) {
-                    pay100.setText("100%");
+                    pay100.setText("Pay 100%\n(After Loading)");
                     pay100.setEnabled(true);
                 } else if (item.getPer100().equals("processing")) {
                     pay100.setText("PROCESSING...");

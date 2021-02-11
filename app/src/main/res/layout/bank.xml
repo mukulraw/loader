@@ -12,7 +12,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Pay via bank transfer or cash deposit"
+        android:text="Pay via IMPS/ NEFT/ RTGS Bank Transfer"
         android:textColor="@color/whorlview_material_blue"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,10 +39,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="54344354354354\nASDSDWD\nAddress"
+        android:layout_marginBottom="16dp"
+        android:text="Current Account Name: KEDSONS TECHNOLOGIES\nAccount Number: 118805000747\nBank: ICICI Bank\nBranch: BHEL, BHOPAL\nIFSC Code: ICIC0001188"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView126" />
+        app:layout_constraintTop_toBottomOf="@+id/textView126"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/textView128"
@@ -50,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:visibility="gone"
         android:text="SBI Bank Account Details"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +65,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:visibility="gone"
         android:layout_marginBottom="16dp"
         android:text="54344354354354\nASDSDWD\nAddress"
         app:layout_constraintBottom_toBottomOf="parent"

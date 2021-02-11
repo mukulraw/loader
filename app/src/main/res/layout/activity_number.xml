@@ -48,24 +48,52 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 
-    <EditText
+    <LinearLayout
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:padding="12dp"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:inputType="phone"
-        android:maxLength="10"
-        android:hint="Enter mobile number here"
+        android:orientation="horizontal"
         android:background="@drawable/white_back_round2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView132" />
+        app:layout_constraintTop_toBottomOf="@+id/textView132" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+91"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"/>
+
+        <TextView
+            android:layout_width="@dimen/dimen_1dp"
+            android:layout_height="match_parent"
+            android:background="#f5f5f5"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/phone"
+            android:padding="12dp"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:hint="Enter mobile number here"
+            android:background="@null"
+            />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView132"

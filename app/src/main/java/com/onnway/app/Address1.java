@@ -232,7 +232,7 @@ public class Address1 extends AppCompatActivity {
                                                         }
                                                     });
 
-                                                    Toast.makeText(Address1.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(Address1.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Toast.makeText(Address1.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                 }

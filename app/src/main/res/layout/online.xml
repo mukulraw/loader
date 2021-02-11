@@ -24,7 +24,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="PAY VIA NET BANKING, CREDIT CARD, DEBIT CARD OR CASH CARD "
+        android:text="Pay via UPI, Net Banking, Debit Card or Credit Card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView125" />

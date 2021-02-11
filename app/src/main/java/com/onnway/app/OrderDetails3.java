@@ -93,6 +93,7 @@ public class OrderDetails3 extends AppCompatActivity {
 
     float fr = 0, ot = 0, cg = 0, sg = 0, in = 0;
     float gr = 0;
+    float pa = 0;
 
     boolean ins = false;
 
@@ -196,7 +197,7 @@ public class OrderDetails3 extends AppCompatActivity {
         pay80 = findViewById(R.id.button2);
         pay100 = findViewById(R.id.button3);
         decs = findViewById(R.id.editText14);
-        grand = findViewById(R.id.textView38);
+        grand = findViewById(R.id.textView381);
         insurance = findViewById(R.id.checkBox);
         progress = findViewById(R.id.progressBar);
         discountterms = findViewById(R.id.textView111);
@@ -388,9 +389,14 @@ public class OrderDetails3 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                float ammm = (90 * gr) / 100;
+
+                Log.d("amount90", String.valueOf(ammm));
+
                 Intent intent = new Intent(OrderDetails3.this, PayNow.class);
-                intent.putExtra("percent", "80");
+                intent.putExtra("percent", "90");
                 intent.putExtra("pid", pid);
+                intent.putExtra("amount", ammm);
                 intent.putExtra("pvalue", pvalue);
                 intent.putExtra("insused", insused);
                 intent.putExtra("insurance", in);
@@ -405,9 +411,12 @@ public class OrderDetails3 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                float ammm = gr - pa;
+
                 Intent intent = new Intent(OrderDetails3.this, PayNow.class);
                 intent.putExtra("percent", "100");
                 intent.putExtra("pid", pid);
+                intent.putExtra("amount", ammm);
                 intent.putExtra("pvalue", pvalue);
                 intent.putExtra("insused", insused);
                 intent.putExtra("insurance", in);
@@ -525,7 +534,7 @@ public class OrderDetails3 extends AppCompatActivity {
 
                                 gr = gr - pvalue;
 
-                                grand.setText("₹ " + gr);
+                                grand.setText("\u20B9 " + gr);
 
                                 pid = response.body().getData().getPid();
 
@@ -643,6 +652,7 @@ public class OrderDetails3 extends AppCompatActivity {
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
+        Log.d("orderis", id);
         Call<confirm_full_bean> call = cr.getOrderDetails(id);
 
         call.enqueue(new Callback<confirm_full_bean>() {
@@ -856,15 +866,23 @@ public class OrderDetails3 extends AppCompatActivity {
 
                 gr = gr - pvalue;
 
-                grand.setText("₹ " + gr);
+                Log.d("freight", String.valueOf(gr));
+
+                grand.setText("\u20B9 " + gr);
+
+                if (item.getPaidAmount().length() > 0) {
+                    pa = Float.parseFloat(item.getPaidAmount());
+                } else {
+                    pa = 0;
+                }
 
                 if (item.getPer80().equals("pending")) {
-                    pay80.setText("Pay\n80%");
+                    pay80.setText("Pay 90%\n(After Loading)");
                     pay80.setEnabled(true);
                     pay80.setTextColor(Color.BLACK);
 
                     if (item.getPer100().equals("pending")) {
-                        pay100.setText("Pay\n100%");
+                        pay100.setText("Pay 100%\n(After Loading)");
                         pay100.setEnabled(true);
                         pay100.setTextColor(Color.BLACK);
                     } else if (item.getPer100().equals("processing")) {
@@ -882,12 +900,12 @@ public class OrderDetails3 extends AppCompatActivity {
                     }
 
                 } else if (item.getPer80().equals("processing")) {
-                    pay80.setText("Processing\n80%");
+                    pay80.setText("Processing\n90%");
                     pay80.setEnabled(false);
                     pay80.setTextColor(Color.BLACK);
 
                     if (item.getPer100().equals("pending")) {
-                        pay100.setText("Pay\n100%");
+                        pay100.setText("Pay 100%\n(After Loading)");
                         pay100.setEnabled(true);
                         pay100.setTextColor(Color.BLACK);
                     } else if (item.getPer100().equals("processing")) {
@@ -936,7 +954,7 @@ public class OrderDetails3 extends AppCompatActivity {
                     pay80.setTextColor(Color.RED);
 
                     if (item.getPer100().equals("pending")) {
-                        pay100.setText("Pay\n100%");
+                        pay100.setText("Pay 100%\n(After Loading)");
                         pay100.setEnabled(true);
                         pay100.setTextColor(Color.BLACK);
                     } else if (item.getPer100().equals("processing")) {

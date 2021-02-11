@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
@@ -19,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ShareCompat;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -39,6 +42,7 @@ import com.onnway.app.splash.SplashActivity;
 import com.onnway.app.sqlite.GetSetUserData;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.onnway.app.updateProfilePOJO.updateProfileBean;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -531,24 +535,50 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("url", "https://www.onnway.com/termsonnway.php");
             startActivity(intent);
         } else if (id == R.id.nav_share) {
-
+            ShareCompat.IntentBuilder.from(MainActivity.this)
+                    .setType("text/plain")
+                    .setChooserTitle("Chooser title")
+                    .setText("http://play.google.com/store/apps/details?id=" + getPackageName())
+                    .startChooser();
         } else if (id == R.id.nav_logout) {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        FirebaseInstanceId.getInstance().deleteInstanceId();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+            new AlertDialog.Builder(MainActivity.this, R.style.MyDialogTheme)
+                    .setTitle("Logout")
+                    .setMessage("Are you sure you want to Logout?")
 
-            SharePreferenceUtils.getInstance().deletePref();
-            Intent intent = new Intent(MainActivity.this, SplashActivity.class);
-            startActivity(intent);
-            finishAffinity();
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, int which) {
+
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        FirebaseInstanceId.getInstance().deleteInstanceId();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).start();
+
+                            SharePreferenceUtils.getInstance().deletePref();
+                            Intent intent = new Intent(MainActivity.this, SplashActivity.class);
+                            startActivity(intent);
+                            finishAffinity();
+
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+
 
         } else if (id == R.id.feedback) {
             Intent intent = new Intent(MainActivity.this, Feedback.class);

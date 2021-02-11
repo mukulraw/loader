@@ -55,7 +55,7 @@ public class NumberActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.rgb(105, 105, 105));
         }
 
-        cardView = findViewById(R.id.cardView);
+        cardView = findViewById(R.id.phone);
         send = findViewById(R.id.button16);
         progress = findViewById(R.id.progressBar4);
 

@@ -65,7 +65,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/grey_back_round"
-        android:text="80%"
+        android:text="Pay 90%\n(After Loading)"
+        android:textAllCaps="false"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/button3"
         app:layout_constraintHorizontal_bias="0.5"
@@ -79,7 +80,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/grey_back_round"
-        android:text="100%"
+        android:text="Pay 100%\n(After Loading)"
+        android:textAllCaps="false"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -144,7 +146,8 @@
         android:layout_marginEnd="8dp"
         android:inputType="textCapCharacters"
         android:hint="enter offer code"
-        android:padding="10dp"
+        android:padding="8dp"
+        android:textSize="14sp"
         android:background="@drawable/white_back_round1"
         app:layout_constraintEnd_toStartOf="@+id/button11"
         app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Payment Options"
+        android:text="Payment Modes via"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
@@ -165,7 +168,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Through IMPS/ NEFT/ RTGS"
+        android:text="ONLINE/ IMPS/ NEFT/ RTGS"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView108" />
@@ -189,6 +192,7 @@
         android:text="Get extra discount upto 40%"
         android:textColor="#0DA2E4"
         android:textSize="10sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/button3"
         app:layout_constraintStart_toStartOf="@+id/button3"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
@@ -230,7 +234,7 @@
         android:layout_marginTop="8dp"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Pay on after loading"
+        android:text="Select Payment Option"
         app:layout_constraintStart_toStartOf="@+id/textView109"
         app:layout_constraintTop_toBottomOf="@+id/textView109" />
 </androidx.constraintlayout.widget.ConstraintLayout>

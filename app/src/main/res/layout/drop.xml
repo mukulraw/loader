@@ -119,7 +119,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/grey_back_round"
-        android:hint="Mobile Number"
+        android:hint="Contact Person Mobile Number"
         android:inputType="phone"
         android:maxLength="10"
         android:padding="10dp"

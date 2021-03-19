@@ -119,51 +119,43 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onResponse(Call<trackBean> call, Response<trackBean> response) {
 
-                mOrigin = new LatLng(Double.parseDouble(response.body().getMylat()), Double.parseDouble(response.body().getMylng()));
-                mDestination = new LatLng(Double.parseDouble(response.body().getDriverlat()), Double.parseDouble(response.body().getDriverlng()));
+                try {
+                    mOrigin = new LatLng(Double.parseDouble(response.body().getMylat()), Double.parseDouble(response.body().getMylng()));
+                    mDestination = new LatLng(Double.parseDouble(response.body().getDriverlat()), Double.parseDouble(response.body().getDriverlng()));
 
-                mMarkerPoints.clear();
-                mMap.clear();
+                    mMarkerPoints.clear();
+                    mMap.clear();
 
-/*
-                Polyline polyline = googleMap.addPolyline(new PolylineOptions()
-                        .clickable(true).add(latLng1).add(latLng2));
+                    Marker melbourne = mMap.addMarker(
+                            new MarkerOptions()
+                                    .position(mDestination)
+                                    .title("Current Location")
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery)));
 
+                    Marker melbourne2 = mMap.addMarker(
+                            new MarkerOptions()
+                                    .position(mOrigin)
+                                    .title("Destination")
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.home)));
 
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    builder.include(mOrigin);
+                    builder.include(mDestination);
+                    LatLngBounds bounds = builder.build();
 
-                polyline.setEndCap(new RoundCap());
-                polyline.setColor(COLOR_BLACK_ARGB);
-                polyline.setJointType(JointType.ROUND);
-*/
+                    int width = getResources().getDisplayMetrics().widthPixels;
+                    int height = getResources().getDisplayMetrics().heightPixels;
+                    int padding = (int) (width * 0.10); // offset from edges of the map 10% of screen
 
-                Marker melbourne = mMap.addMarker(
-                        new MarkerOptions()
-                                .position(mDestination)
-                                .title("Current Location")
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.delivery)));
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
 
-                Marker melbourne2 = mMap.addMarker(
-                        new MarkerOptions()
-                                .position(mOrigin)
-                                .title("Destination")
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.home)));
+                    mMap.animateCamera(cu);
 
-                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    drawRoute();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-//the include method will calculate the min and max bound.
-                builder.include(mOrigin);
-                builder.include(mDestination);
-                LatLngBounds bounds = builder.build();
-
-                int width = getResources().getDisplayMetrics().widthPixels;
-                int height = getResources().getDisplayMetrics().heightPixels;
-                int padding = (int) (width * 0.10); // offset from edges of the map 10% of screen
-
-                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
-
-                mMap.animateCamera(cu);
-
-                drawRoute();
 
             }
 
@@ -174,14 +166,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-
-
-
-
-
     }
 
-    private void drawRoute(){
+    private void drawRoute() {
 
         // Getting URL to the Google Directions API
         String url = getDirectionsUrl(mOrigin, mDestination);
@@ -193,36 +180,38 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    private String getDirectionsUrl(LatLng origin,LatLng dest){
+    private String getDirectionsUrl(LatLng origin, LatLng dest) {
 
         // Origin of route
-        String str_origin = "origin="+origin.latitude+","+origin.longitude;
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
 
         // Destination of route
-        String str_dest = "destination="+dest.latitude+","+dest.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
 
         // Key
         String key = "key=" + "AIzaSyBXQZx4qVICTJWyKTXO0Ji28GZjD4Pvavg";
         //String key = "key=" + getString(R.string.google_maps_key);
 
         // Building the parameters to the web service
-        String parameters = str_origin+"&"+str_dest+"&"+key;
+        String parameters = str_origin + "&" + str_dest + "&" + key;
 
         // Output format
         String output = "json";
 
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
 
         return url;
     }
 
-    /** A method to download json data from url */
+    /**
+     * A method to download json data from url
+     */
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
         HttpURLConnection urlConnection = null;
-        try{
+        try {
             URL url = new URL(strUrl);
 
             // Creating an http connection to communicate with url
@@ -236,10 +225,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
 
-            StringBuffer sb  = new StringBuffer();
+            StringBuffer sb = new StringBuffer();
 
             String line = "";
-            while( ( line = br.readLine())  != null){
+            while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
 
@@ -247,16 +236,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             br.close();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             Log.d("Exception on download", e.toString());
-        }finally{
+        } finally {
             iStream.close();
             urlConnection.disconnect();
         }
         return data;
     }
 
-    /** A class to download data from Google Directions URL */
+    /**
+     * A class to download data from Google Directions URL
+     */
     private class DownloadTask extends AsyncTask<String, Void, String> {
 
         // Downloading data in non-ui thread
@@ -266,12 +257,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             // For storing data from web service
             String data = "";
 
-            try{
+            try {
                 // Fetching the data from web service
                 data = downloadUrl(url[0]);
-                Log.d("DownloadTask","DownloadTask : " + data);
-            }catch(Exception e){
-                Log.d("Background Task",e.toString());
+                Log.d("DownloadTask", "DownloadTask : " + data);
+            } catch (Exception e) {
+                Log.d("Background Task", e.toString());
             }
             return data;
         }
@@ -289,8 +280,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    /** A class to parse the Google Directions in JSON format */
-    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String,String>>> > {
+    /**
+     * A class to parse the Google Directions in JSON format
+     */
+    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
 
         // Parsing the data in non-ui thread
         @Override
@@ -299,13 +292,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             JSONObject jObject;
             List<List<HashMap<String, String>>> routes = null;
 
-            try{
+            try {
                 jObject = new JSONObject(jsonData[0]);
                 DirectionsJSONParser parser = new DirectionsJSONParser();
 
                 // Starts parsing data
                 routes = parser.parse(jObject);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return routes;
@@ -318,7 +311,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             PolylineOptions lineOptions = null;
 
             // Traversing through all the routes
-            for(int i=0;i<result.size();i++){
+            for (int i = 0; i < result.size(); i++) {
                 points = new ArrayList<LatLng>();
                 lineOptions = new PolylineOptions();
 
@@ -326,8 +319,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 List<HashMap<String, String>> path = result.get(i);
 
                 // Fetching all the points in i-th route
-                for(int j=0;j<path.size();j++){
-                    HashMap<String,String> point = path.get(j);
+                for (int j = 0; j < path.size(); j++) {
+                    HashMap<String, String> point = path.get(j);
 
                     double lat = Double.parseDouble(point.get("lat"));
                     double lng = Double.parseDouble(point.get("lng"));
@@ -343,14 +336,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
             // Drawing polyline in the Google Map for the i-th route
-            if(lineOptions != null) {
-                if(mPolyline != null){
+            if (lineOptions != null) {
+                if (mPolyline != null) {
                     mPolyline.remove();
                 }
                 mPolyline = mMap.addPolyline(lineOptions);
 
-            }else
-                Toast.makeText(getApplicationContext(),"No route is found", Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(getApplicationContext(), "No route is found", Toast.LENGTH_LONG).show();
         }
     }
 

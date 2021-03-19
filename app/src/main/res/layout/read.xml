@@ -31,7 +31,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="- The freight rate does not include GST, GST charges is in Customer's Scope only (Reverse Charge Mechanism)." />
+        android:text="- The freight rate does not include GST, GST charges is payable by Customer (Reverse Charge Mechanism)." />
 
     <TextView
         android:layout_width="match_parent"

@@ -32,7 +32,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:src="@drawable/ic_confirm_loading"
+                android:src="@drawable/truck3"
                 android:layout_margin="16dp"/>
             <TextView
                 android:layout_width="match_parent"

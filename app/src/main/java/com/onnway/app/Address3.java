@@ -156,11 +156,11 @@ public class Address3 extends AppCompatActivity {
 
                 if (padd.length() > 0) {
                     if (pcit.length() > 0) {
-                        if (ppin.length() == 6) {
+                        /*if (ppin.length() == 6) {*/
 
                             if (dadd.length() > 0) {
                                 if (dcit.length() > 0) {
-                                    if (dpin.length() == 6) {
+                                    /*if (dpin.length() == 6) {*/
                                         MultipartBody.Part body = null;
 
                                         try {
@@ -262,18 +262,18 @@ public class Address3 extends AppCompatActivity {
                                             }
                                         });
 
-                                    } else {
+                                    /*} else {
                                         Toast.makeText(Address3.this, "Invalid drop PIN code", Toast.LENGTH_SHORT).show();
-                                    }
+                                    }*/
                                 } else {
                                     Toast.makeText(Address3.this, "Invalid drop city", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
                                 Toast.makeText(Address3.this, "Invalid drop address", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
+                        /*} else {
                             Toast.makeText(Address3.this, "Invalid pickup PIN code", Toast.LENGTH_SHORT).show();
-                        }
+                        }*/
                     } else {
                         Toast.makeText(Address3.this, "Invalid pickup city", Toast.LENGTH_SHORT).show();
                     }

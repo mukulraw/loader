@@ -163,7 +163,7 @@ public class OrderDetails extends AppCompatActivity {
         pay80 = findViewById(R.id.button2);
         pay100 = findViewById(R.id.button3);
         decs = findViewById(R.id.editText14);
-        grand = findViewById(R.id.textView38);
+        grand = findViewById(R.id.textView381);
         insurance = findViewById(R.id.checkBox);
         progress = findViewById(R.id.progressBar);
         discountterms = findViewById(R.id.textView111);

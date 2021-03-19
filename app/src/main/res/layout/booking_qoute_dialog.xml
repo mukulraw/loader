@@ -30,11 +30,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
+                android:layout_gravity="center_horizontal"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_confirm_loading"
+                android:src="@drawable/truck3"
+                android:padding="20dp"
                 android:layout_margin="16dp"/>
             <TextView
                 android:layout_width="match_parent"

@@ -681,28 +681,28 @@ public class OrderDetails3 extends AppCompatActivity {
                 }
 
                 if (item.getSelected().contains("1")) {
-                    partLoad1.setCardBackgroundColor(Color.parseColor("#A0A0A0"));
+                    partLoad1.setCardBackgroundColor(Color.parseColor("#e11f26"));
                 }
                 if (item.getSelected().contains("2")) {
-                    partLoad2.setCardBackgroundColor(Color.parseColor("#A0A0A0"));
+                    partLoad2.setCardBackgroundColor(Color.parseColor("#e11f26"));
                 }
                 if (item.getSelected().contains("3")) {
-                    partLoad3.setCardBackgroundColor(Color.parseColor("#A0A0A0"));
+                    partLoad3.setCardBackgroundColor(Color.parseColor("#e11f26"));
                 }
                 if (item.getSelected().contains("4")) {
-                    partLoad4.setCardBackgroundColor(Color.parseColor("#A0A0A0"));
+                    partLoad4.setCardBackgroundColor(Color.parseColor("#e11f26"));
                 }
                 if (item.getSelected().contains("5")) {
-                    partLoad5.setCardBackgroundColor(Color.parseColor("#A0A0A0"));
+                    partLoad5.setCardBackgroundColor(Color.parseColor("#e11f26"));
                 }
                 if (item.getSelected().contains("6")) {
-                    partLoad6.setCardBackgroundColor(Color.parseColor("#A0A0A0"));
+                    partLoad6.setCardBackgroundColor(Color.parseColor("#e11f26"));
                 }
                 if (item.getSelected().contains("7")) {
-                    partLoad7.setCardBackgroundColor(Color.parseColor("#A0A0A0"));
+                    partLoad7.setCardBackgroundColor(Color.parseColor("#e11f26"));
                 }
                 if (item.getSelected().contains("8")) {
-                    partLoad8.setCardBackgroundColor(Color.parseColor("#A0A0A0"));
+                    partLoad8.setCardBackgroundColor(Color.parseColor("#e11f26"));
                 }
 
 

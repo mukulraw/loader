@@ -170,19 +170,38 @@ public class PastOrderFragment extends Fragment {
             holder.status.setText(item.getStatus());
             holder.schedule.setText(item.getSchedule());
 
-            try {
-                float fr = Float.parseFloat(item.getFreight());
-                float ot = Float.parseFloat(item.getOtherCharges());
-                float cg = Float.parseFloat(item.getCgst());
-                float sg = Float.parseFloat(item.getSgst());
-                float in = Float.parseFloat(item.getInsurance());
+            float fr = Float.parseFloat(item.getFreight());
+            float ot = 0;
+            float cg = 0;
+            float sg = 0;
+            float in = 0;
 
-                float gr = fr + ot + cg + sg + in;
-                holder.freight.setText("\u20B9" + gr);
+            try {
+                ot = Float.parseFloat(item.getOtherCharges());
             } catch (Exception e) {
                 e.printStackTrace();
-                holder.freight.setText("\u20B9" + "0");
             }
+
+            try {
+                cg = Float.parseFloat(item.getCgst());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                sg = Float.parseFloat(item.getSgst());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                in = Float.parseFloat(item.getInsurance());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            float gr = fr + ot + cg + sg + in;
+            holder.freight.setText("\u20B9" + gr);
 
             try {
                 if (item.getTruckType2().equals("open truck")) {

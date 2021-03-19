@@ -245,7 +245,7 @@ public class Address3 extends AppCompatActivity {
                                                         }
                                                     });
 
-                                                    Toast.makeText(Address3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(Address3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Toast.makeText(Address3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                 }

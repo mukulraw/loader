@@ -746,10 +746,30 @@ public class OrderDetails extends AppCompatActivity {
                 insurance.setText("\u20B9" + item.getInsurance());
 
                 fr = Float.parseFloat(item.getFreight());
-                ot = Float.parseFloat(item.getOtherCharges());
-                cg = Float.parseFloat(item.getCgst());
-                sg = Float.parseFloat(item.getSgst());
-                in = Float.parseFloat(item.getInsurance());
+                try {
+                    ot = Float.parseFloat(item.getOtherCharges());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    cg = Float.parseFloat(item.getCgst());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    sg = Float.parseFloat(item.getSgst());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    in = Float.parseFloat(item.getInsurance());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
                 if (in > 0) {
 

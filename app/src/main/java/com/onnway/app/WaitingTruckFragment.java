@@ -164,6 +164,18 @@ public class WaitingTruckFragment extends Fragment {
             holder.truck.setText(item.getTruckType());
             holder.schedule.setText(item.getSchedule());
 
+            if (item.getBid_amount().length() > 0)
+            {
+                holder.bidamount.setText("₹ " + item.getBid_amount());
+                holder.bidamounttitle.setVisibility(View.VISIBLE);
+                holder.bidamount.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                holder.bidamounttitle.setVisibility(View.GONE);
+                holder.bidamount.setVisibility(View.GONE);
+            }
+
             if (item.getStatus().equals("accepted quote")) {
 
                 try {
@@ -323,6 +335,8 @@ public class WaitingTruckFragment extends Fragment {
             }
 
 
+
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -355,7 +369,7 @@ public class WaitingTruckFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView type, orderid, date, source, destination, material, weight, freight, truck, status, schedule;
+            TextView type, orderid, date, source, destination, material, weight, freight, truck, status, schedule, bidamount, bidamounttitle;
 
             ImageView truckType;
             Button cancel;
@@ -376,6 +390,8 @@ public class WaitingTruckFragment extends Fragment {
                 truck = itemView.findViewById(R.id.textView64);
                 status = itemView.findViewById(R.id.textView79);
                 cancel = itemView.findViewById(R.id.button13);
+                bidamount = itemView.findViewById(R.id.textView153);
+                bidamounttitle = itemView.findViewById(R.id.textView152);
 
             }
         }

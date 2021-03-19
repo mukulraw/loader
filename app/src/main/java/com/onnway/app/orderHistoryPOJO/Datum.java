@@ -106,6 +106,12 @@ public class Datum {
     @SerializedName("insurance_used")
     @Expose
     private String insurance_used;
+    @SerializedName("bid_id")
+    @Expose
+    private String bid_id;
+    @SerializedName("bid_amount")
+    @Expose
+    private String bid_amount;
 
 
     public String getId() {
@@ -378,5 +384,21 @@ public class Datum {
 
     public void setTruckType2(String truckType2) {
         this.truckType2 = truckType2;
+    }
+
+    public String getBid_id() {
+        return bid_id;
+    }
+
+    public void setBid_id(String bid_id) {
+        this.bid_id = bid_id;
+    }
+
+    public String getBid_amount() {
+        return bid_amount;
+    }
+
+    public void setBid_amount(String bid_amount) {
+        this.bid_amount = bid_amount;
     }
 }

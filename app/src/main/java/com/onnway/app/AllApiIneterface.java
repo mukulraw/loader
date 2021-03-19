@@ -215,6 +215,15 @@ public interface AllApiIneterface {
     );
 
     @Multipart
+    @POST("android/update_order.php")
+    Call<updateProfileBean> update_order2(
+            @Part("id") String id,
+            @Part("status") String status,
+            @Part("user_id") String user_id,
+            @Part("bid_id") String bid_id
+    );
+
+    @Multipart
     @POST("android/getQuotes.php")
     Call<orderHistoryBean> getQuotes(
             @Part("user_id") String user_id

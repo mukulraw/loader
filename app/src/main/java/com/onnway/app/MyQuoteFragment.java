@@ -219,10 +219,11 @@ public class MyQuoteFragment extends Fragment {
 
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                    Call<updateProfileBean> call = cr.update_order(
+                    Call<updateProfileBean> call = cr.update_order2(
                             item.getId(),
                             "placed",
-                            SharePreferenceUtils.getInstance().getString("userId")
+                            SharePreferenceUtils.getInstance().getString("userId"),
+                            item.getBid_id()
                     );
 
                     call.enqueue(new Callback<updateProfileBean>() {

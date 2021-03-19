@@ -225,7 +225,7 @@ public class Address2 extends AppCompatActivity {
                                                         }
                                                     });
 
-                                                    Toast.makeText(Address2.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(Address2.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     Toast.makeText(Address2.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                 }

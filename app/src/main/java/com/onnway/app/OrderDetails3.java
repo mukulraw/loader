@@ -608,7 +608,7 @@ public class OrderDetails3 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String url = "https://www.onnway.com/newadmin/print/lr.php?id=" + id;
+                String url = "https://www.onnway.com/admin/print/lr.php?id=" + id;
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -78,6 +79,8 @@ public class OrderDetails2 extends AppCompatActivity {
 
     ImageView truckType;
 
+    Button downloadlr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +98,8 @@ public class OrderDetails2 extends AppCompatActivity {
                 finish();
             }
         });
+
+        downloadlr = findViewById(R.id.button20);
 
         truckType = findViewById(R.id.imageView5);
         orderid = findViewById(R.id.textView16);
@@ -131,6 +136,18 @@ public class OrderDetails2 extends AppCompatActivity {
 
         pod = findViewById(R.id.pod);
         documents = findViewById(R.id.recyclerView);
+
+        downloadlr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String url = "https://www.onnway.com/admin/print/lr.php?id=" + id;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+
+            }
+        });
 
 
     }

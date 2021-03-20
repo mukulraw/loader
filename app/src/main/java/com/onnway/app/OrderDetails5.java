@@ -344,6 +344,8 @@ public class OrderDetails5 extends AppCompatActivity {
                 drivernote.setText(item.getRemarks());
                 insused = item.getInsurance_used();
 
+
+
                 if (item.getTruckType2().equals("open truck")) {
                     truckType.setImageDrawable(getDrawable(R.drawable.open));
                 } else if (item.getTruckType2().equals("trailer")) {
@@ -374,6 +376,8 @@ public class OrderDetails5 extends AppCompatActivity {
 
                     if (in > 0) {
 
+                        insurance.setText("\u20B9" + item.getInsurance());
+
                         if (item.getInsurance_used().equals("yes")) {
                             insurance.setChecked(true);
                             insurance.setEnabled(false);
@@ -391,7 +395,6 @@ public class OrderDetails5 extends AppCompatActivity {
                         insurance.setVisibility(View.GONE);
                     }
 
-                    updateSummary();
 
                     try {
                         pvalue = Float.parseFloat(response.body().getData().getPvalue());
@@ -417,6 +420,7 @@ public class OrderDetails5 extends AppCompatActivity {
                     grand.setText("NOT ASSIGNED");
                 }
 
+                updateSummary();
 
                 progress.setVisibility(View.GONE);
 
@@ -432,10 +436,10 @@ public class OrderDetails5 extends AppCompatActivity {
     void updateSummary() {
 
         if (ins) {
-            gr = fr + ot + cg + sg + in;
+            gr = fr + ot + cg + sg + in - pvalue;
             grand.setText("\u20B9" + gr);
         } else {
-            gr = fr + ot + cg + sg;
+            gr = fr + ot + cg + sg - pvalue;
             grand.setText("\u20B9" + gr);
         }
 

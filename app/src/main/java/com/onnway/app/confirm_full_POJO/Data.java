@@ -168,6 +168,12 @@ public class Data {
     @SerializedName("remarks2")
     @Expose
     private String remarks2;
+    @SerializedName("discount")
+    @Expose
+    private String discount;
+    @SerializedName("discvalue")
+    @Expose
+    private String discvalue;
 
     public String getId() {
         return id;
@@ -599,6 +605,22 @@ public class Data {
 
     public void setTruckType2(String truckType2) {
         this.truckType2 = truckType2;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public String getDiscvalue() {
+        return discvalue;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public void setDiscvalue(String discvalue) {
+        this.discvalue = discvalue;
     }
 }
 

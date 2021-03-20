@@ -90,7 +90,7 @@ public class OrderDetails extends AppCompatActivity {
     Button pay80, pay100;
 
 
-    float fr = 0, ot = 0, cg = 0, sg = 0, in = 0;
+    float fr = 0, dv = 0, ot = 0, cg = 0, sg = 0, in = 0;
     float gr = 0;
     float pa = 0;
 
@@ -301,6 +301,8 @@ public class OrderDetails extends AppCompatActivity {
                 TextView sgstitle = dialog.findViewById(R.id.textView116);
                 TextView pdis = dialog.findViewById(R.id.textView122);
                 TextView pdistitle = dialog.findViewById(R.id.textView121);
+                TextView sdis = dialog.findViewById(R.id.textView155);
+                TextView sdistitle = dialog.findViewById(R.id.textView154);
 
                 if (fr > 0) {
                     frr.setText("\u20B9" + fr);
@@ -348,6 +350,14 @@ public class OrderDetails extends AppCompatActivity {
                     pdistitle.setVisibility(View.GONE);
                 }
 
+                if (dv > 0) {
+                    sdis.setText("\u20B9" + dv);
+                    sdis.setVisibility(View.VISIBLE);
+                    sdistitle.setVisibility(View.VISIBLE);
+                } else {
+                    sdis.setVisibility(View.GONE);
+                    sdistitle.setVisibility(View.GONE);
+                }
 
             }
         });
@@ -507,6 +517,8 @@ public class OrderDetails extends AppCompatActivity {
 
                                 Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
+                                updateSummary();
+
                             } else {
                                 Toast.makeText(OrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 apply.setEnabled(true);
@@ -595,16 +607,16 @@ public class OrderDetails extends AppCompatActivity {
     void updateSummary() {
 
         if (ins) {
-            gr = fr + ot + cg + sg + in;
+            gr = fr + ot + cg + sg + in - dv - pvalue;
             grand.setText("\u20B9" + gr);
         } else {
-            gr = fr + ot + cg + sg;
+            gr = fr + ot + cg + sg - dv - pvalue;
             grand.setText("\u20B9" + gr);
         }
 
             /*gr = fr + ot + cg + sg + in;
             grand.setText("\u20B9" + gr);*/
-
+        balance.setText("Balance - ₹ " + (gr - pa));
 
     }
 
@@ -746,6 +758,13 @@ public class OrderDetails extends AppCompatActivity {
                 insurance.setText("\u20B9" + item.getInsurance());
 
                 fr = Float.parseFloat(item.getFreight());
+
+                try {
+                    dv = Float.parseFloat(item.getDiscvalue());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 try {
                     ot = Float.parseFloat(item.getOtherCharges());
                 } catch (Exception e) {
@@ -798,8 +817,6 @@ public class OrderDetails extends AppCompatActivity {
                 }
 
 
-                updateSummary();
-
                 try {
                     pvalue = Float.parseFloat(response.body().getData().getPvalue());
                 } catch (Exception e) {
@@ -819,7 +836,7 @@ public class OrderDetails extends AppCompatActivity {
                 }
 
 
-                balance.setText("Balance - ₹ " + (gr - pa));
+                updateSummary();
 
                 if (pvalue > 0) {
                     apply.setEnabled(false);

@@ -166,7 +166,23 @@ public class WaitingTruckFragment extends Fragment {
 
             if (item.getBid_amount().length() > 0)
             {
-                holder.bidamount.setText("₹ " + item.getBid_amount());
+
+                try {
+                    float fr = Float.parseFloat(item.getFreight());
+                    float ot = Float.parseFloat(item.getOtherCharges());
+                    float cg = Float.parseFloat(item.getCgst());
+                    float sg = Float.parseFloat(item.getSgst());
+                    float in = Float.parseFloat(item.getInsurance());
+
+                    float gr = fr + ot + cg + sg;
+                    holder.bidamount.setText("₹ " + gr);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    holder.status.setText(item.getStatus());
+                }
+
+                //holder.bidamount.setText("₹ " + item.getBid_amount());
+
                 holder.bidamounttitle.setVisibility(View.VISIBLE);
                 holder.bidamount.setVisibility(View.VISIBLE);
             }
@@ -193,7 +209,10 @@ public class WaitingTruckFragment extends Fragment {
                 }
 
 
-            } else {
+            }else if (item.getStatus().equals("requsted for quote"))
+            {
+                holder.status.setText("requested for quote");
+            }else {
                 holder.status.setText(item.getStatus());
             }
 

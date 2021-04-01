@@ -16,7 +16,7 @@
 
     <!--Bottom navigation-->
     <string name="find_truck">Find Truck</string>
-    <string name="waiting_truck">Waiting Tuck</string>
+    <string name="waiting_truck">Waiting Truck</string>
     <string name="my_order">My Orders</string>
     <string name="my_quotes">My Quotes</string>
 

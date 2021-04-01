@@ -174,6 +174,9 @@ public class Data {
     @SerializedName("discvalue")
     @Expose
     private String discvalue;
+    @SerializedName("lrcount")
+    @Expose
+    private String lrcount;
 
     public String getId() {
         return id;
@@ -621,6 +624,14 @@ public class Data {
 
     public void setDiscvalue(String discvalue) {
         this.discvalue = discvalue;
+    }
+
+    public String getLrcount() {
+        return lrcount;
+    }
+
+    public void setLrcount(String lrcount) {
+        this.lrcount = lrcount;
     }
 }
 

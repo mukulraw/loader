@@ -590,17 +590,6 @@ public class OrderDetails extends AppCompatActivity {
             }
         });
 
-        downloadlr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String url = "https://www.onnway.com/admin/print/lr.php?id=" + id;
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
-
-            }
-        });
 
     }
 
@@ -743,10 +732,26 @@ public class OrderDetails extends AppCompatActivity {
                     lrdownload.setLayoutManager(manager3);
 
 
-                    if (response.body().getData().getLr().size() > 0) {
+                    Log.d("lrcount", item.getLrcount());
+                    int lrc = Integer.parseInt(item.getLrcount());
+                    if (lrc > 0) {
                         pending2.setVisibility(View.GONE);
+                        downloadlr.setVisibility(View.VISIBLE);
+                        downloadlr.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                String url = "https://www.onnway.com/admin/print/lr3.php?id=" + id;
+                                Intent i = new Intent(Intent.ACTION_VIEW);
+                                i.setData(Uri.parse(url));
+                                startActivity(i);
+
+                            }
+                        });
+
                     } else {
                         pending2.setVisibility(View.VISIBLE);
+                        downloadlr.setVisibility(View.GONE);
                     }
 
 

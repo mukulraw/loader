@@ -290,9 +290,16 @@ public class OrderDetails4 extends AppCompatActivity {
                 material.setText(item.getMaterial());
                 weight.setText(item.getWeight());
                 date.setText(item.getSchedule());
-                status.setText(item.getStatus());
+                //status.setText(item.getStatus());
                 loadtype.setText(item.getLaodType());
                 drivernote.setText(item.getRemarks());
+
+                if (item.getStatus().equals("requsted for quote"))
+                {
+                    status.setText("requested for quote");
+                }else {
+                    status.setText(item.getStatus());
+                }
 
                 if (item.getTruckType2().equals("open truck")) {
                     truckType.setImageDrawable(getDrawable(R.drawable.open));

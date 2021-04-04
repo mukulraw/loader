@@ -38,9 +38,10 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView3"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:clipToPadding="false"
         android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_shipment">
@@ -71,26 +72,26 @@
                 <include layout="@layout/bill6" />
 
             </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="CANCEL BOOKING"
+                android:textColor="@color/colorAccent"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nestedScrollView3"
+                app:layout_constraintVertical_bias="0.0" />
 
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <TextView
-        android:id="@+id/button4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="CANCEL BOOKING"
-        android:textColor="@color/colorAccent"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView3"
-        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -102,7 +103,7 @@
         android:src="@drawable/ic_road"
         android:visibility="gone"
         app:backgroundTint="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
 

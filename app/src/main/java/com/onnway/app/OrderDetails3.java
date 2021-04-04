@@ -910,6 +910,25 @@ public class OrderDetails3 extends AppCompatActivity {
                     pa = 0;
                 }
 
+
+
+                updateSummary();
+
+
+                if (pvalue > 0) {
+                    apply.setEnabled(false);
+                    apply.setClickable(false);
+
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
+                } else {
+                    apply.setEnabled(true);
+                    apply.setClickable(true);
+
+                    promo.setEnabled(true);
+                    promo.setClickable(true);
+                }
+
                 if (item.getPer80().equals("pending")) {
                     pay80.setText("Pay 90%\n(After Loading)");
                     pay80.setEnabled(true);
@@ -936,6 +955,8 @@ public class OrderDetails3 extends AppCompatActivity {
                 } else if (item.getPer80().equals("processing")) {
                     pay80.setText("Processing\n90%");
                     pay80.setEnabled(false);
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
                     pay80.setTextColor(Color.BLACK);
 
                     if (item.getPer100().equals("pending")) {
@@ -945,10 +966,14 @@ public class OrderDetails3 extends AppCompatActivity {
                     } else if (item.getPer100().equals("processing")) {
                         pay100.setText("Processing\n100%");
                         pay100.setEnabled(false);
+                        promo.setEnabled(false);
+                        promo.setClickable(false);
                         pay100.setTextColor(Color.BLACK);
                     } else if (item.getPer100().equals("accepted")) {
                         pay100.setText("Paid\n₹ " + item.getPaidAmount());
                         pay100.setEnabled(false);
+                        promo.setEnabled(false);
+                        promo.setClickable(false);
                         pay100.setTextColor(Color.BLACK);
                     } else if (item.getPer100().equals("rejected")) {
                         pay100.setText("Rejected\n₹ " + item.getPaidAmount());
@@ -959,6 +984,8 @@ public class OrderDetails3 extends AppCompatActivity {
                 } else if (item.getPer80().equals("accepted")) {
                     pay80.setText("Paid\n₹ " + item.getPaidAmount());
                     pay80.setEnabled(false);
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
                     pay80.setTextColor(Color.BLACK);
 
                     float pd = Float.parseFloat(item.getPaidAmount());
@@ -971,10 +998,14 @@ public class OrderDetails3 extends AppCompatActivity {
                     } else if (item.getPer100().equals("processing")) {
                         pay100.setText("Processing\n₹ " + rem);
                         pay100.setEnabled(false);
+                        promo.setEnabled(false);
+                        promo.setClickable(false);
                         pay100.setTextColor(Color.BLACK);
                     } else if (item.getPer100().equals("accepted")) {
                         pay100.setText("Paid\n₹ " + rem);
                         pay100.setEnabled(false);
+                        promo.setEnabled(false);
+                        promo.setClickable(false);
                         pay100.setTextColor(Color.BLACK);
                     } else if (item.getPer100().equals("rejected")) {
                         pay100.setText("Rejected\n₹ " + rem);
@@ -994,10 +1025,14 @@ public class OrderDetails3 extends AppCompatActivity {
                     } else if (item.getPer100().equals("processing")) {
                         pay100.setText("Processing\n100%");
                         pay100.setEnabled(false);
+                        promo.setEnabled(false);
+                        promo.setClickable(false);
                         pay100.setTextColor(Color.BLACK);
                     } else if (item.getPer100().equals("accepted")) {
                         pay100.setText("Paid\n₹ " + item.getPaidAmount());
                         pay100.setEnabled(false);
+                        promo.setEnabled(false);
+                        promo.setClickable(false);
                         pay100.setTextColor(Color.BLACK);
                     } else if (item.getPer100().equals("rejected")) {
                         pay100.setText("Rejected\n₹ " + item.getPaidAmount());
@@ -1006,24 +1041,6 @@ public class OrderDetails3 extends AppCompatActivity {
                     }
 
                 }
-
-                updateSummary();
-
-
-                if (pvalue > 0) {
-                    apply.setEnabled(false);
-                    apply.setClickable(false);
-
-                    promo.setEnabled(false);
-                    promo.setClickable(false);
-                } else {
-                    apply.setEnabled(true);
-                    apply.setClickable(true);
-
-                    promo.setEnabled(true);
-                    promo.setClickable(true);
-                }
-
 
                 progress.setVisibility(View.GONE);
 

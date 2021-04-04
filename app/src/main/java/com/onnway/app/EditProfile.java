@@ -41,7 +41,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class EditProfile extends AppCompatActivity {
 
-    EditText name , email , city , company , gst;
+    EditText name, email, city, company, gst;
     RadioGroup type;
     Button submit;
     ProgressBar progress;
@@ -50,7 +50,7 @@ public class EditProfile extends AppCompatActivity {
     boolean comp = true;
     String t = "";
 
-    RadioButton compp , indi;
+    RadioButton compp, indi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +80,6 @@ public class EditProfile extends AppCompatActivity {
         indi = findViewById(R.id.indi);
 
 
-
-
         city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,14 +105,11 @@ public class EditProfile extends AppCompatActivity {
 
                 RadioButton btn = type.findViewById(checkedId);
 
-                if (btn.getText().toString().equals("Company"))
-                {
+                if (btn.getText().toString().equals("Company")) {
                     comp = true;
                     company.setVisibility(View.VISIBLE);
                     t = btn.getText().toString();
-                }
-                else
-                {
+                } else {
                     comp = false;
                     company.setVisibility(View.GONE);
                     t = btn.getText().toString();
@@ -133,48 +128,30 @@ public class EditProfile extends AppCompatActivity {
                 String co = company.getText().toString();
                 String g = gst.getText().toString();
 
-                if (n.length() > 0)
-                {
-                    if (e.length() > 0 )
-                    {
-                        if (c.length() > 0)
-                        {
+                if (n.length() > 0) {
+                    if (e.length() > 0) {
+                        if (c.length() > 0) {
                             int iidd = type.getCheckedRadioButtonId();
-                            if (iidd > -1)
-                            {
-                                if (comp)
-                                {
-                                    if (co.length() > 0)
-                                    {
-                                        update(n , e , c , t , co , g);
-                                    }
-                                    else
-                                    {
+                            if (iidd > -1) {
+                                if (comp) {
+                                    if (co.length() > 0) {
+                                        update(n, e, c, t, co, g);
+                                    } else {
                                         Toast.makeText(EditProfile.this, "Invalid company name", Toast.LENGTH_SHORT).show();
                                     }
+                                } else {
+                                    update(n, e, c, t, "", g);
                                 }
-                                else
-                                {
-                                    update(n , e , c , t , "" , g);
-                                }
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(EditProfile.this, "Please choose type", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(EditProfile.this, "Invalid address", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(EditProfile.this, "Invalid email", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else
-                {
+                } else {
                     Toast.makeText(EditProfile.this, "Invalid name", Toast.LENGTH_SHORT).show();
                 }
 
@@ -185,8 +162,7 @@ public class EditProfile extends AppCompatActivity {
 
     }
 
-    void setPrevious()
-    {
+    void setPrevious() {
         progress.setVisibility(View.VISIBLE);
 
         AppController b = (AppController) getApplicationContext();
@@ -199,7 +175,7 @@ public class EditProfile extends AppCompatActivity {
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Log.d("progie" , SharePreferenceUtils.getInstance().getString("userId"));
+        Log.d("progie", SharePreferenceUtils.getInstance().getString("userId"));
 
         Call<profileBean> call = cr.getLoaderProfile(SharePreferenceUtils.getInstance().getString("userId"));
 
@@ -210,24 +186,22 @@ public class EditProfile extends AppCompatActivity {
                 Data item = response.body().getData();
 
                 name.setText(item.getName());
-                if (item.getType().equals("Individual"))
-                {
-                    indi.setChecked(true);
-                    //company.setVisibility(View.GONE);
-                    //companytitle.setVisibility(View.GONE);
-                    company.setText("---");
+
+                try {
+                    if (item.getType().equals("Individual")) {
+                        indi.setChecked(true);
+                        //company.setVisibility(View.GONE);
+                        //companytitle.setVisibility(View.GONE);
+                        company.setText("---");
+                    } else {
+                        compp.setChecked(true);
+                        //company.setVisibility(View.VISIBLE);
+                        //companytitle.setVisibility(View.VISIBLE);
+                        company.setText(item.getCompany());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                else
-                {
-                    compp.setChecked(true);
-                    //company.setVisibility(View.VISIBLE);
-                    //companytitle.setVisibility(View.VISIBLE);
-                    company.setText(item.getCompany());
-                }
-
-
-
-
 
                 email.setText(item.getEmail());
                 city.setText(item.getCity());
@@ -245,8 +219,7 @@ public class EditProfile extends AppCompatActivity {
         });
     }
 
-    void update(String n , String e , String c , String t , String co , String g)
-    {
+    void update(String n, String e, String c, String t, String co, String g) {
         progress.setVisibility(View.VISIBLE);
 
         AppController b = (AppController) getApplicationContext();
@@ -280,8 +253,7 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onResponse(Call<updateProfileBean> call, Response<updateProfileBean> response) {
 
-                if (response.body().getStatus().equals("1"))
-                {
+                if (response.body().getStatus().equals("1")) {
 
                     /*SharePreferenceUtils.getInstance().saveString("name" , response.body().getData().getName());
                     SharePreferenceUtils.getInstance().saveString("email" , response.body().getData().getEmail());
@@ -291,9 +263,7 @@ public class EditProfile extends AppCompatActivity {
 
                     Toast.makeText(EditProfile.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     finish();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(EditProfile.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
 

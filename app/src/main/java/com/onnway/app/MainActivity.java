@@ -507,32 +507,32 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(MainActivity.this, Web.class);
             intent.putExtra("title", "About Onnway");
-            intent.putExtra("url", "https://www.onnway.com/aboutonway.php");
+            intent.putExtra("url", "https://onnway.com/about-us.php");
             startActivity(intent);
         } else if (id == R.id.nav_faq) {
             Intent intent = new Intent(MainActivity.this, Web.class);
             intent.putExtra("title", "FAQs");
-            intent.putExtra("url", "https://www.onnway.com/faqonnway.php");
+            intent.putExtra("url", "https://onnway.com/faq.php");
             startActivity(intent);
         } else if (id == R.id.nav_contact) {
             Intent intent = new Intent(MainActivity.this, Web.class);
             intent.putExtra("title", "Contact Us");
-            intent.putExtra("url", "https://www.onnway.com/contactonnway.php");
+            intent.putExtra("url", "https://onnway.com/contact-us.php");
             startActivity(intent);
         } else if (id == R.id.nav_payment_terms) {
             Intent intent = new Intent(MainActivity.this, Web.class);
             intent.putExtra("title", "Payment Terms");
-            intent.putExtra("url", "https://www.onnway.com/paymentonnway.php");
+            intent.putExtra("url", "https://onnway.com/payment_terms.php");
             startActivity(intent);
         } else if (id == R.id.nav_security) {
             Intent intent = new Intent(MainActivity.this, Web.class);
             intent.putExtra("title", "Privacy Policy");
-            intent.putExtra("url", "https://www.onnway.com/privacyonnway.php");
+            intent.putExtra("url", "https://onnway.com/privacy_policy.php");
             startActivity(intent);
         } else if (id == R.id.nav_terms_and_condition) {
             Intent intent = new Intent(MainActivity.this, Web.class);
             intent.putExtra("title", "Terms and Conditions");
-            intent.putExtra("url", "https://www.onnway.com/termsonnway.php");
+            intent.putExtra("url", "https://onnway.com/terms-n-condition.php");
             startActivity(intent);
         } else if (id == R.id.nav_share) {
             ShareCompat.IntentBuilder.from(MainActivity.this)

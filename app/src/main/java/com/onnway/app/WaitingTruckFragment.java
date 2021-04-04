@@ -167,13 +167,43 @@ public class WaitingTruckFragment extends Fragment {
             if (item.getBid_amount().length() > 0)
             {
 
-                try {
-                    float fr = Float.parseFloat(item.getFreight());
-                    float ot = Float.parseFloat(item.getOtherCharges());
-                    float cg = Float.parseFloat(item.getCgst());
-                    float sg = Float.parseFloat(item.getSgst());
-                    float in = Float.parseFloat(item.getInsurance());
+                float fr = 0, ot = 0, cg = 0, sg = 0, in = 0;
 
+                try {
+                    fr = Float.parseFloat(item.getFreight());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                try {
+                    ot = Float.parseFloat(item.getOtherCharges());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                try {
+                    cg = Float.parseFloat(item.getCgst());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                try {
+                    sg = Float.parseFloat(item.getSgst());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                try {
+                    in = Float.parseFloat(item.getInsurance());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                try {
                     float gr = fr + ot + cg + sg;
                     holder.bidamount.setText("₹ " + gr);
                 } catch (Exception e) {
@@ -194,13 +224,44 @@ public class WaitingTruckFragment extends Fragment {
 
             if (item.getStatus().equals("accepted quote")) {
 
-                try {
-                    float fr = Float.parseFloat(item.getFreight());
-                    float ot = Float.parseFloat(item.getOtherCharges());
-                    float cg = Float.parseFloat(item.getCgst());
-                    float sg = Float.parseFloat(item.getSgst());
-                    float in = Float.parseFloat(item.getInsurance());
+                float fr = 0, ot = 0, cg = 0, sg = 0, in = 0;
 
+                try {
+                    fr = Float.parseFloat(item.getFreight());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                try {
+                    ot = Float.parseFloat(item.getOtherCharges());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                try {
+                    cg = Float.parseFloat(item.getCgst());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                try {
+                    sg = Float.parseFloat(item.getSgst());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                try {
+                    in = Float.parseFloat(item.getInsurance());
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+
+                try {
                     float gr = fr + ot + cg + sg;
                     holder.status.setText(item.getStatus() + " (₹ " + gr + ")");
                 } catch (Exception e) {

@@ -187,18 +187,24 @@ public class GetProfile extends AppCompatActivity {
                 Data item = response.body().getData();
 
                 name.setText(item.getName());
-                if (item.getType().equals("Individual"))
+                try {
+                    if (item.getType().equals("Individual"))
+                    {
+                        //company.setVisibility(View.GONE);
+                        //companytitle.setVisibility(View.GONE);
+                        company.setText("---");
+                    }
+                    else
+                    {
+                        //company.setVisibility(View.VISIBLE);
+                        //companytitle.setVisibility(View.VISIBLE);
+                        company.setText(item.getCompany());
+                    }
+                }catch (Exception e)
                 {
-                    //company.setVisibility(View.GONE);
-                    //companytitle.setVisibility(View.GONE);
-                    company.setText("---");
+                    e.printStackTrace();
                 }
-                else
-                {
-                    //company.setVisibility(View.VISIBLE);
-                    //companytitle.setVisibility(View.VISIBLE);
-                    company.setText(item.getCompany());
-                }
+
 
                 SharePreferenceUtils.getInstance().saveString("image" , item.getImage());
 

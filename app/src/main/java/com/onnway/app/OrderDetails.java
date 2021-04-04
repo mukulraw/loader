@@ -654,48 +654,7 @@ public class OrderDetails extends AppCompatActivity {
                     truckType.setImageDrawable(getDrawable(R.drawable.container));
                 }
 
-                if (item.getPer80().equals("pending")) {
-                    pay80.setText("Pay 90%\n(After Loading)");
-                    pay80.setEnabled(true);
-                } else if (item.getPer80().equals("processing")) {
-                    pay80.setText("PROCESSING...");
-                    pay80.setEnabled(false);
-                } else if (item.getPer80().equals("rejected")) {
-                    pay80.setText("Rejected\nPAY NOW");
-                    pay80.setEnabled(true);
-                } else {
-                    pay80.setText("Paid\n₹ " + item.getPaidAmount());
-                    pay80.setEnabled(false);
-                }
 
-                if (item.getPaidPercent().equals("80")) {
-                    pay80.setText("Paid\n₹ " + item.getPaidAmount());
-                    pay80.setEnabled(false);
-                }
-
-
-                if (item.getPer100().equals("pending")) {
-                    pay100.setText("Pay 100%\n(After Loading)");
-                    pay100.setEnabled(true);
-                } else if (item.getPer100().equals("processing")) {
-                    pay100.setText("PROCESSING...");
-                    pay100.setEnabled(false);
-                } else if (item.getPer100().equals("rejected")) {
-                    pay100.setText("REJECTED\nPAY NOW");
-                    pay100.setEnabled(true);
-                } else {
-                    pay100.setText("100%\n" + item.getPaidAmount());
-                    pay100.setEnabled(false);
-                }
-
-                if (item.getPaidPercent().equals("100")) {
-                    pay80.setText("Paid");
-                    pay80.setEnabled(false);
-
-                    pay100.setText("100%\n" + item.getPaidAmount());
-                    pay100.setEnabled(false);
-
-                }
 
                 if (item.getAssign_id() != null) {
 
@@ -857,6 +816,55 @@ public class OrderDetails extends AppCompatActivity {
                     promo.setClickable(true);
                 }
 
+                if (item.getPer80().equals("pending")) {
+                    pay80.setText("Pay 90%\n(After Loading)");
+                    pay80.setEnabled(true);
+                } else if (item.getPer80().equals("processing")) {
+                    pay80.setText("PROCESSING...");
+                    pay80.setEnabled(false);
+                } else if (item.getPer80().equals("rejected")) {
+                    pay80.setText("Rejected\nPAY NOW");
+                    pay80.setEnabled(true);
+                } else {
+                    pay80.setText("Paid\n₹ " + item.getPaidAmount());
+                    pay80.setEnabled(false);
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
+                }
+
+                if (item.getPaidPercent().equals("80")) {
+                    pay80.setText("Paid\n₹ " + item.getPaidAmount());
+                    pay80.setEnabled(false);
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
+                }
+
+
+                if (item.getPer100().equals("pending")) {
+                    pay100.setText("Pay 100%\n(After Loading)");
+                    pay100.setEnabled(true);
+                } else if (item.getPer100().equals("processing")) {
+                    pay100.setText("PROCESSING...");
+                    pay100.setEnabled(false);
+                } else if (item.getPer100().equals("rejected")) {
+                    pay100.setText("REJECTED\nPAY NOW");
+                    pay100.setEnabled(true);
+                } else {
+                    pay100.setText("100%\n" + item.getPaidAmount());
+                    pay100.setEnabled(false);
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
+                }
+
+                if (item.getPaidPercent().equals("100")) {
+                    pay80.setText("Paid");
+                    pay80.setEnabled(false);
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
+                    pay100.setText("100%\n" + item.getPaidAmount());
+                    pay100.setEnabled(false);
+
+                }
 
                 progress.setVisibility(View.GONE);
 

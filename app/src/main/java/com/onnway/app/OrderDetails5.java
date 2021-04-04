@@ -339,12 +339,17 @@ public class OrderDetails5 extends AppCompatActivity {
                 material.setText(item.getMaterial());
                 weight.setText(item.getWeight());
                 date.setText(item.getSchedule());
-                status.setText(item.getStatus());
+                //status.setText(item.getStatus());
                 loadtype.setText(item.getLaodType());
                 drivernote.setText(item.getRemarks());
                 insused = item.getInsurance_used();
 
-
+                if (item.getStatus().equals("requsted for quote"))
+                {
+                    status.setText("requested for quote");
+                }else {
+                    status.setText(item.getStatus());
+                }
 
                 if (item.getTruckType2().equals("open truck")) {
                     truckType.setImageDrawable(getDrawable(R.drawable.open));
@@ -403,8 +408,15 @@ public class OrderDetails5 extends AppCompatActivity {
                     }
 
                     gr = gr - pvalue;
-
-                    grand.setText("₹ " + gr);
+                    if (gr > 0)
+                    {
+                        grand.setText("\u20B9" + gr);
+                    }
+                    else
+                    {
+                        grand.setText("-");
+                    }
+                    //grand.setText("₹ " + gr);
                     if (item.getPaidAmount().length() > 0) {
                         pa = Float.parseFloat(item.getPaidAmount());
                     } else {
@@ -437,10 +449,26 @@ public class OrderDetails5 extends AppCompatActivity {
 
         if (ins) {
             gr = fr + ot + cg + sg + in - pvalue;
-            grand.setText("\u20B9" + gr);
+            if (gr > 0)
+            {
+                grand.setText("\u20B9" + gr);
+            }
+            else
+            {
+                grand.setText("-");
+            }
+
         } else {
             gr = fr + ot + cg + sg - pvalue;
-            grand.setText("\u20B9" + gr);
+            if (gr > 0)
+            {
+                grand.setText("\u20B9" + gr);
+            }
+            else
+            {
+                grand.setText("-");
+            }
+            //grand.setText("\u20B9" + gr);
         }
 
             /*gr = fr + ot + cg + sg + in;

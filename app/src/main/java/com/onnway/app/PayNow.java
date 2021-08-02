@@ -180,7 +180,7 @@ public class PayNow extends AppCompatActivity {
                             String txnToken = body.getString("txnToken");
 
 
-                            String mid = "OQyoJy00054286990314";
+                            String mid = "KEDSON65782154527212";
                             String amount = String.valueOf(ammm);
                             //String txnToken = txntoken;
                             String orderid = oid + "_" + txn;
@@ -190,7 +190,7 @@ public class PayNow extends AppCompatActivity {
                             TransactionManager transactionManager = new TransactionManager(paytmOrder, new PaytmPaymentTransactionCallback() {
                                 @Override
                                 public void onTransactionResponse(Bundle bundle) {
-                                    //Toast.makeText(getApplicationContext(), "Payment Transaction response " + bundle.toString(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Payment Transaction response " + bundle.toString(), Toast.LENGTH_LONG).show();
                                 }
 
                                 @Override
@@ -386,6 +386,10 @@ public class PayNow extends AppCompatActivity {
 
 
         if (requestCode == 123 && data != null) {
+
+            Toast.makeText(this, data.getStringExtra("nativeSdkForMerchantMessage") + data.getStringExtra("response"), Toast.LENGTH_SHORT).show();
+
+            Log.d("nativeSdkFor", data.getStringExtra("nativeSdkForMerchantMessage") + data.getStringExtra("response"));
 
             progress.setVisibility(View.VISIBLE);
 

@@ -189,7 +189,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
 
         // Key
-        String key = "key=" + "AIzaSyBXQZx4qVICTJWyKTXO0Ji28GZjD4Pvavg";
+        String key = "key=" + "AIzaSyDqE-hIGTcdZA2RNswLLaNwN92dJUEYEnA";
         //String key = "key=" + getString(R.string.google_maps_key);
 
         // Building the parameters to the web service

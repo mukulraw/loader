@@ -21,7 +21,7 @@ public class AppController extends Application {
     private static AppController mInstance;
     private ImageLoader mImageLoader;
 
-    public String baseurl = "https://www.onnway.com/";
+    public String baseurl = "https://onnway.com/";
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
